@@ -16,6 +16,10 @@ function api_functions.currentPlayerDistanceFromTarget()
     return 10.0
 end
 
+function api_functions.distanceToUnit(unitGuid)
+    return 10.0
+end
+
 function api_functions.currentPlayerIsCasting()
     return false
 end
@@ -279,5 +283,23 @@ end
 function api_functions.getUnitsByNpcId(npcId)
     return {}
 end
+
+function api_functions.unitIsCasting(unitGuid)
+    return false
+end
+
+function api_functions.unitCastingSpellID(unitGuid)
+    return 0
+end
+
+function api_functions.unitIsChanneling(unitGuid)
+    return false
+end
+
+function api_functions.unitChannelingSpellID(unitGuid)
+    return 0
+end
+
+
 
 return api_functions
