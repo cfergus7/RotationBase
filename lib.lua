@@ -276,4 +276,8 @@ function api_functions.getCooldownRemainingTime(spellId)
     return 0
 end
 
+function api_functions.getUnitsByNpcId(npcId)
+    return {}
+end
+
 return api_functions
