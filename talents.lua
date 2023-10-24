@@ -1,0 +1,4 @@
+local talents = {}
+
+
+return talents
