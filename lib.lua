@@ -300,10 +300,16 @@ function api_functions.unitChannelingSpellID(unitGuid)
     return 0
 end
 
+function api_functions.unitAuraValue(unitGuid,spellId,index,isSource)
+    return 0.0
+end
+
+function api_functions.currentPlayerStaggerPercentage()
+    return 0.0
+end
+
 function api_functions.currentTime()
     return 0
 end
-
-
 
 return api_functions
