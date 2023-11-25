@@ -96,6 +96,14 @@ function api_functions.unitHealthPercent(unitGuid)
     return 0
 end
 
+function api_functions.unitHealth(unitGuid)
+    return 0
+end
+
+function api_functions.unitMaxHealth(unitGuid)
+    return 0
+end
+
 function api_functions.unitAuraRemainingTime(unitGuid,spellID,isLocalPlayerSource)
     return 0
 end
@@ -160,11 +168,19 @@ function api_functions.getCurrentPlayerCastPercentage()
     return 0.0
 end
 
+function api_functions.unitCastPercentage()
+    return 0.0
+end
+
 function api_functions.getCurrentPlayerChannelID()
     return 0
 end
 
 function api_functions.getCurrentPlayerChannelPercentage()
+    return 0.0
+end
+
+function api_functions.unitChannelPercentage()
     return 0.0
 end
 
@@ -200,11 +216,15 @@ function api_functions.targetPosition()
     return {}
 end
 
-function api_functions.isFacing()
+function api_functions.isFacing(unitGuid)
     return false
 end
 
 function api_functions.getPartyUnits()
+    return {}
+end
+
+function api_functions.getUnits()
     return {}
 end
 
