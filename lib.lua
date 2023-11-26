@@ -168,7 +168,7 @@ function api_functions.getCurrentPlayerCastPercentage()
     return 0.0
 end
 
-function api_functions.unitCastPercentage()
+function api_functions.unitCastPercentage(unitGuid)
     return 0.0
 end
 
@@ -180,7 +180,7 @@ function api_functions.getCurrentPlayerChannelPercentage()
     return 0.0
 end
 
-function api_functions.unitChannelPercentage()
+function api_functions.unitChannelPercentage(unitGuid)
     return 0.0
 end
 
