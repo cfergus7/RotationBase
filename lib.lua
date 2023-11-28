@@ -304,6 +304,10 @@ function api_functions.getUnitsByNpcId(npcId)
     return {}
 end
 
+function api_functions.unitTarget(unitGuid)
+    return ""
+end
+
 function api_functions.unitIsCasting(unitGuid)
     return false
 end
