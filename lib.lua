@@ -68,7 +68,15 @@ function api_functions.castSpellOnTarget(spellID,target)
     return false
 end
 
+function api_functions.castSpellOnPartyMember(spellID,target)
+    return false
+end
+
 function api_functions.castAOESpellOnTarget(spellID,target)
+    return false
+end
+
+function api_functions.castAOESpellOnSelf(spellID,target)
     return false
 end
 
