@@ -76,7 +76,7 @@ function api_functions.castAOESpellOnTarget(spellID,target)
     return false
 end
 
-function api_functions.castAOESpellOnSelf(spellID,target)
+function api_functions.castAOESpellOnSelf(spellID)
     return false
 end
 
