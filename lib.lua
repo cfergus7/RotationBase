@@ -344,4 +344,12 @@ function api_functions.currentTime()
     return 0
 end
 
+function api_functions.lastSpellCast()
+    return 0
+end
+
+function api_functions.spellCastHistory()
+    return {}
+end
+
 return api_functions
