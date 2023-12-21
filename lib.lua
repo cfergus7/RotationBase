@@ -60,6 +60,22 @@ function api_functions.canCastCharge(spellID,maxCharge)
     return false
 end
 
+function api_functions.objectIsOnCooldown(objectID)
+    return false
+end
+
+function api_functions.castObject(objectID)
+    return false
+end
+
+function api_functions.castObjectOnTarget(objectID,target)
+    return false
+end
+
+function api_functions.castObjectOnPartyMember(objectID,target)
+    return false
+end
+
 function api_functions.castSpell(spellID)
     return false
 end
@@ -313,6 +329,10 @@ function api_functions.getUnitsByNpcId(npcId)
 end
 
 function api_functions.unitTarget(unitGuid)
+    return ""
+end
+
+function api_functions.unitOwner(unitGuid)
     return ""
 end
 
