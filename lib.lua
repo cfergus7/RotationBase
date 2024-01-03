@@ -52,6 +52,10 @@ function api_functions.isSpec(specID)
     return false
 end
 
+function api_functions.petAttack()
+    return false
+end
+
 function api_functions.canCast(spellID)
     return false
 end
@@ -121,6 +125,10 @@ function api_functions.unitHealthPercent(unitGuid)
 end
 
 function api_functions.unitHealth(unitGuid)
+    return 0
+end
+
+function api_functions.unitNpcID(unitGuid)
     return 0
 end
 
@@ -370,6 +378,18 @@ end
 
 function api_functions.spellCastHistory()
     return {}
+end
+
+function api_functions.canCastOptimizedAOE(spellID,range,radius,isDPS,checkHostile,includeNeutral,useHealthThreshold,healthPercentThreshold)
+    return false
+end
+
+function api_functions.countOptimizedAOETarget(spellID,range,radius,isDPS,checkHostile,includeNeutral,useHealthThreshold,healthPercentThreshold)
+    return 0
+end
+
+function api_functions.castOptimizedAOE(spellID,range,radius,isDPS,checkHostile,includeNeutral,useHealthThreshold,healthPercentThreshold)
+    return false
 end
 
 return api_functions
