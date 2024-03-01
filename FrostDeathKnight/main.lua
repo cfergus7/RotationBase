@@ -172,14 +172,29 @@ function  StateUpdate()
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer)
     state.CurrentRunicPower = game_api.getPower(1)/10
     state.CurrentRunesAvailable = game_api.getRuneCount()
+    if game_api.hasTalentEntry(96178) or game_api.hasTalentEntry(96229) then
+        state.EmpowerRuneWeaponCharges = 1
+    end
+    if game_api.hasTalentEntry(96178) and game_api.hasTalentEntry(96229) then
+        state.EmpowerRuneWeaponCharges = 2
+    end
+
 
 end
 
-local AutoAoE
+local AutoAoE, FrostStrikeLogic, BreathofSindragosaLogic, SoulReaperLogic, ObliterateLogic, HowlingBlastLogic, ObliterateLogic2, HornofWinterLogic, FrostStrikeLogicActiveBreathCheck
 
 function DPS()
 
     AutoAoE = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
+    FrostStrikeLogic = API.PlayerHasBuff(auras.IcyTalonsBuff) and API.PlayerHasBuff(auras.UnleashedFrenzy) and game_api.currentPlayerAuraRemainingTime(auras.IcyTalonsBuff, true) <= 1250 and game_api.currentPlayerAuraRemainingTime(auras.UnleashedFrenzy, true) <= 1250
+    BreathofSindragosaLogic = state.CurrentRunicPower >= 60
+    SoulReaperLogic = state.currentTargetHpPercent < 35 and state.CurrentRunicPower > 40
+    ObliterateLogic = API.PlayerHasBuff(auras.KillingMachineBuff) or API.PlayerHasBuff(auras.PillarofFrostBuff)
+    HowlingBlastLogic = API.PlayerHasBuff(auras.Ryme) and state.CurrentRunicPower >39
+    ObliterateLogic2 = state.CurrentRunicPower <=100
+    HornofWinterLogic = state.CurrentRunicPower <=95
+    FrostStrikeLogicActiveBreathCheck = API.PlayerHasBuff(auras.BreathofSindragosa)
 
     --Opener Down the Road
 
@@ -190,7 +205,8 @@ function DPS()
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
 
-            if API.CanCast(spells.FrostStrike) then
+            
+            if API.CanCast(spells.FrostStrike) and FrostStrikeLogic and FrostStrikeLogicActiveBreathCheck then
                 game_api.castSpell(spells.FrostStrike)
                 API.Debug("FrostStrikeCasted for DPS")
                 return true
@@ -204,7 +220,7 @@ function DPS()
             end
         end
 
-        if game_api.getToggle(settings.Cooldown) then
+        if game_api.getToggle(settings.Cooldown) and BreathofSindragosaLogic then
             if API.CanCast(spells.BreathofSindragosa) then
                 game_api.castSpell(spells.BreathofSindragosa)
                 API.Debug("BreathofSindragosa Casted for DPS")
@@ -213,7 +229,7 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            if API.CanCast(spells.EmpowerRuneWeapon) then
+            if game_api.canCastCharge(spells.EmpowerRuneWeapon, state.EmpowerRuneWeaponCharges) then
                 game_api.castSpell(spells.EmpowerRuneWeapon)
                 API.Debug("EmpowerRuneWeaponCasted for DPS")
                 return true
@@ -236,25 +252,25 @@ function DPS()
             end
         end
 
-        if API.CanCast(spells.SoulReaper) then
+        if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
             game_api.castSpell(spells.SoulReaper)
             API.Debug("SoulReaper Casted for DPS")
             return true
         end
 
-            if API.CanCast(spells.Obliterate) then
+            if API.CanCast(spells.Obliterate) and ObliterateLogic then
                 game_api.castSpell(spells.Obliterate)
                 API.Debug("ObliterateCasted for DPS")
                 return true
             end
 
-            if API.CanCast(spells.HowlingBlast) then
+            if API.CanCast(spells.HowlingBlast) and HowlingBlastLogic then
                 game_api.castSpell(spells.HowlingBlast)
                 API.Debug("HowlingBlastCasted for DPS")
                 return true
             end
 
-        if game_api.getToggle(settings.Cooldown) then
+        if game_api.getToggle(settings.Cooldown) and ObliterateLogic2 then
             if API.CanCast(spells.Obliterate) then
                 game_api.castSpell(spells.Obliterate)
                 API.Debug("ObliterateCasted for DPS")
@@ -262,7 +278,7 @@ function DPS()
             end
         end
 
-        if game_api.getToggle(settings.Cooldown) then
+        if game_api.getToggle(settings.Cooldown) and HornofWinterLogic then
             if API.CanCast(spells.HornofWinter) then
                 game_api.castSpell(spells.HornofWinter)
                 API.Debug("HornofWinter Casted for DPS")
@@ -270,7 +286,7 @@ function DPS()
             end
         end
 
-            if API.CanCast(spells.FrostStrike) then
+            if API.CanCast(spells.FrostStrike) and FrostStrikeLogicActiveBreathCheck then
                 game_api.castSpell(spells.FrostStrike)
                 API.Debug("FrostStrikeCasted for DPS")
                 return true

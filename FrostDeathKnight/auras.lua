@@ -8,6 +8,10 @@ auras.EmpowerRuneWeaponBuff              = 47568
 auras.IcyTalonsBuff                      = 194879
 auras.RuneofHysteriaBuff                 = 326918
 auras.UnholyStrengthBuff                 = 53365
+auras.UnleashedFrenzy                    = 376905
+auras.PillarofFrostBuff                  = 51271
+auras.RimeBuff                           = 59057
+auras.BreathofSindragosa                 = 152279
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095
