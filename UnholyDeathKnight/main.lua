@@ -207,6 +207,16 @@ function DPS()
             end
         end
 
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.SoulReaper) then
+                game_api.canCast(spells.SoulReaper)
+                API.Debug("SoulReaper Casted Spell for DPS")
+                return true
+            end
+
+        end
+
     end
 
     

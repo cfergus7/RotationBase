@@ -172,8 +172,8 @@ function  StateUpdate()
 
     state.afflictedUnits = game_api.getUnitsByNpcId(204773)
     state.incorporealUnits = game_api.getUnitsByNpcId(204560)
-    
-    state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer) 
+
+    state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer)
 
 end
 
@@ -183,23 +183,378 @@ function DPS()
 
     AutoAoe = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
+    --Opener Down the Road
+
+
+    --Base Rotation BreathofSindragosa
+
+
+
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
-        
-        if game_api.getToggle(settings.Cooldown) then 
-            if API.CanCast(spells.MindFreeze) then
-                game_api.castSpell(spells.MindFreeze)
-                API.Debug("MindFreeze Casted for DPS")
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.PillarofFrost) then
+                game_api.castSpell(spells.PillarofFrost)
+                API.Debug("PillarofFrost Casted for DPS")
                 return true
             end
         end
 
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.BreathofSindragosa) then
+                game_api.castSpell(spells.BreathofSindragosa)
+                API.Debug("BreathofSindragosa Casted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.EmpowerRuneWeapon) then
+                game_api.castSpell(spells.EmpowerRuneWeapon)
+                API.Debug("EmpowerRuneWeaponCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.RemorselessWinter) then
+                game_api.castSpell(spells.RemorselessWinter)
+                API.Debug("RemorselessWinterCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.ChillStreak) then
+                game_api.castSpell(spells.ChillStreak)
+                API.Debug("ChillStreakCasted for DPS")
+                return true
+            end
+        end
+
+        if API.CanCast(spells.SoulReaper) then
+            game_api.castSpell(spells.SoulReaper)
+            API.Debug("SoulReaper Casted for DPS")
+            return true
+        end
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.HornofWinter) then
+                game_api.castSpell(spells.HornofWinter)
+                API.Debug("HornofWinter Casted for DPS")
+                return true
+            end
+        end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            -- BreathofSindragosa AoE
+
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.PillarofFrost) then
+                game_api.castSpell(spells.PillarofFrost)
+                API.Debug("PillarofFrost Casted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.BreathofSindragosa) then
+                game_api.castSpell(spells.BreathofSindragosa)
+                API.Debug("BreathofSindragosa Casted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.EmpowerRuneWeapon) then
+                game_api.castSpell(spells.EmpowerRuneWeapon)
+                API.Debug("EmpowerRuneWeaponCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.AbominationLimb) then
+                game_api.castSpell(spells.AbominationLimb)
+                API.Debug("AbominationLimb Casted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.RemorselessWinter) then
+                game_api.castSpell(spells.RemorselessWinter)
+                API.Debug("RemorselessWinterCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.ChillStreak) then
+                game_api.castSpell(spells.ChillStreak)
+                API.Debug("ChillStreakCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.DeathAndDecay) then
+                game_api.castSpell(spells.DeathAndDecay)
+                API.Debug("DeathAndDecay Casted for DPS")
+                return true
+            end
+        end
+        
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.HornofWinter) then
+                game_api.castSpell(spells.HornofWinter)
+                API.Debug("HornofWinter Casted for DPS")
+                return true
+            end
+        end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+
+        --Base Rotation Obliteration
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+        
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.RemorselessWinter) then
+                game_api.castSpell(spells.RemorselessWinter)
+                API.Debug("RemorselessWinterCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.ChillStreak) then
+                game_api.castSpell(spells.ChillStreak)
+                API.Debug("ChillStreakCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.EmpowerRuneWeapon) then
+                game_api.castSpell(spells.EmpowerRuneWeapon)
+                API.Debug("EmpowerRuneWeaponCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.PillarofFrost) then
+                game_api.castSpell(spells.PillarofFrost)
+                API.Debug("PillarofFrost Casted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.DeathAndDecay) then
+                game_api.castSpell(spells.DeathAndDecay)
+                API.Debug("DeathAndDecay Casted for DPS")
+                return true
+            end
+        end
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+
+            --Obliterate AoE
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.AbominationLimb) then
+                    game_api.castSpell(spells.AbominationLimb)
+                    API.Debug("AbominationLimb Casted for DPS")
+                    return true
+                end
+            end
+        
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.RemorselessWinter) then
+                game_api.castSpell(spells.RemorselessWinter)
+                API.Debug("RemorselessWinterCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.ChillStreak) then
+                game_api.castSpell(spells.ChillStreak)
+                API.Debug("ChillStreakCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.EmpowerRuneWeapon) then
+                game_api.castSpell(spells.EmpowerRuneWeapon)
+                API.Debug("EmpowerRuneWeaponCasted for DPS")
+                return true
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if API.CanCast(spells.PillarofFrost) then
+                game_api.castSpell(spells.PillarofFrost)
+                API.Debug("PillarofFrost Casted for DPS")
+                return true
+            end
+        end
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.HowlingBlast) then
+                game_api.castSpell(spells.HowlingBlast)
+                API.Debug("HowlingBlastCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.FrostStrike) then
+                game_api.castSpell(spells.FrostStrike)
+                API.Debug("FrostStrikeCasted for DPS")
+                return true
+            end
+
+            if API.CanCast(spells.Obliterate) then
+                game_api.castSpell(spells.Obliterate)
+                API.Debug("ObliterateCasted for DPS")
+                return true
+            end
+
+
+ --------- Combat and DPS functions ----------------------        
     end
-
-    
-
-
 end
-    
+
 --[[
     Run on eatch engine tick if game has focus and is not loading
 ]]
