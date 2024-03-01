@@ -175,6 +175,8 @@ function  StateUpdate()
     
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer) 
     state.Pets = game_api.getUnitsByNpcId(26125)
+    state.CurrentRunicPower = game_api.getPower(1)/10
+    state.CurrentRunesAvailable = game_api.getRuneCount()
 end
 
 local AutoAoE

@@ -157,25 +157,21 @@ end
 
 function  StateUpdate()
     API.RefreshFunctionsState();
-    state.currentPower = game_api.getPower(0) /5 --runes
-    state.currentMaxPower = game_api.getMaxPower(0) /5 --runes
+
     state.currentTarget = game_api.getCurrentUnitTarget()
     state.currentTargetHpPercent = game_api.unitHealthPercent(state.currentTarget)
     state.currentPlayer = game_api.getCurrentPlayer()
     state.currentHpPercent = game_api.unitHealthPercent(state.currentPlayer)
     state.playerHealth = game_api.unitHealthPercent(state.currentPlayer)
-
-
     state.TargetCheck = game_api.unitInCombat(state.currentPlayer) and state.currentTarget ~= 00 and functions.isInCombatOrHasNpcId(state.currentTarget, cLists.npcIdList) and (game_api.currentPlayerDistanceFromTarget() <=6 or  game_api.unitNpcID(state.currentTarget)== 44566) and game_api.isFacing(state.currentTarget) and game_api.isTargetHostile(true) and game_api.unitHealthPercent(state.currentTarget) > 0     state.getUnits = game_api.getUnits()
     state.PlayerIsInCombat = game_api.unitInCombat(state.currentPlayer)
     state.HostileUnits = getCombatUnits()
     state.HostileUnitCount = API.CountUnitsInRange(10, state.HostileUnits)
-
-
     state.afflictedUnits = game_api.getUnitsByNpcId(204773)
     state.incorporealUnits = game_api.getUnitsByNpcId(204560)
-
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer)
+    state.CurrentRunicPower = game_api.getPower(1)/10
+    state.CurrentRunesAvailable = game_api.getRuneCount()
 
 end
 
