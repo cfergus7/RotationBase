@@ -1,8 +1,10 @@
 game_api = require("lib")
-spells = require ("spells")
-talents = require ("talents")
-auras = require ("auras")
-settings = require ("settings")
+spells = require("spells")
+talents = require("talents")
+auras = require("auras")
+settings = require("settings")
+API = require("common_functions")
+cLists = require("common_lists")
 state = {}
 
 --[[
@@ -167,7 +169,7 @@ function  StateUpdate()
     state.TargetCheck = game_api.unitInCombat(state.currentPlayer) and state.currentTarget ~= 00 and functions.isInCombatOrHasNpcId(state.currentTarget, cLists.npcIdList) and (game_api.currentPlayerDistanceFromTarget() <=6 or  game_api.unitNpcID(state.currentTarget)== 44566) and game_api.isFacing(state.currentTarget) and game_api.isTargetHostile(true) and game_api.unitHealthPercent(state.currentTarget) > 0     state.getUnits = game_api.getUnits()
     state.PlayerIsInCombat = game_api.unitInCombat(state.currentPlayer)
     state.HostileUnits = getCombatUnits()
-    state.HostileUnitCount = API.CountUnitsInRange(40, state.HostileUnits)
+    state.HostileUnitCount = API.CountUnitsInRange(10, state.HostileUnits)
 
 
     state.afflictedUnits = game_api.getUnitsByNpcId(204773)
@@ -181,7 +183,7 @@ local AutoAoE
 
 function DPS()
 
-    AutoAoe = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
+    AutoAoE = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
     --Opener Down the Road
 

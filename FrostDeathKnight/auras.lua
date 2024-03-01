@@ -1,18 +1,18 @@
 local auras = {}
 
 -- Buffs
-spells.AbominationLimbBuff                = 383269
-spells.DeathAndDecayBuff                  = 188290
-spells.DeathStrikeBuff                    = 101568
-spells.EmpowerRuneWeaponBuff              = 47568
-spells.IcyTalonsBuff                      = 194879
-spells.RuneofHysteriaBuff                 = 326918
-spells.UnholyStrengthBuff                 = 53365
+auras.AbominationLimbBuff                = 383269
+auras.DeathAndDecayBuff                  = 188290
+auras.DeathStrikeBuff                    = 101568
+auras.EmpowerRuneWeaponBuff              = 47568
+auras.IcyTalonsBuff                      = 194879
+auras.RuneofHysteriaBuff                 = 326918
+auras.UnholyStrengthBuff                 = 53365
 -- Debuffs
-spells.BloodPlagueDebuff                  = 55078
-spells.FrostFeverDebuff                   = 55095
-spells.MarkofFyralathDebuff               = 414532
-spells.SoulReaperDebuff                   = 343294
-spells.VirulentPlagueDebuff               = 191587
+auras.BloodPlagueDebuff                  = 55078
+auras.FrostFeverDebuff                   = 55095
+auras.MarkofFyralathDebuff               = 414532
+auras.SoulReaperDebuff                   = 343294
+auras.VirulentPlagueDebuff               = 191587
 
 return auras
