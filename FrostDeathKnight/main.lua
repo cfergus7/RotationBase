@@ -1,10 +1,10 @@
-game_api = require("lib")
-spells = require("spells")
-talents = require("talents")
-auras = require("auras")
-settings = require("settings")
-API = require("common_functions")
-cLists = require("common_lists")
+game_api : require("lib")
+spells : require("spells")
+talents : require("talents")
+auras : require("auras")
+settings : require("settings")
+API : require("common_functions")
+cLists : require("common_lists")
 state = {}
 
 --[[

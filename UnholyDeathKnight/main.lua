@@ -3,6 +3,8 @@ spells = require ("spells")
 talents = require ("talents")
 auras = require ("auras")
 settings = require ("settings")
+API : require("common_functions")
+cLists : require("common_lists")
 state = {}
 
 --[[
@@ -177,9 +179,10 @@ function  StateUpdate()
     state.Pets = game_api.getUnitsByNpcId(26125)
     state.CurrentRunicPower = game_api.getPower(1)/10
     state.CurrentRunesAvailable = game_api.getRuneCount()
+    
 end
 
-local AutoAoE
+local AutoAoE, SoulReaperLogic, DeathCoilLogicSuddenDoom, ClawingShadowsLogicRottenTouch, DeathCoilLogicDeathRot, OutbreakLogic, DeathCoilLogicSummonGargoyle
 
 function hasPet()
     local Pets = state.Pets
@@ -193,12 +196,22 @@ function hasPet()
     return true
 end
 
+
 function DPS()
+
+    SoulReaperLogic = state.currentTargetHpPercent < 35
+    DeathCoilLogicSuddenDoom = API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 80
+    ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
+    DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(auras.DeathRot, true) < 10
+    OutbreakLogic = --need debuf time on boss 
+    DeathCoilLogicSummonGargoyle = state.CurrentRunesAvailable < 3 
 
     AutoAoe = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
         
+        -- ST Coil Build
+
         if game_api.getToggle(settings.Cooldown) then 
             -- Pets insert here
             
@@ -211,9 +224,109 @@ function DPS()
 
         if game_api.getToggle(settings.Cooldown) then
             
-            if API.CanCast(spells.SoulReaper) then
+            if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
                 game_api.canCast(spells.SoulReaper)
                 API.Debug("SoulReaper Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.DeathCoil)and DeathCoilLogicSuddenDoom then
+                game_api.canCast(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
+                game_api.canCast(spells.ClawingShadows)
+                API.Debug("ClawingShadows Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.DeathCoil) and DeathCoilLogicDeathRot then
+                game_api.canCast(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.Outbreak) and OutbreakLogic then
+                game_api.canCast(spells.Outbreak)
+                API.Debug("Outbreak Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.DeathCoil) then
+                game_api.canCast(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.ClawingShadows) then
+                game_api.canCast(spells.ClawingShadows)
+                API.Debug("ClawingShadows Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.DeathandDecay) then
+                game_api.canCast(spells.DeathandDecay)
+                API.Debug("DeathandDecay Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.FesteringStrike) then
+                game_api.canCast(spells.FesteringStrike)
+                API.Debug("FesteringStrike Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.ClawingShadows) then
+                game_api.canCast(spells.ClawingShadows)
+                API.Debug("ClawingShadows Casted Spell for DPS")
+                return true
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            
+            if API.CanCast(spells.DeathCoil) then
+                game_api.canCast(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell for DPS")
                 return true
             end
 
