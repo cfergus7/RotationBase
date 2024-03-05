@@ -10,6 +10,7 @@ auras.RuneofHysteriaBuff                 = 326918
 auras.UnholyStrengthBuff                 = 53365
 auras.FesteringWound                     =194310
 auras.DeathRot                           =377540
+auras.MagusoftheDead
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095

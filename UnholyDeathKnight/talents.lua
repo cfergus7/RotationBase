@@ -19,5 +19,6 @@ talents.SoulReaper                         = 343294
 talents.UnholyGround                       = 374265
 talents.BreathofSindragosa                = 152279
 talents.Obliteration                      = 281238
+talents.MagusoftheDead                    = 390196
 
 return talents
