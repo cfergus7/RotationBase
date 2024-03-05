@@ -1,21 +1,23 @@
 local talents = {}
 
 -- Talents
-spells.AbominationLimb                    = 383269
-spells.AntiMagicShell                     = 48707
-spells.AntiMagicZone                      = 51052
-spells.Asphyxiate                         = 221562
-spells.Assimilation                       = 374383
-spells.ChainsofIce                        = 45524
-spells.CleavingStrikes                    = 316916
-spells.DeathStrike                        = 49998
-spells.EmpowerRuneWeapon                  = 47568
-spells.IceboundFortitude                  = 48792
-spells.IcyTalons                          = 194878
-spells.RaiseDead                          = 46585
-spells.RunicAttenuation                   = 207104
-spells.SacrificialPact                    = 327574
-spells.SoulReaper                         = 343294
-spells.UnholyGround                       = 374265
+talents.AbominationLimb                    = 383269
+talents.AntiMagicShell                     = 48707
+talents.AntiMagicZone                      = 51052
+talents.Asphyxiate                         = 221562
+talents.Assimilation                       = 374383
+talents.ChainsofIce                        = 45524
+talents.CleavingStrikes                    = 316916
+talents.DeathStrike                        = 49998
+talents.EmpowerRuneWeapon                  = 47568
+talents.IceboundFortitude                  = 48792
+talents.IcyTalons                          = 194878
+talents.RaiseDead                          = 46585
+talents.RunicAttenuation                   = 207104
+talents.SacrificialPact                    = 327574
+talents.SoulReaper                         = 343294
+talents.UnholyGround                       = 374265
+talents.BreathofSindragosa                = 152279
+talents.Obliteration                      = 281238
 
 return talents

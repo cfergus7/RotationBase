@@ -76,6 +76,7 @@ spells.Obliteration                       = 281238
 spells.PillarofFrost                      = 51271
 spells.RageoftheFrozenChampion            = 377076
 spells.RemorselessWinter                  = 196770
+spells.ScourgeStrike                      = 55090
 spells.ShatteringBlade                    = 207057
 spells.UnleashedFrenzy                    = 376905
 -- Buffs
