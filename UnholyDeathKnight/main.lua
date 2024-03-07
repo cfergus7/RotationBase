@@ -3,8 +3,8 @@ spells = require ("spells")
 talents = require ("talents")
 auras = require ("auras")
 settings = require ("settings")
-API : require("common_functions")
-cLists : require("common_lists")
+API = require("common_functions")
+cLists = require("common_lists")
 state = {}
 
 --[[
@@ -202,12 +202,12 @@ function DPS()
     SoulReaperLogic = state.currentTargetHpPercent < 35
     DeathCoilLogicSuddenDoom = API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 80
     ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
-    DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(auras.DeathRot, true) < 10
+    DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(state.currentPlayer, auras.DeathRot, true) < 10
     OutbreakLogic = --need debuf time on boss 
     DeathCoilLogicSummonGargoyle -- not letting me use CurrentRunesAvailable and summon Pet
     ScourgeStrikeLogic = API.PlayerHasBuff(auras.MagusoftheDead) and API.PlayerHasBuff(auras.FesteringWound) > 0
-    DeathandDecayLogic = 0 -- pet check 
-    FesteringStrikeLogic = API.PlayerHasBuff(auras.FesteringWound) < 3
+    DeathandDecayLogic = 
+    FesteringStrikeLogic = game_api.unitHasAura(auras.FesteringWound) < 3   --- go back and fix this with the new unit auras
     ClawingShadowsLogicFestering = API.PlayerHasBuff(auras.FesteringWound) > 3
     DefileLogic = API.PlayerHasBuff(auras.MagusoftheDead) -- and has pet
 
@@ -219,8 +219,7 @@ function DPS()
 
         if game_api.getToggle(settings.Cooldown) then 
             -- Pets insert here
-            
-            if API.CanCast(spells.RaiseDead) then
+            if hasPet then 
                 game_api.castSpell(spells.RaiseDead)
                 API.Debug("RaiseDead Casted for DPS")
                 return true
