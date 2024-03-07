@@ -35,31 +35,38 @@ local party = common_functions.getParty()
 
 local prevstring = nil
 
-function common_functions.HealingTrinketLogic(UseTrinket1Setting, UseTrinket2Setting, TrinketAvgHP, UseSetting, TargetUnit)
+function common_functions.HealingTrinketLogic(UseTrinket1Setting, UseTrinket2Setting, TrinketAvgHP, UseSetting,
+                                              TargetUnit)
     local Trinket1 = game_api.getTrinketID1()
     local Trinket2 = game_api.getTrinketID2()
     local TrinketAoELogic = common_functions.AverageGroupLife(40) <= game_api.getSetting(TrinketAvgHP)
 
     if game_api.getSetting(UseTrinket1Setting) then
-        if game_api.canCastObject(Trinket1) and common_functions.UseCooldown(UseSetting, TrinketAoELogic) then
-            if TargetUnit then
-                game_api.castObjectOnPartyMember(Trinket1, TargetUnit)
-            else
-                game_api.castObject(Trinket1)
+        if Trinket1 ~= nil then
+            if not game_api.objectIsOnCooldown(Trinket1) and game_api.canCastObject(Trinket1) and
+                common_functions.UseCooldown(UseSetting, TrinketAoELogic) then
+                if TargetUnit then
+                    game_api.castObjectOnPartyMember(Trinket1, TargetUnit)
+                else
+                    game_api.castObject(Trinket1)
+                end
+                common_functions.Debug("Trinket 1 Casted")
+                return true
             end
-            common_functions.Debug("Trinket 1 Casted")
-            return true
         end
     end
     if game_api.getSetting(UseTrinket2Setting) then
-        if game_api.canCastObject(Trinket2) and common_functions.UseCooldown(UseSetting, TrinketAoELogic) then
-            if TargetUnit then
-                game_api.castObjectOnPartyMember(Trinket2, TargetUnit)
-            else
-                game_api.castObject(Trinket2)
+        if Trinket2 ~= nil then
+            if not game_api.objectIsOnCooldown(Trinket2) and game_api.canCastObject(Trinket2) and
+                common_functions.UseCooldown(UseSetting, TrinketAoELogic) then
+                if TargetUnit then
+                    game_api.castObjectOnPartyMember(Trinket2, TargetUnit)
+                else
+                    game_api.castObject(Trinket2)
+                end
+                common_functions.Debug("Trinket 2 Casted")
+                return true
             end
-            common_functions.Debug("Trinket 2 Casted")
-            return true
         end
     end
 
@@ -247,10 +254,10 @@ end]]
 
 function common_functions.UnitWithLowestEffectiveHealth(range)
     local lowestHealthUnit = nil
-    local lowestEffectiveHealth = 101 -- Start higher than 100 to ensure we catch the first unit
+    local lowestEffectiveHealth = 101     -- Start higher than 100 to ensure we catch the first unit
     local CurrentTarget = game_api.getCurrentUnitTarget()
     local unitBelowThresholdFound = false -- Track if any unit below 15% health is found
-    local isCurrentTargetInParty = false -- Flag to check if CurrentTarget is in the party
+    local isCurrentTargetInParty = false  -- Flag to check if CurrentTarget is in the party
 
     for _, unit in ipairs(party) do
         -- Check if CurrentTarget is in the party
@@ -310,7 +317,6 @@ function common_functions.AverageGroupLife(range)
         return averageEffectiveHealth
     end
 end
-
 
 function common_functions.UnitWithLowestEffectiveHealthWithOutAura(range, aura)
     local lowestHealthUnit = nil
@@ -493,7 +499,8 @@ function common_functions.CustomWeightFunction:CalculatePartyUnitWeight(unit)
         game_api.unitHasAura(unit, TemporalLink, false) or game_api.unitHasAura(unit, CrushingDepths, false) or
         unitHasDebuffFromList(HeavyDmgDebuffs, unit)
     local hasAnyDebuff = game_api.unitHasAura(unit, TouchOfRuin, false) or
-        game_api.unitHasAura(unit, ImpendingDoom, false) or game_api.unitHasAura(unit, JadeSerpentStrike, false) or game_api.unitHasAura(unit, soulthorns, false) or
+        game_api.unitHasAura(unit, ImpendingDoom, false) or game_api.unitHasAura(unit, JadeSerpentStrike, false) or
+        game_api.unitHasAura(unit, soulthorns, false) or
         unitHasDebuffFromList(cLists.HeavyDmgList, unit) or unitHasDebuffFromList(cLists.BleedList, unit)
     local hasTankDebuff = game_api.unitHasAura(unit, JadeSerpentStrike, false) or
         game_api.unitHasAura(unit, DecayingStrike, false) or game_api.unitHasAura(unit, DecayingStrikeE, false)
@@ -609,12 +616,13 @@ local function containsAnyValues(tbl, values)
     return false
 end
 
+--[[
 function common_functions.AllUnitsAreFarFromUnitWithAura(auraID, range)
     local unitWithAura = nil
     for _, unit in ipairs(party) do
         if game_api.unitHasAura(unit, auraID, false) then
             unitWithAura = unit
-            break 
+            break
         end
     end
 
@@ -623,87 +631,137 @@ function common_functions.AllUnitsAreFarFromUnitWithAura(auraID, range)
     end
 
     for _, otherUnit in ipairs(party) do
-        if otherUnit ~= unitWithAura then 
+        if otherUnit ~= unitWithAura then
             if game_api.distanceBetweenUnits(otherUnit, unitWithAura) <= range then
-                return false 
+                return false
             end
         end
     end
 
     return true
 end
+--]]
 
-
-
-function common_functions.UnitToDispel(DispelType, DispelType2, DispelType3, DispelType4)
-    local lowestHealthUnit = nil
-    local lowestHealth = 101 -- Set to a number higher than 100 to ensure we catch the first unit
-
-    local dispelTypes = { DispelType, DispelType2, DispelType3, DispelType4 }
-
-    local function shouldDispelUnit(unit)
-        local uniqueIDs = cLists.uniqueIDs
-        local combinedList = common_functions.getCombinedList(dispelTypes)
-
-        local randomNumber = common_functions.randomBetween(250, 1250)
-        -- Helper function to check if a unit has any of the auras from a given list
-        local function unitHasAnyAura(unit, ids)
-            for _, id in ipairs(ids) do
-                if game_api.unitHasAura(unit, id, false) and game_api.unitAuraElapsedTime(unit, id, false) >= randomNumber then
-                    common_functions.Debug("Unit Found With Dispelable ID" .. tostring(id))
-                    return true
-                end
-            end
-            return false
-        end
-        local desiredDispelTypes = { "MAGIC", "POISON", "CURSE", "DISEASE" }
-        local hasDebuffOfDesiredType = false
-
-
-
-        for _, dispelType in ipairs(desiredDispelTypes) do
-            if game_api.unitDebuffListWithDispelType(unit, dispelType) then
-                hasDebuffOfDesiredType = true
-                break
-            end
-        end
-
-        local genericDispelCheck = common_functions.IsInRange(40, unit) and not unitHasAnyAura(unit, uniqueIDs) and
-            hasDebuffOfDesiredType and unitHasAnyAura(unit, combinedList)
-
-        return (
-
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 400681, false) and game_api.unitAuraElapsedTime(unit, 400681, false) > 1500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 240443, false) and game_api.unitAuraStackCount(unit, 240443, false) >= 3 and game_api.unitAuraElapsedTime(unit, 240443, false) > 1500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377405, false) and game_api.unitAuraElapsedTime(unit, 377405, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 389179, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 389179, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 372682, false) and game_api.unitAuraStackCount(unit, 372682, false) > 5) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 384161, false) and common_functions.IsInRange(10, unit) and game_api.unitAuraElapsedTime(unit, 384161, false) > 2500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 370766, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 370766, false) > 2500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 388777, false) and game_api.unitAuraStackCount(unit, 388777, false) > 11) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 374350, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 374350, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377510, false) and game_api.unitAuraStackCount(unit, 377510, false) >= 3) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 397907, false) and game_api.unitAuraElapsedTime(unit, 397907, false) >= 1250) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and common_functions.AllUnitsAreFarFromUnitWithAura(415554, 10)) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and (game_api.unitHasAura(unit, 405696, false) or game_api.unitHasAura(unit, 404141, false)) and game_api.unitHasAura(unit, 403912, false)) or
-            --(containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 255582, false) and game_api.unitIsRole(unit, "TANK")) or 
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 200182, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 412044, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 416716, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 225909, false) and (game_api.unitAuraStackCount(unit, 225909, false) >= 12 and game_api.unitIsRole(unit, "DPS") or game_api.unitAuraStackCount(unit, 225909, false) >= 8 and game_api.unitIsRole(unit, "TANK"))) or
-            (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 374389, false) and game_api.unitAuraStackCount(unit, 374389, false) >= 4) or
-            (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 217851, false) and (game_api.unitIsRole(unit, "TANK") and game_api.unitAuraElapsedTime(unit, 217851, false) > 2000 or not game_api.unitIsRole("TANK"))) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 273226, false) and game_api.unitAuraStackCount(unit, 273226, false) >= 2) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 264050, false) and game_api.unitAuraStackCount(unit, 264050, false) >= 2) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and common_functions.AllUnitsAreFarFromUnitWithAura(261440, 4)) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and common_functions.AllUnitsAreFarFromUnitWithAura(429048, 10)) or
-            
-            genericDispelCheck
-        )
+function common_functions.AllUnitsAreFarFromUnitWithAura(unit, auraID, range)
+    -- Check if the specified unit has the aura
+    if not game_api.unitHasAura(unit, auraID, false) then
+        return false -- Return false if the unit doesn't have the aura
     end
 
+    -- Check the distance of all other units from the specified unit
+    for _, otherUnit in ipairs(party) do
+        if otherUnit ~= unit then -- Ensure not to compare the unit to itself
+            if game_api.distanceBetweenUnits(otherUnit, unit) <= range then
+                return false      -- If any unit is within the range, return false
+            end
+        end
+    end
+
+    -- If no units are within the range, return true
+    return true
+end
+
+function common_functions.findUnitWithLongestDebuff(unit, debuffSpellId)
+    -- Check if the specified unit has the debuff and get its duration
+    local unitDebuffTime = game_api.unitDebuffRemainingTime(unit, debuffSpellId)
+    if unitDebuffTime <= 0 then
+        return false -- The unit doesn't have the debuff or it has expired
+    end
+
+    -- Check other units to ensure no one has a debuff duration longer or equal to the specified unit
+    for _, otherUnit in ipairs(party) do
+        if otherUnit ~= unit then -- Skip the unit itself
+            local otherUnitDebuffTime = game_api.unitDebuffRemainingTime(otherUnit, debuffSpellId)
+            if otherUnitDebuffTime >= unitDebuffTime then
+                return false -- Another unit has a debuff with equal or longer duration
+            end
+        end
+    end
+
+    -- If no other unit has a longer or equal debuff duration, return true
+    return true
+end
+
+local lowestHealthUnit, lowestHealth, dispelTypes, uniqueIDs, combinedList, randomNumber, desiredDispelTypes, hasDebuffOfDesiredType, genericDispelCheck, filteredDispelTypes
+
+
+-- Helper function to check if a unit has any of the auras from a given list
+local function unitHasAnyAura(unit, ids)
+    randomNumber = common_functions.randomBetween(250, 1250)
+
+    for _, id in ipairs(ids) do
+        if game_api.unitHasAura(unit, id, false) and game_api.unitAuraElapsedTime(unit, id, false) >= randomNumber then
+            common_functions.Debug("Unit Found With Dispelable ID" .. tostring(id))
+            return true
+        end
+    end
+    return false
+end
+
+
+local function shouldDispelUnit(unit, DispelType, DispelType2, DispelType3, DispelType4)
+    uniqueIDs = cLists.uniqueIDs
+    dispelTypes = { DispelType, DispelType2, DispelType3, DispelType4 }
+    filteredDispelTypes = {}
+
+    for _, v in ipairs(dispelTypes) do
+        if v ~= nil then
+            table.insert(filteredDispelTypes, v)
+        end
+    end
+
+    combinedList = common_functions.getCombinedList(filteredDispelTypes)
+    desiredDispelTypes = { "MAGIC", "POISON", "CURSE", "DISEASE" }
+    hasDebuffOfDesiredType = false
+
+    for _, dispelType in ipairs(desiredDispelTypes) do
+        if game_api.unitDebuffListWithDispelType(unit, dispelType) then
+            hasDebuffOfDesiredType = true
+            break
+        end
+    end
+
+    genericDispelCheck = common_functions.IsInRange(40, unit) and not unitHasAnyAura(unit, uniqueIDs) and
+        hasDebuffOfDesiredType and unitHasAnyAura(unit, combinedList)
+
+    return (
+
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 400681, false) and game_api.unitAuraElapsedTime(unit, 400681, false) > 1500) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 240443, false) and game_api.unitAuraStackCount(unit, 240443, false) >= 3 and game_api.unitAuraElapsedTime(unit, 240443, false) > 1500) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377405, false) and game_api.unitAuraElapsedTime(unit, 377405, false) > 3000) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 389179, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 389179, false) > 3000) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 372682, false) and game_api.unitAuraStackCount(unit, 372682, false) > 5) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 384161, false) and common_functions.IsInRange(10, unit) and game_api.unitAuraElapsedTime(unit, 384161, false) > 2500) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 370766, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 370766, false) > 2500) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 388777, false) and game_api.unitAuraStackCount(unit, 388777, false) > 11) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 374350, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 374350, false) > 3000) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377510, false) and game_api.unitAuraStackCount(unit, 377510, false) >= 3) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 397907, false) and game_api.unitAuraElapsedTime(unit, 397907, false) >= 1250) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and common_functions.AllUnitsAreFarFromUnitWithAura(unit, 415554, 10)) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and (game_api.unitHasAura(unit, 405696, false) or game_api.unitHasAura(unit, 404141, false)) and game_api.unitHasAura(unit, 403912, false)) or
+        --(containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 255582, false) and game_api.unitIsRole(unit, "TANK")) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 200182, false) and game_api.unitIsRole(unit, "TANK")) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 412044, false) and game_api.unitIsRole(unit, "TANK")) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 416716, false) and game_api.unitIsRole(unit, "TANK")) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 225909, false) and (game_api.unitAuraStackCount(unit, 225909, false) >= 12 and game_api.unitIsRole(unit, "DPS") or game_api.unitAuraStackCount(unit, 225909, false) >= 8 and game_api.unitIsRole(unit, "TANK"))) or
+        (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 374389, false) and game_api.unitAuraStackCount(unit, 374389, false) >= 4) or
+        (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 217851, false) and (game_api.unitIsRole(unit, "TANK") and game_api.unitAuraElapsedTime(unit, 217851, false) > 2000 or not game_api.unitIsRole("TANK"))) or
+        (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 273226, false) and game_api.unitAuraStackCount(unit, 273226, false) >= 2) or
+        (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 264050, false) and game_api.unitAuraStackCount(unit, 264050, false) >= 2) or
+        (containsAnyValues(dispelTypes, { "DISEASE" }) and common_functions.AllUnitsAreFarFromUnitWithAura(unit, 261440, 4)) or
+        (containsAnyValues(dispelTypes, { "MAGIC" }) and common_functions.findUnitWithLongestDebuff(unit, 429048)) or
+        (containsAnyValues(dispelTypes, { "CURSE" }) and common_functions.AllUnitsAreFarFromUnitWithAura(unit, 252781, 5)) or
+
+        genericDispelCheck
+    )
+end
+
+function common_functions.UnitToDispel(DispelType, DispelType2, DispelType3, DispelType4)
+    lowestHealthUnit = nil
+    lowestHealth = 101  -- Set to a number higher than 100 to ensure we catch the first unit
+
     for _, playerPartyUnit in ipairs(party) do
-        if common_functions.IsInRange(40, playerPartyUnit) and shouldDispelUnit(playerPartyUnit) then
+        if common_functions.IsInRange(40, playerPartyUnit) and shouldDispelUnit(playerPartyUnit, DispelType, DispelType2, DispelType3, DispelType4) then
             local unitHealth = game_api.unitHealthPercent(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
@@ -715,78 +773,12 @@ function common_functions.UnitToDispel(DispelType, DispelType2, DispelType3, Dis
     return lowestHealthUnit
 end
 
-
-
-
-
 function common_functions.EvokerUnitToDispel(DispelType, DispelType2, DispelType3, DispelType4)
-    local lowestHealthUnit = nil
-    local lowestHealth = 101 -- Set to a number higher than 100 to ensure we catch the first unit
-
-    local dispelTypes = { DispelType, DispelType2, DispelType3, DispelType4 }
-
-    local function shouldDispelUnit(unit)
-        local uniqueIDs = cLists.uniqueIDs
-        local combinedList = common_functions.getCombinedList(dispelTypes)
-
-        local randomNumber = common_functions.randomBetween(250, 1250)
-        -- Helper function to check if a unit has any of the auras from a given list
-        local function unitHasAnyAura(unit, ids)
-            for _, id in ipairs(ids) do
-                if game_api.unitHasAura(unit, id, false) and game_api.unitAuraElapsedTime(unit, id, false) >= randomNumber then
-                    common_functions.Debug("Unit Found With Dispelable ID" .. tostring(id))
-                    return true
-                end
-            end
-            return false
-        end
-        local desiredDispelTypes = { "MAGIC", "POISON", "CURSE", "DISEASE" }
-        local hasDebuffOfDesiredType = false
-
-
-
-        for _, dispelType in ipairs(desiredDispelTypes) do
-            if game_api.unitDebuffListWithDispelType(unit, dispelType) then
-                hasDebuffOfDesiredType = true
-                break
-            end
-        end
-
-        local genericDispelCheck = common_functions.IsInRange(25, unit) and not unitHasAnyAura(unit, uniqueIDs) and
-            hasDebuffOfDesiredType and unitHasAnyAura(unit, combinedList)
-
-            return (
-
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 400681, false) and game_api.unitAuraElapsedTime(unit, 400681, false) > 1500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 240443, false) and game_api.unitAuraStackCount(unit, 240443, false) >= 3 and game_api.unitAuraElapsedTime(unit, 240443, false) > 1500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377405, false) and game_api.unitAuraElapsedTime(unit, 377405, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 389179, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 389179, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 372682, false) and game_api.unitAuraStackCount(unit, 372682, false) > 5) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 384161, false) and common_functions.IsInRange(10, unit) and game_api.unitAuraElapsedTime(unit, 384161, false) > 2500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 370766, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 370766, false) > 2500) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 388777, false) and game_api.unitAuraStackCount(unit, 388777, false) > 11) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 374350, false) and common_functions.IsInRange(15, unit) and game_api.unitAuraElapsedTime(unit, 374350, false) > 3000) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 377510, false) and game_api.unitAuraStackCount(unit, 377510, false) >= 3) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 397907, false) and game_api.unitAuraElapsedTime(unit, 397907, false) >= 1250) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and common_functions.AllUnitsAreFarFromUnitWithAura(415554, 15)) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and (game_api.unitHasAura(unit, 405696, false) or game_api.unitHasAura(unit, 404141, false)) and game_api.unitHasAura(unit, 403912, false)) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 255582, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 200182, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 412044, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 416716, false) and game_api.unitIsRole(unit, "TANK")) or
-            (containsAnyValues(dispelTypes, { "MAGIC" }) and game_api.unitHasAura(unit, 225909, false) and (game_api.unitAuraStackCount(unit, 225909, false) >= 12 and game_api.unitIsRole(unit, "DPS") or game_api.unitAuraStackCount(unit, 225909, false) >= 8 and game_api.unitIsRole(unit, "TANK"))) or
-            (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 374389, false) and game_api.unitAuraStackCount(unit, 374389, false) >= 4) or
-            (containsAnyValues(dispelTypes, { "POISON" }) and game_api.unitHasAura(unit, 217851, false) and (game_api.unitIsRole(unit, "TANK") and game_api.unitAuraElapsedTime(unit, 217851, false) > 2000 or not game_api.unitIsRole("TANK"))) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 273226, false) and game_api.unitAuraStackCount(unit, 273226, false) >= 2) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and game_api.unitHasAura(unit, 264050, false) and game_api.unitAuraStackCount(unit, 264050, false) >= 2) or
-            (containsAnyValues(dispelTypes, { "DISEASE" }) and common_functions.AllUnitsAreFarFromUnitWithAura(261440, 6)) or
-
-            genericDispelCheck
-        )
-    end
+    lowestHealthUnit = nil
+    lowestHealth = 101  -- Set to a number higher than 100 to ensure we catch the first unit
 
     for _, playerPartyUnit in ipairs(party) do
-        if common_functions.IsInRange(30, playerPartyUnit) and shouldDispelUnit(playerPartyUnit) then
+        if common_functions.IsInRange(30, playerPartyUnit) and shouldDispelUnit(playerPartyUnit, DispelType, DispelType2, DispelType3, DispelType4) then
             local unitHealth = game_api.unitHealthPercent(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
@@ -841,7 +833,7 @@ function common_functions.FreedomUnit(range)
 
 
     for _, playerPartyUnit in ipairs(party) do
-        if common_functions.IsInRange(range, playerPartyUnit) and (unitHasAnyAura(playerPartyUnit, cLists.FreedomList) or game_api.unitHasAura(playerPartyUnit, 164886, false) and game_api.unitAuraStackCount(playerPartyUnit, 164886, false) >= 6) then
+        if common_functions.IsInRange(range, playerPartyUnit) and (unitHasAnyAura(playerPartyUnit, cLists.FreedomList) or game_api.unitHasAura(playerPartyUnit, 164886, false) and game_api.unitAuraStackCount(playerPartyUnit, 164886, false) >= 8) then
             local unitHealth = game_api.unitHealthPercent(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
@@ -924,7 +916,9 @@ function common_functions.countUnitsWithAura(aura)
 end
 
 function common_functions.IsInRange(range, unit)
-    return game_api.distanceBetweenUnits(game_api.getCurrentPlayer(), unit) <= range
+    if unit then --had error when unit wasnt in my dungeon
+        return game_api.distanceBetweenUnits(game_api.getCurrentPlayer(), unit) <= range
+    end
 end
 
 function common_functions.IsTargetingNPC(target)
@@ -936,9 +930,17 @@ function common_functions.IsTargetingNPC(target)
     end
 end
 
+function common_functions.getHostileUnits()
+    local getHostileUnits = game_api.getHostileUnits();
+    return getHostileUnits
+end
+
+local getHostileUnits = common_functions.getHostileUnits()
+
+
 function common_functions.RefreshFunctionsState()
     party = common_functions.getParty()
-
+    getHostileUnits = common_functions.getHostileUnits()
     local npcIds = { 208459, 208461, 207800 }
 
     for _, npcId in ipairs(npcIds) do
@@ -952,6 +954,11 @@ end
 function common_functions.UnitHasAnyAura(unit, spellIDs)
     local randomNumber = common_functions.randomBetween(1250, 1800)
     for _, id in ipairs(spellIDs) do
+        if game_api.unitHasAura(unit, id, true) and game_api.unitAuraElapsedTime(unit, id, true) >= randomNumber then
+            return true
+        end
+    end
+    for id, _ in pairs(spellIDs) do
         if game_api.unitHasAura(unit, id, true) and game_api.unitAuraElapsedTime(unit, id, true) >= randomNumber then
             return true
         end
@@ -1096,7 +1103,7 @@ function common_functions.PartyCheckCount(raidCount, mplusCount)
     return checkcount
 end
 
-function common_functions.useConsume(potionOfPowerAlign1, potionOfPowerAlign2,useManaPotion)
+function common_functions.useConsume(potionOfPowerAlign1, potionOfPowerAlign2, useManaPotion)
     --[[SETTINGS FOR POTION OF POWER TO USE
     -- Potions
     game_api.createSetting(settings.potionOfPower, settings.potionOfPower, "With Lust or Cooldowns", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns" })
@@ -1123,30 +1130,38 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
     auras.Bloodlust = 32182
 ]]
     local PotionMode = game_api.getSetting(settings.potionOfPower)
-    local shouldUsePotionOfPower = (PotionMode == "On Cooldown") or 
-                                   (PotionMode == "With Cooldown" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)))) or
-                                    (PotionMode == "With Lust or Cooldowns" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)) or game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false))) or
-                                    (PotionMode == "With Lust" and (game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false)))
+    local isUnderLust = game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or
+    game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or
+    game_api.currentPlayerHasAura(264667, false) or game_api.currentPlayerHasAura(381301, false) or
+    game_api.currentPlayerHasAura(390386, false)
+    local shouldUsePotionOfPower = (PotionMode == "On Cooldown") or
+        (PotionMode == "With Cooldown" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)))) or
+        (PotionMode == "With Lust or Cooldowns" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)) or isUnderLust)) or
+        (PotionMode == "With Lust" and (isUnderLust))
 
     if shouldUsePotionOfPower then
         for potionID, _ in pairs(cLists.powerPotions) do
             if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                 print("Using Power Potion:", potionID)
                 game_api.castObject(potionID)
+                return true
             end
         end
     end
-    if game_api.unitHealthPercent(game_api.getCurrentPlayer()) < game_api.getSetting(settings.healthStoneHP) then
+    if game_api.unitHealthPercent(game_api.getCurrentPlayer()) <= game_api.getSetting(settings.healthStoneHP) then
         if not game_api.objectIsOnCooldown(5512) and game_api.canCastObject(5512) then
             print("Using Healthstone")
             game_api.castObject(5512)
+            return true
         end
     end
+
     if game_api.unitHealthPercent(game_api.getCurrentPlayer()) < game_api.getSetting(settings.healthPotionHP) then
         for potionID, _ in pairs(cLists.healingPotions) do
             if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                 print("Using Healing Potion:", potionID)
                 game_api.castObject(potionID)
+                return true
             end
         end
     end
@@ -1156,19 +1171,20 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
                 if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                     print("Using Mana Potion:", potionID)
                     game_api.castObject(potionID)
+                    return true
                 end
             end
         end
     end
 
-    return false 
+    return false
 end
 
 function common_functions.dpsTrinket(trinketAlignAura1, trinketAlignAura2)
     --[[SETTINGS FOR trinket usage
     -- trinkets
-    game_api.createSetting(settings.trinket1, settings.trinket1Text, "With Lust or Cooldowns", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
-    game_api.createSetting(settings.trinket2, settings.trinket2Text, "With Lust or Cooldowns", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
+    game_api.createSetting(settings.trinket1, settings.trinket1Text, "Dont Use", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
+    game_api.createSetting(settings.trinket2, settings.trinket2Text, "Dont Use", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
     game_api.createSetting(settings.defensiveTrinketHP, settings.defensiveTrinketHPText, 50, { 0, 100 })
 
 --trinket
@@ -1190,23 +1206,24 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
 ]]
 
     local trinketMode1 = game_api.getSetting(settings.trinket1)
-    local shouldUseTrinket1 = (trinketMode1 == "On Cooldown") or 
-                                (trinketMode1 == "With Cooldown" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)))) or
-                                (trinketMode1 == "With Lust or Cooldowns" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)) or game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false))) or
-                                (trinketMode1 == "With Lust" and (game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false)))
+    local shouldUseTrinket1 = (trinketMode1 == "On Cooldown") or
+        (trinketMode1 == "With Cooldown" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)))) or
+        (trinketMode1 == "With Lust or Cooldowns" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)) or game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or game_api.currentPlayerHasAura(264667, false))) or
+        (trinketMode1 == "With Lust" and (game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or game_api.currentPlayerHasAura(264667, false)))
 
     local trinketMode2 = game_api.getSetting(settings.trinket2)
-    local shouldUseTrinket2 = (trinketMode2 == "On Cooldown") or 
-                                (trinketMode2 == "With Cooldown" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)))) or
-                                (trinketMode2 == "With Lust or Cooldowns" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)) or game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false))) or
-                                (trinketMode2 == "With Lust" and (game_api.currentPlayerHasAura(390386,false) or game_api.currentPlayerHasAura(80353,false) or game_api.currentPlayerHasAura(2825,false) or game_api.currentPlayerHasAura(32182,false) or game_api.currentPlayerHasAura(264667,false)))
+    local shouldUseTrinket2 = (trinketMode2 == "On Cooldown") or
+        (trinketMode2 == "With Cooldown" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)))) or
+        (trinketMode2 == "With Lust or Cooldowns" and ((trinketAlignAura1 and game_api.currentPlayerHasAura(trinketAlignAura1, false)) or (trinketAlignAura2 and game_api.currentPlayerHasAura(trinketAlignAura2, false)) or game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or game_api.currentPlayerHasAura(264667, false))) or
+        (trinketMode2 == "With Lust" and (game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or game_api.currentPlayerHasAura(264667, false)))
 
     if shouldUseTrinket1 then
         local trinket1 = game_api.getTrinketID1()
         if trinket1 ~= nil then
-            if not game_api.objectIsOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
+            if not game_api.isOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
                 print("Using Trinket 1")
                 game_api.castObjectOnTarget(trinket1, game_api.getCurrentUnitTarget())
+                return true
             end
         end
     end
@@ -1214,9 +1231,10 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
         local trinket1 = game_api.getTrinketID1()
         if trinket1 ~= nil then
             if game_api.unitHealthPercent(game_api.getCurrentPlayer()) <= game_api.getSetting(settings.defensiveTrinketHP) then
-                if not game_api.objectIsOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
+                if not game_api.isOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
                     print("Using Trinket 1 Defensive")
                     game_api.castObjectOnTarget(trinket1, game_api.getCurrentUnitTarget())
+                    return true
                 end
             end
         end
@@ -1225,9 +1243,10 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
     if shouldUseTrinket2 then
         local trinket2 = game_api.getTrinketID2()
         if trinket2 ~= nil then
-            if not game_api.objectIsOnCooldown(trinket2) and game_api.canCastObject(trinket2)  then
+            if not game_api.objectIsOnCooldown(trinket2) and game_api.canCastObject(trinket2) then
                 print("Using Trinket 2")
                 game_api.castObjectOnTarget(trinket2, game_api.getCurrentUnitTarget())
+                return true
             end
         end
     end
@@ -1239,6 +1258,7 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
                     print("Using Trinket 2 Defensive")
                     print(game_api.getCurrentUnitTarget())
                     game_api.castObjectOnTarget(trinket2, game_api.getCurrentUnitTarget())
+                    return true
                 end
             end
         end
@@ -1248,13 +1268,13 @@ end
 
 function common_functions.isUnitDummy(unit)
     local unitNpcID = game_api.unitNpcID(unit)
-    
+
     for id, _ in pairs(cLists.dummies) do
         if unitNpcID == id then
             return true
         end
     end
-    
+
     return false
 end
 
@@ -1301,13 +1321,26 @@ function common_functions.getEnemyUnits()
 end
 
 function common_functions.getCombatUnits()
-    local units = game_api.getHostileUnits()
+    local units = getHostileUnits
     local combatUnits = {}
     local insert = table.insert
 
     for _, unit in ipairs(units) do
         if game_api.unitHealthPercent(unit) > 0 and not common_functions.ignoreUnit(unit) and not common_functions.hasImmunity(unit) and
             game_api.isFacing(unit) and game_api.unitInCombat(unit) then
+            insert(combatUnits, unit)
+        end
+    end
+
+    return combatUnits
+end
+function common_functions.getCombatUnits2()
+    local units = getHostileUnits
+    local combatUnits = {}
+    local insert = table.insert
+
+    for _, unit in ipairs(units) do
+        if game_api.unitHealthPercent(unit) > 0 and not common_functions.ignoreUnit(unit) and not common_functions.hasImmunity(unit) and game_api.unitInCombat(unit) then
             insert(combatUnits, unit)
         end
     end
@@ -1340,6 +1373,20 @@ function common_functions.LowestUnitWithAura(spellIDs)
         end
     end
     return lowestUnitWithAura
+end
+
+function common_functions.LowestUnitWithoutAura(spellIDs)
+    local lowestUnitWithoutAura = nil
+    local lowestHealthPercent = 101
+    for _, unit in ipairs(party) do
+        for _, id in ipairs(spellIDs) do
+            if (not game_api.unitHasAura(unit, id, true) and game_api.distanceToUnit(unit) < 40 and (game_api.unitHealthPercent(unit) < lowestHealthPercent) and game_api.unitHealthPercent(unit) > 0) then
+                lowestUnitWithoutAura = unit
+                break
+            end
+        end
+    end
+    return lowestUnitWithoutAura
 end
 
 function common_functions.LowestUnitNotTank()
@@ -1389,6 +1436,38 @@ function common_functions.timeToDie()
     end
 end
 
+function common_functions.timeToReachHealth(targetHealthThreshold)
+    local targetHealthMax = game_api.unitMaxHealth(state.currentTarget)
+    local targetHealthCurrent = game_api.unitHealth(state.currentTarget)
+    local currentTarget = game_api.getCurrentUnitTarget()
+
+    if lastTarget ~= currentTarget then
+        combatStartTime = game_api.currentTime()
+        isInCombat = true
+        lastTarget = currentTarget
+    end
+
+    if targetHealthCurrent > 0 then
+        local currentTime = game_api.currentTime()
+
+        if not isInCombat then
+            combatStartTime = currentTime
+            isInCombat = true
+        end
+
+        local elapsedTime = currentTime - combatStartTime
+        local healthLost = targetHealthMax - targetHealthCurrent
+        local timeToReachHealth = (targetHealthThreshold - targetHealthCurrent) / (targetHealthMax / elapsedTime)
+
+        return timeToReachHealth
+    else
+        combatStartTime = nil
+        isInCombat = false
+        lastTarget = nil
+        return 0
+    end
+end
+
 local combatStartTimes = {}
 function common_functions.timeToDieGroup()
     local units = game_api.getHostileUnits()
@@ -1398,7 +1477,7 @@ function common_functions.timeToDieGroup()
 
     -- Clean up combatStartTimes for units no longer in combat or relevant
     for unit in pairs(combatStartTimes) do
-        if not game_api.unitInCombat(unit) or not game_api.isUnitHostile(unit, true) or game_api.unitHealth(unit) <= 0 then
+        if not common_functions.isInCombatOrHasNpcId(unit, cLists.npcIdList) or not common_functions.IsInRange(50, unit) or not game_api.isUnitHostile(unit, true) or game_api.unitHealth(unit) <= 0 then
             combatStartTimes[unit] = nil
         end
     end
@@ -1505,18 +1584,7 @@ end
 function common_functions.ProactiveLogic(List)
     local enemyUnits = game_api.getUnits()
     for _, enemy in ipairs(enemyUnits) do -- Some way to loop enemies
-        for _, id in ipairs(List) do
-            if game_api.unitCastingSpellID(enemy) == id then
-                return true
-            end
-        end
-    end
-end
-
-function common_functions.ProactiveLogicTable(List)
-    local enemyUnits = game_api.getUnits()
-    for _, enemy in ipairs(enemyUnits) do -- Some way to loop enemies
-        for _, id in pairs(List) do
+        for id, _ in ipairs(List) do
             if game_api.unitCastingSpellID(enemy) == id then
                 return true
             end
@@ -1525,8 +1593,8 @@ function common_functions.ProactiveLogicTable(List)
 end
 
 function common_functions.BoSUnit(range)
-    local lowestHealth = 101     -- Initialize to a value higher than the maximum possible health percentage
-    local lowestHealthUnit = nil -- Initialize to nil
+    local lowestHealth = 9999999999 -- Initialize to a value higher than the maximum possible health percentage
+    local lowestHealthUnit = nil    -- Initialize to nil
 
     local function unitHasAnyAura(unit, ids)
         for id, _ in pairs(ids) do
@@ -1538,22 +1606,32 @@ function common_functions.BoSUnit(range)
     end
 
     for _, playerPartyUnit in ipairs(party) do
-        if common_functions.IsInRange(range, playerPartyUnit) and not unitHasAnyAura(playerPartyUnit, cLists.Personals) and game_api.unitHealthPercent(playerPartyUnit) > 0 and ((common_functions.ProactiveLogicTable(cLists.aoeIncoming)) or (game_api.unitIsRole(playerPartyUnit, "TANK") and common_functions.ProactiveLogicTable(cLists.tankBustersCombined)
+        if common_functions.IsInRange(range, playerPartyUnit) and playerPartyUnit ~= game_api.getCurrentPlayer() and not unitHasAnyAura(playerPartyUnit, cLists.Personals) and game_api.unitHealthPercent(playerPartyUnit) > 0 and (unitHasDebuffFromList(HeavyDmgDebuffs, playerPartyUnit) or (common_functions.ProactiveLogicTable(cLists.aoeIncoming)) or (game_api.unitIsRole(playerPartyUnit, "TANK") and common_functions.ProactiveLogicTable(cLists.tankBustersCombined)
                 and ((game_api.unitHealthPercent(playerPartyUnit) <= 55 and not unitHasAnyAura(playerPartyUnit, cLists.TankDefs)) or game_api.unitHealthPercent(playerPartyUnit) <= 20))) then
-            local unitHealth = game_api.unitHealthPercent(playerPartyUnit)
+            local unitHealth = game_api.unitHealth(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
                 lowestHealthUnit = playerPartyUnit
             end
         end
     end
-
     return lowestHealthUnit
 end
 
+function common_functions.ProactiveLogicTable(List)
+    --print(game_api.unitIsCasting(game_api.unitTarget(game_api.getCurrentPlayer())) and game_api.isTargetHostile(true))
+    for _, enemy in ipairs(getHostileUnits) do -- Some way to loop enemies
+        for id, _ in pairs(List) do
+            if game_api.unitCastingSpellID(enemy) == id then
+                return true
+            end
+        end
+    end
+end
+
 function common_functions.BoSUnitTank(range)
-    local lowestHealth = 101 -- Initialize to a value higher than the maximum possible health percentage
-    local lowestHealthUnit = nil -- Initialize to nil
+    local lowestHealth = 99999999999999 -- Initialize to a value higher than the maximum possible health percentage
+    local lowestHealthUnit = nil        -- Initialize to nil
 
     local function unitHasAnyAura(unit, ids)
         for id, _ in pairs(ids) do
@@ -1563,10 +1641,9 @@ function common_functions.BoSUnitTank(range)
         end
         return false
     end
-
     for _, playerPartyUnit in ipairs(party) do
-        if functions.IsInRange(range, playerPartyUnit) and (not unitHasAnyAura(playerPartyUnit, cLists.Personals) or game_api.unitHealthPercent(playerPartyUnit) <= 40) and game_api.unitHealthPercent(playerPartyUnit) > 0 and (functions.ProactiveLogicTable(cLists.aoeIncoming))then
-            local unitHealth = game_api.unitHealthPercent(playerPartyUnit)
+        if functions.IsInRange(range, playerPartyUnit) and (not unitHasAnyAura(playerPartyUnit, cLists.Personals) or game_api.unitHealthPercent(playerPartyUnit) <= 40) and game_api.unitHealthPercent(playerPartyUnit) > 0 and (functions.ProactiveLogicTable(cLists.aoeIncoming)) then
+            local unitHealth = game_api.unitHealth(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
                 lowestHealthUnit = playerPartyUnit
@@ -1624,20 +1701,23 @@ end
 -- You are free to help contribute to this also ;)
 
 -- Settings lines:
--- settings.useRacials = "Use racilas"
+-- settings.useRacials = "Racials"
 -- settings.useRacialsText = "Decide if you would like to use racials or not"
--- settings.racialsMode = "Racials mode"
--- settings.racialsModeText = "Decide which racial to use"
+-- settings.racialsName = "Racials mode"
+-- settings.racialsNameText = "Decide which racial to use"
+--settings.racialsClass = "Racials Class"
+--settings.racialsClassText = "Decide Which Racial Class to Use"
 
--- game_api.createSetting(useRacials, useRacialsText, true, {})
--- game_api.createSetting(settings.racialsName, settings.racialsNameText, "none", { "none", "Fireblood", "Blood fury", "Gift of the Naaru", "Berserking", "Stoneform", "Ancestral call", "Will to survive", "Escape artist", "War stomp"})
--- game_api.createSetting(settings.racialsClass, settings.racialsClassText, "none", { "none", "Warrior", "Hunter", "Rogue", "Deathknight", "Priest", "Mage", "Warlock", "Shaman", "Monk", "Demon Hunter", "Paladin", "Druid"})
+-- game_api.createSetting(settings.useRacials, settings.useRacialsText, true, {})
+-- game_api.createSetting(settings.racialsName, settings.racialsNameText, "None", { "None", "Fireblood","Shadowmeld", "Blood fury", "Gift of the Naaru", "Berserking", "Stoneform", "Ancestral call", "Will to survive", "Escape artist", "War stomp"})
+-- game_api.createSetting(settings.racialsClass, settings.racialsClassText, "None", { "None", "Warrior", "Hunter", "Rogue", "Deathknight", "Priest", "Mage", "Warlock", "Shaman", "Monk", "Demon Hunter", "Paladin", "Druid"})
 function common_functions.useRacialCommon()
     local racialName = game_api.getSetting(settings.racialsName)
     local racialClass = game_api.getSetting(settings.racialsClass)
+    randomNumber = common_functions.randomBetween(50,90)
 
-    if racialName == "none" or racialClass == "none" then
-        print("No racial selected or class selected, please select a racial and class in the settings.")
+    if not game_api.unitInCombat(game_api.getCurrentPlayer()) then return end
+    if racialName == "None" or racialClass == "None" then
         return false
     end
 
@@ -1645,9 +1725,15 @@ function common_functions.useRacialCommon()
     local racialIDs = {
         Fireblood = 265221, -- All classes
         ["Blood fury"] = {
-            [20572] = "Warrior, Hunter, Rogue, Deathknight",
-            [33702] = "Priest, Mage, Warlock",
-            [33697] = "Shaman, Monk"
+            Warrior = 20572,
+            Hunter = 20572,
+            Rogue = 20572,
+            Deathknight = 20572,
+            Priest = 33702,
+            Mage = 33702,
+            Warlock = 33702,
+            Shaman = 33697,
+            Monk = 33697
         },
         Berserking = 26297, -- All classes
         Stoneform = 20594,
@@ -1656,15 +1742,16 @@ function common_functions.useRacialCommon()
         ["Escape artist"] = 20589,   -- All classes
         ["War stomp"] = 20549,
         ["Arcane Torrent"] = {
-            [28730] = "Mage, Warlock",
-            [202719] = "Demon Hunter",
-            [129597] = "Monk",
-            [155145] = "Paladin",
-            [25046] = "Rogue",
-            [80483] = "Hunter",
-            [232633] = "Priest",
-            [50613] = "Deathknight",
-            [69179] = "Warrior"
+            Mage = 28730,
+            Warlock = 28730,
+            ["Demon Hunter"] = 202719,
+            Monk = 129597,
+            Paladin = 155145,
+            Rogue = 25046,
+            Hunter = 80483,
+            Priest = 232633,
+            Deathknight = 50613,
+            Warrior = 69179
         },
         ["Will of the Forsaken"] = 7744, -- All classes
         Shadowmeld = 58984               -- All classes
@@ -1685,11 +1772,55 @@ function common_functions.useRacialCommon()
 
     local racialLogic = {
         Fireblood = function()
-            if common_functions.CanCast(racialID) and common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList) then
+            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({"DISEASE","POISON","CURSE"}))) then
                 print("Using Fireblood to remove debuff(s)")
                 game_api.castSpell(racialID)
             end
         end,
+        Shadowmeld = function()
+            if common_functions.CanCast(racialID) and game_api.getUnitRole(game_api.getCurrentPlayer()) ~= "TANK" then
+                for _, playerPartyUnit in ipairs(party) do
+                    if game_api.unitHasAura(playerPartyUnit, 257407,false) then -- pursuit on AD
+                        print("Using Shadowmeld to Ignore Debuff Application")
+                        game_api.castSpell(racialID)
+                    end
+                end
+        
+                for _, unit in ipairs(getHostileUnits) do
+                    if game_api.isUnitHostile(unit, true) then
+                        if game_api.unitIsCasting(unit) and not game_api.unitIsChanneling(unit) then
+                            unitCasting = true
+                            castPercentage =game_api.unitCastPercentage(unit)
+                        end
+                        if game_api.unitIsChanneling(unit) then
+                            unitCasting = true
+                            castPercentage =game_api.unitChannelPercentage(unit)
+                        end
+                        --257407 pursuit debuff
+                        local spellId = game_api.unitCastingSpellID(unit) 
+                        local channelId = game_api.unitChannelingSpellID(unit)
+                        if unitCasting then
+                            if castPercentage >= randomNumber and game_api.unitTarget(unit) == game_api.getCurrentPlayer() then
+                                if cLists.shadowMeldTarget[spellId] or cLists.shadowMeldTarget[channelId] then
+                                    print("Using Shadowmeld to Ignore Targeted Cast")
+                                    game_api.castSpell(racialID)
+                                end
+                            end
+                        end
+                        --specific boss meld logic
+                        if game_api.unitNpcID(unit) == 201790 then
+                            if castPercentage >= randomNumber and game_api.unitTarget(unit) == game_api.getCurrentPlayer() then
+                                if cLists.shadowMeldTarget[spellId] or cLists.shadowMeldTarget[channelId] then
+                                    print("Using Shadowmeld to Ignore Targeted Cast")
+                                    game_api.castSpell(racialID)
+                                end
+                            end
+                        end
+                    end
+                end
+            end
+        end,
+
         ["Blood fury"] = function()
             if common_functions.CanCast(racialID) and common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.LocalPlayerCDs) then
                 print("Using Blood fury")
@@ -1715,7 +1846,7 @@ function common_functions.useRacialCommon()
             end
         end,
         Stoneform = function()
-            if common_functions.CanCast(racialID) and common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList) then
+            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({"DISEASE","POISON","CURSE"}))) then
                 print("Using Stoneform to remove debuff(s)")
                 game_api.castSpell(racialID)
             end
@@ -1758,17 +1889,90 @@ function common_functions.useRacialCommon()
 
     if racialID then
         local logicFunction = racialLogic[racialName]
-        if logicFunction then
-            logicFunction() -- Execute the racial logic
+        if logicFunction() then
             return true
-        else
-            print("Unknown racial name: " .. racialName)
-            return false
         end
-    else
-        print("Unknown or unavailable racial ability for class: ", racialClass)
     end
     return false
+end
+
+-- Calculates the Time to Die for the current target
+local combatStartTimes = {}
+local initialHealth = {}
+
+function common_functions.timeToDieNew()
+    local currentTarget = game_api.getCurrentUnitTarget()
+    return common_functions.timeToDieUnitNew(currentTarget)
+end
+
+function common_functions.timeToDieUnitNew(unit)
+    common_functions.checkAndPerformCleanup() -- Clean up the combatStartTimes and initialHealth tables once in a while
+
+    local targetHealthMax = game_api.unitMaxHealth(unit)
+    local targetHealthCurrent = game_api.unitHealth(unit)
+    local currentTime = game_api.currentTime()
+
+    if not combatStartTimes[unit] then
+        -- First time this unit is encountered in combat
+        combatStartTimes[unit] = currentTime
+        initialHealth[unit] = targetHealthCurrent
+        return 0 -- Too early to calculate TTD
+    end
+
+    local healthLost = initialHealth[unit] - targetHealthCurrent
+    local elapsedTime = currentTime - combatStartTimes[unit]
+
+    local significantHealthLossThreshold = targetHealthMax * 0.05 -- 5% of total health
+    if (healthLost < significantHealthLossThreshold or elapsedTime == 0) and not game_api.unitIsBoss(unit) then
+        return 0                                                  -- Not enough data for a reliable prediction
+    end
+
+    -- Calculate the rate of health loss per second
+    local healthLossRate = healthLost / elapsedTime
+    -- Estimate time to die based on current health and rate of health loss
+    local timeToDie = targetHealthCurrent / healthLossRate
+
+    return math.floor(timeToDie / 1000 * 100 + 0.5) / 100
+end
+
+function common_functions.timeToDieGroupNew()
+    local combatUnits = game_api.getHostileUnits()
+    local totalTTD = 0
+    local unitCount = 0
+
+    for _, unit in ipairs(combatUnits) do
+        if game_api.unitInCombat(unit) and game_api.isUnitHostile(unit, true) and game_api.unitHealth(unit) > 0 then
+            local timeToDie = common_functions.timeToDieUnitNew(unit)
+            if timeToDie > 0 then
+                totalTTD = totalTTD + timeToDie
+                unitCount = unitCount + 1
+            end
+        end
+    end
+
+    if unitCount > 0 then
+        local averageTTD = totalTTD / unitCount
+        return math.floor(averageTTD * 100 + 0.5) / 100
+    else
+        return 0
+    end
+end
+
+local lastCleanupTime = 0
+local cleanupInterval = 10 -- Cleanup every 10 seconds
+
+function common_functions.checkAndPerformCleanup()
+    local currentTime = game_api.currentTime()
+    if currentTime - lastCleanupTime > cleanupInterval then
+        for unit, _ in pairs(combatStartTimes) do
+            if game_api.unitHealth(unit) <= 0 then
+                combatStartTimes[unit] = nil
+                initialHealth[unit] = nil
+            end
+        end
+
+        lastCleanupTime = currentTime
+    end
 end
 
 return common_functions

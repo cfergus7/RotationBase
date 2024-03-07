@@ -45,25 +45,179 @@ common_lists.npcIdList = { [198594] = true, [81638] = true, [131009] = true, [13
 
 
 common_lists.priorityKickList = {
-    [278444] = true, [367503] = true, [411300] = true, [395427] = true, [385036] = true, [255824] = true, [372223] = true, [388862] = true, [257737] = true, [388863] = true,
-    [369675] = true, [377389] = true, [426541] = true, [278961] = true, [164887] = true, [387974] = true, [199663] = true, [383385] = true, [415773] = true, [385046] = true,
-    [256849] = true, [76820] = true, [369365] = true, [395694] = true, [374339] = true, [418200] = true, [410870] = true, [377402] = true, [387411] = true, [243369] = true,
-    [384161] = true, [377341] = true, [385310] = true, [386012] = true, [392451] = true, [400165] = true, [378172] = true, [266036] = true, [413044] = true, [413427] = true,
-    [383656] = true, [257397] = true, [390988] = true, [227913] = true, [267824] = true, [201298] = true, [429176] = true, [373395] = true, [193585] = true, [374544] = true,
-    [384808] = true, [412922] = true, [200630] = true, [169839] = true, [255041] = true, [412924] = true, [373017] = true, [169840] = true, [384365] = true, [253544] = true,
-    [396925] = true, [257784] = true, [387618] = true, [265346] = true, [264390] = true, [164965] = true, [252781] = true, [382712] = true, [264520] = true, [201399] = true,
-    [374045] = true, [260879] = true, [377488] = true, [225562] = true, [412233] = true, [376725] = true, [388392] = true, [387564] = true, [372711] = true, [201837] = true,
-    [396640] = true, [386546] = true, [264050] = true, [373872] = true, [200658] = true, [253583] = true, [382787] = true, [417481] = true, [388882] = true, [374563] = true,
-    [265487] = true, [416256] = true, [369400] = true, [76813] = true, [266106] = true, [408805] = true, [265091] = true, [197797] = true, [263959] = true, [272183] = true,
-    [204243] = true, [169825] = true, [396812] = true, [264024] = true, [387606] = true, [264407] = true, [382347] = true, [377500] = true, [389804] = true, [373803] = true,
-    [225568] = true, [88170] = true, [200642] = true, [373804] = true, [88186] = true, [373932] = true, [265876] = true, [256060] = true, [413607] = true, [202108] = true,
-    [196883] = true, [369823] = true, [278755] = true, [374699] = true, [265368] = true, [253517] = true, [253562] = true, [418202] = true, [411994] = true, [265433] = true,
-    [415437] = true, [426783] = true, [377950] = true, [385029] = true, [412378] = true, [252923] = true, [369411] = true, [87779] = true, [415770] = true, [369603] = true,
-    [260698] = true, [386024] = true, [367500] = true, [271174] = true, [201411] = true, [265089] = true, [86331] = true, [375602] = true, [164973] = true, [372538] = true,
-    [415435] = true, [374706] = true, [165213] = true, [167385] = true, [250368] = true, [168082] = true, [427459] = true, 
-    [400180] = true, [413606] = true, [407891] = true, [259572] = true, [426768] = true, [428103] = true, [426731] = true, [200248] = true, [428263] = true, [260699] = true,
-    [260700] = true, [260701] = true, [268278] = true,
-
+--Dragon Flight Season 3
+    [278444] = true, -- Infest
+    [367503] = true, -- Withering Burst
+    [411300] = true, -- Fish Bolt Volley
+    [395427] = true, -- Burning Roar
+    [385036] = true, -- Wind Buffet
+    [255824] = true, -- Fanatic's Rage
+    [372223] = true, -- Mending Clay
+    [388862] = true, -- Surge
+    [257737] = true, -- Thundering Squall
+    [388863] = true, -- Mana Void
+    [369675] = true, -- Chain Lightning
+    [377389] = true, -- Call of the Flock
+    [426541] = true, -- Runic Bolt
+    [278961] = true, -- Decaying Mind
+    [164887] = true, -- Healing Waters
+    [387974] = true, -- Arcane Missiles
+    [199663] = true, -- Soul Blast
+    [383385] = true, -- Rotting Surge
+    [415773] = true, -- Temporal Detonation
+    [385046] = true, -- Withering Poison
+    [256849] = true, -- Dino Might
+    [76820] = true, -- Hex
+    [369365] = true, -- Curse of Stone
+    [395694] = true, -- Elemental Focus
+    [374339] = true, -- Demoralizing Shout
+    [418200] = true, -- Infinite Burn
+    [410870] = true, -- Cyclone
+    [377402] = true, -- Aqueous Barrier
+    [387411] = true, -- Death Bolt Volley
+    [243369] = true, -- Drain Life
+    [384161] = true, -- Mote of Combustion
+    [377341] = true, -- Tidal Divergence
+    [385310] = true, -- Lightning Bolt
+    [386012] = true, -- Stormbolt
+    [392451] = true, -- Flashfire
+    [400165] = true, -- Epoch Bolt
+    [378172] = true, -- Molten Core
+    [266036] = true, -- Drain Essence
+    [413044] = true, -- Dark Echoes
+    [413427] = true, -- Time Beam
+    [383656] = true, -- Molten Army
+    [257397] = true, -- Healing Balm
+    [390988] = true, -- Water Bolt
+    [227913] = true, -- Felfrenzy
+    [267824] = true, -- Scar Soul
+    [201298] = true, -- Bloodbolt
+    [429176] = true, -- Aquablast
+    [373395] = true, -- Bloodcurdling Shout
+    [193585] = true, -- Bound
+    [374544] = true, -- Burst of Decay
+    [384808] = true, -- Guardian Wind
+    [412922] = true, -- Binding Grasp
+    [200630] = true, -- Unnerving Screech
+    [169839] = true, -- Pyroblast
+    [255041] = true, -- Terrifying Screech
+    [412924] = true, -- Binding Grasp
+    [373017] = true, -- Roaring Blaze
+    [169840] = true, -- Frostbolt
+    [384365] = true, -- Disruptive Shout
+    [253544] = true, -- Bwonsamdi's Mantle
+    [396925] = true, -- Lava Bolt
+    [257784] = true, -- Frost Blast
+    [387618] = true, -- Infuse
+    [265346] = true, -- Pallid Glare
+    [264390] = true, -- Spellbind
+    [164965] = true, -- Choking Vines
+    [252781] = true, -- Unstable Hex
+    [382712] = true, -- Necrotic Breath
+    [264520] = true, -- Severing Serpent
+    [201399] = true, -- Dread Inferno
+    [374045] = true, -- Expulse
+    [260879] = true, -- Blood Bolt
+    [377488] = true, -- Icy Bindings
+    [225562] = true, -- Blood Metamorphosis
+    [412233] = true, -- Rocket Bolt Volley
+    [376725] = true, -- Storm Bolt
+    [388392] = true, -- Monotonous Lecture
+    [387564] = true, -- Mystic Vapors
+    [372711] = true, -- Infuse Corruption
+    [201837] = true, -- Shadow Bolt
+    [396640] = true, -- Healing Touch
+    [386546] = true, -- Waking Bane
+    [264050] = true, -- Infected Thorn
+    [373872] = true, -- Gushing Ooze
+    [200658] = true, -- Star Shower
+    [253583] = true, -- Fiery Enchant
+    [382787] = true, -- Decay Claws
+    [417481] = true, -- Displace Chronosequence
+    [388882] = true, -- Inundate
+    [374563] = true, -- Dazzle
+    [265487] = true, -- Shadow Bolt Volley
+    [416256] = true, -- Stonebolt
+    [369400] = true, -- Earthen Ward
+    [76813] = true, -- Healing Wave
+    [266106] = true, -- Sonic Screech
+    [408805] = true, -- Destabilize
+    [265091] = true, -- Gift of G'huun
+    [197797] = true, -- Arcane Blitz
+    [263959] = true, -- Soul Volley
+    [272183] = true, -- Raise Dead
+    [204243] = true, -- Tormenting Eye
+    [169825] = true, -- Arcane Blast
+    [396812] = true, -- Mystic Blast
+    [264024] = true, -- Soul Bolt
+    [387606] = true, -- Dominate
+    [264407] = true, -- Horrific Visage
+    [382347] = true, -- Witherbolt
+    [377500] = true, -- Hasten
+    [389804] = true, -- Heavy Tome
+    [373803] = true, -- Cold Claws
+    [225568] = true, -- Curse of Isolation
+    [88170] = true, -- Cloudburst
+    [200642] = true, -- Despair
+    [373804] = true, -- Touch of Decay
+    [88186] = true, -- Vapor Form
+    [373932] = true, -- Illusionary Bolt
+    [265876] = true, -- Ruinous Volley
+    [256060] = true, -- Revitalizing Brew
+    [413607] = true, -- Corroding Volley
+    [202108] = true, -- Petrifying Totem
+    [196883] = true, -- Spirit Blast
+    [369823] = true, -- Spiked Carapace
+    [278755] = true, -- Harrowing Despair
+    [374699] = true, -- Cauterize
+    [265368] = true, -- Spirited Defense
+    [253517] = true, -- Mending Word
+    [253562] = true, -- Wildfire
+    [418202] = true, -- Temporal Blast
+    [411994] = true, -- Chronomelt
+    [265433] = true, -- Withering Curse
+    [415437] = true, -- Enervate
+    [426783] = true, -- Mind Flay
+    [377950] = true, -- Greater Healing Rapids
+    [385029] = true, -- Screech
+    [412378] = true, -- Dizzying Sands
+    [252923] = true, -- Venom Blast
+    [369411] = true, -- Sonic Burst
+    [87779] = true, -- Greater Heal
+    [415770] = true, -- Infinite Bolt Volley
+    [369603] = true, -- Defensive Bulwark
+    [260698] = true, -- Soul Bolt
+    [386024] = true, -- Tempest
+    [367500] = true, -- Hideous Cackle
+    [271174] = true, -- Retch
+    [201411] = true, -- Firebolt
+    [265089] = true, -- Dark Reconstitution
+    [86331] = true, -- Lightning Bolt
+    [375602] = true, -- Erratic Growth
+    [164973] = true, -- Dancing Thorns
+    [372538] = true, -- Melt
+    [415435] = true, -- Infinite Bolt
+    [374706] = true, -- Pyretic Burst
+    [165213] = true, -- Enraged Growth
+    [167385] = true, -- Uber Strike
+    [250368] = true, -- Noxious Stench
+    [168082] = true, -- Revitalize
+    [427459] = true, -- Toxic Bloom
+    [400180] = true, -- Corroding Volley
+    [413606] = true, -- Corroding Volley
+    [407891] = true, -- Healing Wave
+    [259572] = true, -- Noxious Stench
+    [426768] = true, -- Lightning Bolt
+    [428103] = true, -- Frostbolt
+    [426731] = true, -- Water Bolt
+    [200248] = true, -- Arcane Blitz
+    [428263] = true, -- Water Bolt
+    [260699] = true, -- Soul Bolt
+    [260700] = true, -- Ruinous Bolt
+    [260701] = true, -- Bramble Bolt
+    [268278] = true, -- Wracking Chord
+    [426596] = true, -- Soul Bolt
+    --[168092] = true, -- Water Bolt
 
 }
 
@@ -73,37 +227,39 @@ common_lists.ignoreUnits = {
     [125977] = true, -- reanimation-totem
     [100991] = true, -- strangling-roots
     [174773] = true, -- Spiteful
+    [204773] = true, -- Afflicted
+    [204560] = true, -- Incorp
 
 }
 
 common_lists.priorityStunList = {
-    [167385] = true, -- uber strike
-    [253721] = true, -- Creates a barrier; mobs inside the barrier take 90% less damage
-    [258653] = true, -- Creates a barrier; mobs inside the barrier take 90% less damage
-    [268931] = true, -- Creates a barrier; mobs inside the barrier take 90% less damage
-    [268202] = true, -- If not CC'd to stop it, it stuns and deals damage to the target
-    [268203] = true, -- If not CC'd to stop it, it stuns and deals damage to the target
-    [412012] = true, -- Stacking damage amplification on the target
-    [412044] = true, -- Stacking damage amplification on the target
-    [412200] = true, -- Massive frontal damage
-    [412225] = true, -- Massive frontal damage
-    [200291] = true, -- Does painful AOE damage if you let the cast go through
-    [200325] = true, -- Does painful AOE damage if you let the cast go through
-    [235823] = true, -- Does painful AOE damage if you let the cast go through
-    [241064] = true, -- Does painful AOE damage if you let the cast go through
-    [241065] = true, -- Does painful AOE damage if you let the cast go through
-    [235824] = true, -- Does painful AOE damage if you let the cast go through
-    [200345] = true, -- Very painful conal AOE at the target
-    [200344] = true, -- Very painful conal AOE at the target
-    [208068] = true, -- Very painful conal AOE at the target
-    [200784] = true, -- Gains a huge buff
-    [76516] = true,  -- Does a big targeted DoT if successful
-    [200084] = true, -- soul blade
-    [214001] = true, --ravens divineProtection
+    [167385] = true, -- Uber Strike
+    [253721] = true, -- Bulwark of Juju
+    [258653] = true, -- Bulwark of Juju
+    [268931] = true, -- Bulwark of Juju
+    [268202] = true, -- Death Lens
+    [268203] = true, -- Death Lens
+    [412012] = true, -- Temposlice
+    [412044] = true, -- Temposlice
+    [412200] = true, -- Electro-Juiced Gigablast
+    [412225] = true, -- Electro-Juiced Gigablast
+    [200291] = true, -- Knife Dance
+    [200325] = true, -- Knife Dance
+    [235823] = true, -- Knife Dance
+    [241064] = true, -- Knife Dance
+    [241065] = true, -- Knife Dance
+    [235824] = true, -- Knife Dance
+    [200345] = true, -- Arrow Barrage
+    [200344] = true, -- Arrow Barrage
+    [208068] = true, -- Arrow Barrage
+    [200784] = true, -- &quot;Drink&quot; Ancient Potion
+    [76516] = true, -- Poisoned Spear
+    [200084] = true, -- Soul Blade
+    [214001] = true, -- Raven's Dive
     [200913] = true, -- Indigestion
     [201139] = true, -- Brutal Assault
-    [214003] = true,  -- Coup de Gace
-    [225962] = true, -- Bloodthirsty leap
+    [214003] = true, -- Coup de Grace
+    [225962] = true, -- Bloodthirsty Leap
     [200343] = true, -- Arrow Barrage
     [172578] = true, -- Bounding Whirl
     [38166] = true, -- Enrage
@@ -111,51 +267,181 @@ common_lists.priorityStunList = {
     [400180] = true, -- Corroding Volley
     [413606] = true, -- Corroding Volley
     [412922] = true, -- Binding Grasp
-    [415770] = true, -- Infinite bolt volley
-    [412924] = true, 
-    [407891] = true, 
-    [204243] = true, 
-    [201399] = true, 
-    [200630] = true, 
-    [200658] = true, 
-    [225568] = true, 
-    [256849] = true, 
-    [253544] = true, 
-    [253517] = true, 
-    [252781] = true, 
-    [253562] = true, 
-    [255041] = true, 
-    [250096] = true, 
+    [415770] = true, -- Infinite Bolt Volley
+    [412924] = true, -- Binding Grasp
+    [407891] = true, -- Healing Wave
+    [204243] = true, -- Tormenting Eye
+    [201399] = true, -- Dread Inferno
+    [200630] = true, -- Unnerving Screech
+    [200658] = true, -- Star Shower
+    [225568] = true, -- Curse of Isolation
+    [256849] = true, -- Dino Might
+    [253544] = true, -- Bwonsamdi's Mantle
+    [253517] = true, -- Mending Word
+    [252781] = true, -- Unstable Hex
+    [253562] = true, -- Wildfire
+    [255041] = true, -- Terrifying Screech
+    --[250096] = true, 
 
 
 }
 
+common_lists.shadowMeldTarget = {
+
+    [411994] = true, -- Chronomelt
+    [409266] = true, -- Extinction Blast
+    [409268] = true, -- Extinction Blast
+    [409261] = true, -- Extinction Blast
+    --[406886] = true, -- Corrosive Infusion
+    [408029] = true, -- Necrofrost
+    [412922] = true, -- Binding Grasp
+    [419511] = true, -- Temporal Link
+    [419512] = true, -- Temporal Link
+    [418009] = true, -- Serrated Arrows
+    [407120] = true, -- Serrated Axe
+    [263943] = true, -- Etch
+    [266036] = true, -- Drain Essence
+    [268202] = true, -- Death Lens
+    [264694] = true, -- Rotten Expulsion
+    [261439] = true, -- Virulent Pathogen
+    [261440] = true, -- Virulent Pathogen
+    [199663] = true, -- Soul Blast
+    [200248] = true, -- Arcane Blitz
+    [203163] = true, -- Sic Bats!
+    [198833] = true, -- Shadow Bolt
+    --[257407] = true, -- Pursuit
+    [254959] = true, -- Soulburn
+    [164965] = true, -- Choking Vines
+    [169445] = true, -- Noxious Eruption
+    [169930] = true, -- Lumbering Swipe
+    [169929] = true, -- Lumbering Swipe
+    [200642] = true, -- Despair
+    [204243] = true, -- Tormenting Eye
+    [201837] = true, -- Shadow Bolt
+    [201902] = true, -- Scorching Shot
+    [200238] = true, -- Feed on the Weak
+    [200185] = true, -- Nightmare Bolt
+    [200359] = true, -- Induced Paranoia
+    [426768] = true, -- Lightning Bolt
+    [426783] = true, -- Mind Flay
+    [429176] = true, -- Aquablast
+    [167385] = true, -- uber strike dummy test
+    [250096] = true, -- Wracking Pain
+
+}
+
+common_lists.classSpecIDs = {
+
+    [137015] = true, -- Beast Mastery Hunter
+    [137016] = true, -- Marksmanship Hunter
+    [137029] = true, -- Holy Paladin
+    [137032] = true, -- Discipline Priest
+    [137031] = true, -- Holy Priest
+    [137017] = true, -- Survival Hunter
+    [137010] = true, -- Guardian Druid
+    [137037] = true, -- Assassination Rogue
+    [137007] = true, -- Unholy Death Knight
+    [137024] = true, -- Mistweaver Monk
+    [137040] = true, -- Elemental Shaman
+    [137033] = true, -- Shadow Priest
+    [137025] = true, -- Windwalker Monk
+    [137027] = true, -- Retribution Paladin
+    [137036] = true, -- Outlaw Rogue
+    [137050] = true, -- Fury Warrior
+    [212612] = true, -- Havoc Demon Hunter
+    [137019] = true, -- Fire Mage
+    [137020] = true, -- Frost Mage
+    [212613] = true, -- Vengeance Demon Hunter
+    [137041] = true, -- Enhancement Shaman
+    [137035] = true, -- Subtlety Rogue
+    [137046] = true, -- Destruction Warlock
+    [137011] = true, -- Feral Druid
+    [137044] = true, -- Demonology Warlock
+    [137013] = true, -- Balance Druid
+    [137048] = true, -- Protection Warrior
+    [137043] = true, -- Affliction Warlock
+    [137028] = true, -- Protection Paladin
+    [137012] = true, -- Restoration Druid
+    [356809] = true, -- Devastation Evoker
+    [356810] = true, -- Preservation Evoker
+    [137023] = true, -- Brewmaster Monk
+    [137039] = true, -- Restoration Shaman
+    [396186] = true, -- Augmentation Evoker
+    [137006] = true, -- Frost Death Knight
+    [137049] = true, -- Arms Warrior
+    [137008] = true, -- Blood Death Knight
+
+
+    
+}
+
+common_lists.stoneForm = {
+    [373735] = true, -- Dragon Strike
+    [372570] = true, -- Bold Ambush
+    [372224] = true, -- Dragonbone Axe
+    [391762] = true, -- Curse of the Dragon Hoard
+    [393444] = true, -- Gushing Wound
+    [375416] = true, -- Bleeding
+    [367521] = true, -- Bone Bolt
+    [367481] = true, -- Bloody Bite
+    [378020] = true, -- Gash Frenzy
+    [369828] = true, -- Chomp
+    [372718] = true, -- Earthen Shards
+    [377732] = true, -- Jagged Bite
+    [256363] = true, -- Ripper Punch
+    [413131] = true, -- Whirling Dagger
+    [413136] = true, -- Whirling Dagger
+    [260455] = true, -- Serrated Fangs
+    [265533] = true, -- Blood Maw
+    [265019] = true, -- Savage Cleave
+    [193941] = true, -- Impaling Shard
+    [200182] = true, -- Festering Rip
+    [196376] = true, -- Grievous Tear
+    [412285] = true, -- Stonebolt
+    [418009] = true, -- Serrated Arrows
+    [407120] = true, -- Serrated Axe
+    [416258] = true, -- Stonebolt
+    [407313] = true, -- Shrapnel
+    [412505] = true, -- Rending Cleave
+    [411700] = true, -- Slobbering Bite
+    [260741] = true, -- Jagged Nettles
+    [264556] = true, -- Tearing Strike
+    [426660] = true, -- Razor Jaws
+    [225963] = true, -- Bloodthirsty Leap
+    [197546] = true, -- Brutal Glaive
+    [255434] = true, -- Serrated Teeth
+    [271178] = true, -- Ravaging Leap
+    [225484] = true, -- Grievous Rip
+
+}
 
 common_lists.FreedomList = {
-    [387359] = true,
-    [377561] = true,
-    [87618] = true,
-    [369818] = true,
-    [265377] = true,
-    [408556] = true,
-    [374724] = true,
-    [385963] = true,
-    [258875] = true,
-    [391634] = true,
-    [257483] = true,
-    [199063] = true,
-    [426500] = true,
-    [411994] = true,
-    [204852] = true,
-    [413606] = true,
-    [169840] = true,
-    [418200] = true,
-    [408084] = true,
-    [411644] = true,
-    [254959] = true,
-    [255041] = true,
-    [252781] = true,
-    [424498] = true
+    [387359] = true, -- Waterlogged
+    [377561] = true, -- Time Eruption
+    [87618] = true, -- Static Cling
+    [369818] = true, -- Diseased Bite
+    [265377] = true, -- Hooked Snare
+    [408556] = true, -- Entangled
+    [374724] = true, -- Molten Subduction
+    [385963] = true, -- Frost Shock
+    [258875] = true, -- Blackout Barrel
+    [391634] = true, -- Deep Chill
+    [257483] = true, -- Pile of Bones
+    [199063] = true, -- Strangling Roots
+    [426500] = true, -- Gnarled Roots
+    [411994] = true, -- Chronomelt
+    [204852] = true, -- Awakening Roots
+    [413606] = true, -- Corroding Volley
+    [169840] = true, -- Frostbolt
+    [418200] = true, -- Infinite Burn
+    [408084] = true, -- Necrofrost
+    [411644] = true, -- Soggy Bonk
+    [254959] = true, -- Soulburn
+    [255041] = true, -- Terrifying Screech
+    --[252781] = true, -- Unstable Hex
+    [424498] = true, -- Mass Entanglement
+    [401667] = true, -- Time Stasis
+
 }
 
 
@@ -170,7 +456,7 @@ common_lists.tankBustersCombined = {
     [255579] = true, -- gilded claws physical cast
     [255434] = true, -- serrated teeth phy cast
     [249919] = true, -- skewer phy cast
-    [260508] = true, -- crush phy cast
+    --[260508] = true, -- crush phy cast
     [197418] = true, -- vengeful shear phy cast
     [198245] = true, -- brutal haymaker phy cast
     [198080] = true, -- hateful charge
@@ -185,7 +471,7 @@ common_lists.tankBustersCombined = {
     [427510] = true, -- noxious charge magic cast 
     [413131] = true, -- whirling dagger
     [413529] = true, -- Untwist
-    [265371] = true, -- Focused Strike
+    --[265371] = true, -- Focused Strike
     [266036] = true, -- Drain Essence
     [265347] = true, -- Peck
     [265760] = true, -- Thorned Barrage
@@ -266,6 +552,53 @@ common_lists.aoeIncoming = {
     [169445] = true,  -- Nox erupt
     [220855] = true, -- DHT Pushback
 }
+
+common_lists.aoeIncomingTank = {
+    [167385] = true, -- uber strike
+    [421672] = true, -- serpents-fury
+    [421292] = true, -- constricting-thicket
+    [420907] = true, -- viridian-rain
+    [417455] = true, -- dream-rend
+    [422026] = true, -- Tortured Scream
+    [427899] = true, -- Firestorm EB
+    [169179] = true, -- EB last boss Stomp
+    [204666] = true, -- Shattered Earth
+    [266181] = true, -- Dread Essence
+    [260703] = true, -- Runic Mark
+    [260773] = true, -- Dire Ritual
+    [264734] = true, -- Consume Apocalyptic
+    [415770] = true, -- Infinite Bolt Volley
+    [413622] = true, -- Infinite Fury
+    [413607] = true, -- Corroding Volley
+    [417481] = true, -- Displace Chronosequence
+    [411300] = true, -- Fish Bolt Volley
+    --[409456] = true, -- Earth Surge
+    [414535] = true, -- Stonecracker
+    [407978] = true, -- Necrotic Winds
+    [196587] = true, -- Soul Burst
+    --[198073] = true, -- Earthshaking Stomp
+    [202019] = true, -- Shadowbolt Volley
+    [264150] = true, -- Shattered
+    [263959] = true, -- Soul Volley
+    [265876] = true, -- Ruinous Volley
+    [259572] = true,  -- Noxious Stench
+    [428868] = true,  -- Putrid Roar
+    [427668] = true,  -- Shockwave TOT
+    [416264] = true,  -- Infinite Corruption
+    [200050] = true,  -- Apocalyptic Nightmare
+    [428374] = true,  -- Focus Tempest
+    [413023] = true,  -- Ancient Radiance
+    [200580] = true,  -- Maddening Roar
+    [427223] = true,  -- Cinderbolt Salve Timer
+    [174921] = true,  -- Noxious Eruption
+    [177145] = true,  -- Noxious Eruption
+    [76634] = true,   -- Swell
+    [419327] = true,  -- Infinite Schism
+    [175973] = true,  -- Colossal Blow
+    [169445] = true,  -- Nox erupt
+    [220855] = true, -- DHT Pushback
+}
+
 
 common_lists.tankBustersDebuff = {
     [255434] = true, -- serrated Teeth
@@ -361,41 +694,121 @@ common_lists.reflectAndBlock = {
     [265880] = true, -- Dread Mark
     [264378] = true, -- Fragment Soul
     [428530] = true, -- Murk Spew
-    [370649] = true, [372275] = true, [372315] = true,
-    [372394] = true, [376851] = true, [385812] = true,
-    [375424] = true, [375653] = true, [374352] = true,
-    [390942] = true, [387975] = true, 
-    [388862] = true, [211401] = true, [211406] = true,
-    [209036] = true, [373364] = true, [209413] = true,
-    [211473] = true, [212784] = true, [191976] = true,
-    [192288] = true, [198959] = true, [413590] = true,
-    [416256] = true, [415435] = true, [415436] = true,
-    [417030] = true, [411763] = true, [418202] = true,
-    [413606] = true, [400165] = true, [421284] = true,
-    [429153] = true, [425345] = true, [250096] = true,
-    [253562] = true, [254959] = true, [252687] = true,
-    [252923] = true, [199663] = true, [200248] = true,
-    [200238] = true, [200185] = true, [201298] = true,
-    [201411] = true, [200684] = true, [200642] = true,
-    [200631] = true, [204243] = true, [201837] = true,
-    [201361] = true, [168040] = true, [168092] = true,
-    [427858] = true, [427863] = true, [427885] = true,
-    [164886] = true, [164965] = true, [164973] = true,
-    [169840] = true, [169839] = true, [169657] = true,
-    [169658] = true, [428376] = true, [428103] = true,
-    [428263] = true, [429048] = true, [429173] = true,
-    [428889] = true, [428526] = true, [426783] = true,
-    [429176] = true, [76820] = true, [303825] = true,
-    [428542] = true, [426768] = true, [75992] = true,
-    [260701] = true, [260700] = true, [260699] = true,
-    [265372] = true,
-    [278444] = true, [264153] = true, [263943] = true,
-    [264105] = true, [264024] = true,
-    [426541] = true, [267824] = true,
-    [264556] = true, 
+    [370649] = true, -- Lava Flow
+    [372275] = true, -- Chain Lightning
+    [372315] = true, -- Frost Spike
+    [372394] = true, -- Lightning Bolt
+    [376851] = true, -- Aerial Buffet
+    [385812] = true, -- Aerial Slash
+    [375424] = true, -- Raging Tempest
+    [375653] = true, -- Static Jolt
+    [374352] = true, -- Energy Bomb
+    [390942] = true, -- Darting Sting
+    [387975] = true, -- Arcane Missiles
+    [388862] = true, -- Surge
+    [211401] = true, -- Drifting Embers
+    [211406] = true, -- Firebolt
+    [209036] = true, -- Throw Torch
+    [373364] = true, -- Vampiric Claws
+    [209413] = true, -- Suppress
+    [211473] = true, -- Shadow Slash
+    [212784] = true, -- Eye Storm
+    [191976] = true, -- Arcing Bolt
+    [192288] = true, -- Searing Light
+    [198959] = true, -- Etch
+    [413590] = true, -- Noxious Ejection
+    [416256] = true, -- Stonebolt
+    [415435] = true, -- Infinite Bolt
+    [415436] = true, -- Tainted Sands
+    [417030] = true, -- Fireball
+    [411763] = true, -- Infinite Blast
+    [418202] = true, -- Temporal Blast
+    [413606] = true, -- Corroding Volley
+    [400165] = true, -- Epoch Bolt
+    [421284] = true, -- Coiling Flames
+    [429153] = true, -- Twisting Singe
+    [425345] = true, -- Fyr'alath's Flame
+    [250096] = true, -- Wracking Pain
+    [253562] = true, -- Wildfire
+    [254959] = true, -- Soulburn
+    [252687] = true, -- Venomfang Strike
+    [252923] = true, -- Venom Blast
+    [199663] = true, -- Soul Blast
+    [200248] = true, -- Arcane Blitz
+    [200238] = true, -- Feed on the Weak
+    [200185] = true, -- Nightmare Bolt
+    [201298] = true, -- Bloodbolt
+    [201411] = true, -- Firebolt
+    [200684] = true, -- Nightmare Toxin
+    [200642] = true, -- Despair
+    [200631] = true, -- Unnerving Screech
+    [204243] = true, -- Tormenting Eye
+    [201837] = true, -- Shadow Bolt
+    [201361] = true, -- Darksoul Bite
+    [168040] = true, -- Nature's Wrath
+    [168092] = true, -- Water Bolt
+    [427858] = true, -- Fireball
+    [427863] = true, -- Frostbolt
+    [427885] = true, -- Arcane Blast
+    [164886] = true, -- Dreadpetal Pollen
+    [164965] = true, -- Choking Vines
+    [164973] = true, -- Dancing Thorns
+    [169840] = true, -- Frostbolt
+    [169839] = true, -- Pyroblast
+    [169657] = true, -- Poisonous Claws
+    [169658] = true, -- Poisonous Claws
+    [428376] = true, -- Focused Tempest
+    [428103] = true, -- Frostbolt
+    [428263] = true, -- Water Bolt
+    [429048] = true, -- Flame Shock
+    [429173] = true, -- Mind Rot
+    [428889] = true, -- Foul Bolt
+    [428526] = true, -- Ink Blast
+    [426783] = true, -- Mind Flay
+    [429176] = true, -- Aquablast
+    [76820] = true, -- Hex
+    [303825] = true, -- Crushing Depths
+    [428542] = true, -- Crushing Depths
+    [426768] = true, -- Lightning Bolt
+    [75992] = true, -- Lightning Surge
+    [260701] = true, -- Bramble Bolt
+    [260700] = true, -- Ruinous Bolt
+    [260699] = true, -- Soul Bolt
+    [265372] = true, -- Shadow Cleave
+    [278444] = true, -- Infest
+    [264153] = true, -- Spit
+    [263943] = true, -- Etch
+    [264105] = true, -- Runic Mark
+    [264024] = true, -- Soul Bolt
+    [426541] = true, -- Runic Bolt
+    [267824] = true, -- Scar Soul
+    [264556] = true, -- Tearing Strike
+
 }
 
+common_lists.spellWardingAOE = {
+    [416267] = true, --dragon after 2nd boss
+    [417404] = true, --3rd boss corrosion
+    [400641] = true, --Dividing Strike
+    [409128] = true, --wild thrash
+    [200580] = true, --Maddening Roar
+    [199389] = true, --Earthshaking Roar
+    [427899] = true, -- Firestorm EB
+    [76634] = true,   -- Swell
+    [167385] = true, --uber strike
 
+
+
+}
+common_lists.spellWardingDebuff = {
+    [413547] = true, -- bloom
+    --[263943] = true, -- etch
+    [213611] = true, -- soul rend
+    [200084] = true, -- soul blade
+    [429263] = true, -- shock blast
+    [409266] = true, --Extinction blast 
+
+}
 
 common_lists.reflectable = {
 
@@ -445,55 +858,131 @@ common_lists.reflectable = {
 
    
 common_lists.Personals = {
-    [48707] = true, [48792] = true, [198589] = true, [187827] = true,
-    [102342] = true, [61336] = true, [363916] = true, [186265] = true,
-    [264735] = true, [45438] = true, [342245] = true, [116849] = true,
-    [122783] = true, [122278] = true, [642] = true, [498] = true,
-    [47788] = true, [33206] = true, [47585] = true, [31224] = true,
-    [108271] = true, [104773] = true, [108416] = true, [118038] = true,
-    [6940] = true
+    [48707] = true, -- Anti-Magic Shell
+    [48792] = true, -- Icebound Fortitude
+    [198589] = true, -- Blur
+    [187827] = true, -- Metamorphosis
+    [102342] = true, -- Ironbark
+    [61336] = true, -- Survival Instincts
+    [363916] = true, -- Obsidian Scales
+    [186265] = true, -- Aspect of the Turtle
+    [264735] = true, -- Survival of the Fittest
+    [45438] = true, -- Ice Block
+    [342245] = true, -- Alter Time
+    [116849] = true, -- Life Cocoon
+    [122783] = true, -- Diffuse Magic
+    [122278] = true, -- Dampen Harm
+    [642] = true, -- Divine Shield
+    [498] = true, -- Divine Protection
+    [47788] = true, -- Guardian Spirit
+    [33206] = true, -- Pain Suppression
+    [47585] = true, -- Dispersion
+    [31224] = true, -- Cloak of Shadows
+    [108271] = true, -- Astral Shift
+    [104773] = true, -- Unending Resolve
+    [108416] = true, -- Dark Pact
+    [118038] = true, -- Die by the Sword
+    [6940] = true, -- Blessing of Sacrifice
 }
 
 common_lists.TankDefs = {
-    [194679] = true, [48792] = true, [55233] = true, [187827] = true,
-    [61336] = true, [22812] = true, [122278] = true, [122783] = true,
-    [642] = true, [228049] = true, [204018] = true, [31850] = true,
-    [86659] = true, [871] = true, [392966] = true, [23920] = true,
-    [322507] = true, [115203] = true
+    [194679] = true, -- Rune Tap
+    [48792] = true, -- Icebound Fortitude
+    [55233] = true, -- Vampiric Blood
+    [187827] = true, -- Metamorphosis
+    [61336] = true, -- Survival Instincts
+    [22812] = true, -- Barkskin
+    [122278] = true, -- Dampen Harm
+    [122783] = true, -- Diffuse Magic
+    [642] = true, -- Divine Shield
+    [228049] = true, -- Guardian of the Forgotten Queen
+    [204018] = true, -- Blessing of Spellwarding
+    [31850] = true, -- Ardent Defender
+    [86659] = true, -- Guardian of Ancient Kings
+    [871] = true, -- Shield Wall
+    [392966] = true, -- Spell Block
+    [23920] = true, -- Spell Reflection
+    [322507] = true, -- Celestial Brew
+    [115203] = true, -- Fortifying Brew
 }
 
 common_lists.harmFulDebuff = {
-    [414425] = true, -- blistering-spear
-    [424579] = true, -- suppressive-ember
-    [421656] = true, -- cauterizing-wound
-    [421326] = true, -- flash-fire
-    [420856] = true, -- poisonous-javelin
-    [421284] = true, -- coiling-flames
-    [417806] = true, -- burning-presence
-    [267907] = true,
-    [260741] = true,
-    [263943] = true,
-    [220855] = true,
-    [196376] = true,
-    [200238] = true,
-    [197546] = true,
-    [255575] = true,
-    [250096] = true,
-    [428542] = true,
-    [426660] = true,
-    [415554] = true, --choroburst
-    [407406] = true, --
-    [400681] = true, -- spark of tyr
-    [413208] = true, -- sand buffeted
-    [407120] = true, -- serrated axe
-    [407205] = true,
-    [413547] = true, -- bloom
-    [200684] = true, -- nightmare toxin
-    [204645] = true, -- oakheart grip
+    [414425] = true, -- Blistering Spear
+    [424579] = true, -- Suppressive Ember
+    [421656] = true, -- Cauterizing Wound
+    [421326] = true, -- Flash Fire
+    [420856] = true, -- Poisonous Javelin
+    [421284] = true, -- Coiling Flames
+    [417806] = true, -- Burning Presence
+    [267907] = true, -- Soul Thorns
+    [260741] = true, -- Jagged Nettles
+    [263943] = true, -- Etch
+    [220855] = true, -- Down Draft
+    [196376] = true, -- Grievous Tear
+    [200238] = true, -- Feed on the Weak
+    [197546] = true, -- Brutal Glaive
+    [255575] = true, -- Transfusion
+    [250096] = true, -- Wracking Pain
+    [428542] = true, -- Crushing Depths
+    [426660] = true, -- Razor Jaws
+    [415554] = true, -- Chronoburst
+    [407406] = true, -- Corrosion
+    [400681] = true, -- Spark of Tyr
+    [413208] = true, -- Sand Buffeted
+    [407120] = true, -- Serrated Axe
+    [407205] = true, -- Volatile Mortar
+    [413547] = true, -- Bloom
+    [200684] = true, -- Nightmare Toxin
+    [204645] = true, -- Crushing Grip
+    [255835] = true, -- Transfusion
+
+    --[409266] = true, --Extinction blast 
+
 
 }
 
+common_lists.SacList = {
+    [414425] = true, -- Blistering Spear
+    [424579] = true, -- Suppressive Ember
+    [421656] = true, -- Cauterizing Wound
+    [421326] = true, -- Flash Fire
+    [420856] = true, -- Poisonous Javelin
+    [421284] = true, -- Coiling Flames
+    [417806] = true, -- Burning Presence
+    [267907] = true, -- Soul Thorns
+    [260741] = true, -- Jagged Nettles
+    [263943] = true, -- Etch
+    [220855] = true, -- Down Draft
+    [196376] = true, -- Grievous Tear
+    [200238] = true, -- Feed on the Weak
+    [197546] = true, -- Brutal Glaive
+    [255575] = true, -- Transfusion
+    [428542] = true, -- Crushing Depths
+    [426660] = true, -- Razor Jaws
+    [415554] = true, -- Chronoburst
+    [400681] = true, -- Spark of Tyr
+    [413208] = true, -- Sand Buffeted
+    [407120] = true, -- Serrated Axe
+    [407205] = true, -- Volatile Mortar
+    [413547] = true, -- bloom
+    [200684] = true, -- nightmare toxin
+    [204645] = true, -- oakheart grip
+    [255835] = true, -- transfusion
+    [198079] = true, -- hateful gaze
+    --[409266] = true, --Extinction blast 
+    [196587] = true, -- Soul Burst
+    [201733] = true, --stnging swarm
+    --[250096] = true, --wracking pain
+
+    [196354] = true, --grievous leap
+    [225484] = true, -- grievous rip
+
+
+}
+
+
 common_lists.healingPotions = {
+    [207041] = true, -- Potion of Withering Dreams
     [207023] = true, -- Dreamwalker's Healing Potion
     [207022] = true, -- Dreamwalker's Healing Potion
     [207021] = true, -- Dreamwalker's Healing Potion
@@ -503,18 +992,19 @@ common_lists.healingPotions = {
 }
 
 common_lists.powerPotions = {
-    [191383] = true, -- Elemental Potion of Ultimate Power
-    [191381] = true, -- Elemental Potion of Ultimate Power
-    [191382] = true, -- Elemental Potion of Ultimate Power
-    [191387] = true, -- Elemental Potion of Power
-    [191389] = true, -- Elemental Potion of Power
-    [191388] = true, -- Elemental Potion of Power
     [191914] = true, -- Fleeting Elemental Potion of Ultimate Power
     [191913] = true, -- Fleeting Elemental Potion of Ultimate Power
     [191912] = true, -- Fleeting Elemental Potion of Ultimate Power
+    [191383] = true, -- Elemental Potion of Ultimate Power
+    [191381] = true, -- Elemental Potion of Ultimate Power
+    [191382] = true, -- Elemental Potion of Ultimate Power
     [191906] = true, -- Fleeting Elemental Potion of Power
     [191905] = true, -- Fleeting Elemental Potion of Power
     [191907] = true, -- Fleeting Elemental Potion of Power
+    [191387] = true, -- Elemental Potion of Power
+    [191389] = true, -- Elemental Potion of Power
+    [191388] = true, -- Elemental Potion of Power
+
     
 }
 common_lists.manaPotions = {
@@ -527,64 +1017,100 @@ common_lists.manaPotions = {
 
 common_lists.immunity = {
 
-[350158]=true,
-[350857]=true,
-[359033]=true,
-[355790]=true,
-[336499]=true,
-[323149]=true,
-[326629]=true,
-[351086]=true,
-[347097]=true,
-[164426]=true,
-[227338]=true,
-[232156]=true,[229489]=true,[369031]=true,[330959]=true,[346694]=true,
-[328921]=true,[329808]=true,[329636]=true,[367573]=true,
-[362505]=true,[84589]=true,[376724]=true,[383840]=true,[388084]=true,
-[117665]=true,[113309]=true,[379256]=true,[374779]=true,[388431]=true,
-[396734]=true,[410654]=true,[403284]=true,[410631]=true,
-[335141]=true,[373233]=true,[406730]=true, [75683]=true, 
+    [350158] = true, -- Annhylde's Bright Aegis
+    [350857] = true, -- Banshee Shroud
+    [359033] = true, -- Forge's Flames
+    [355790] = true, -- Eternal Torment
+    [336499] = true, -- Guessing Game
+    [323149] = true, -- Embrace Darkness
+    [326629] = true, -- Noxious Fog
+    [351086] = true, -- Power Overwhelming
+    [347097] = true, -- Security Shield
+    [164426] = true, -- Reckless Provocation
+    [227338] = true, -- Riderless
+    [232156] = true, -- Spectral Service
+    [229489] = true, -- Royalty
+    [369031] = true, -- Sacred Barrier
+    [330959] = true, -- Danse Macabre
+    [346694] = true, -- Unyielding Shield
+    [328921] = true, -- Blood Shroud
+    [329808] = true, -- Hardened Stone Form
+    [329636] = true, -- Hardened Stone Form
+    [367573] = true, -- Genesis Bulwark
+    [362505] = true, -- Domination's Grasp
+    [84589] = true, -- Deflecting Winds
+    [376724] = true, -- Crackling Shield
+    [383840] = true, -- Ablative Barrier
+    [388084] = true, -- Glacial Shield
+    [117665] = true, -- Bounds of Reality
+    [113309] = true, -- Ultimate Power
+    [379256] = true, -- Seal Empowerment
+    [374779] = true, -- Primal Barrier
+    [388431] = true, -- Ruinous Shroud
+    [396734] = true, -- Storm Shroud
+    [410654] = true, -- Void Empowerment
+    [403284] = true, -- Void Empowerment
+    [410631] = true, -- Void Empowerment
+    [335141] = true, -- Dark Shroud
+    [373233] = true, -- Reconfiguration Emitter
+    [406730] = true, -- Crucible Instability
+    [75683] = true, -- High Tide
 }
 
 
 common_lists.BOPList = {
-    [225963] = true,
-    [200182] = true,
-    [196354] = true,
-    [225484] = true,
-    [196376] = true,
-    [260741] = true,
-    [426660] = true,
-    [412505] = true,
-    [255814] = true,
-    [255434] = true,
-    [264150] = true,
-    [411700] = true,
-    [411958] = true,
-    [264556] = true,
+    [225963] = true, -- bloodthirsty leap
+    [200182] = true, -- festering rip
+    [196354] = true, --grievous leap
+    [225484] = true, -- grievous rip
+    [196376] = true, --grievous tear
+    [260741] = true, -- jagged nettles
+    [426660] = true, -- razor jaws
+    [412505] = true, --rending cleave
+    [255814] = true, --rending maul
+    [255434] = true, --serrated-teeth
+    [264150] = true, --shatter
+    [411700] = true, --slobbering-bite
+    [411958] = true, --stonebolt
+    [264556] = true, --tearing-strike
     [201733] = true, --stnging swarm
-    [267907] = true,
+    [267907] = true, --soul-thorns
+    [260551] = true, -- soul thorns
+    [257407] = true, -- pursuit
+    [198079] = true, -- hateful gaze
+    [426659] = true, --razor jaws
+}
+
+common_lists.purge = {
+
+    [412012] = true, -- Temposlice
+    [265368] = true, -- Spirited Defense
+    [256922] = true, -- Runic Blade
+    [256849] = true, -- Dino Might
+    [197797] = true, -- Arcane Blitz
+
 
 }
 
+
 common_lists.soothe = {
-    [38166] = true, -- Berserker Enrage EB
-    [197797] = true, -- arcane blitz
-    [257260] = true,
-    [165213] = true,
-    [255824] = true,
-    [428291] = true,
-    [228318] = true, -- EB Enrage (Pretty sure)
-    [8599] = true,
-    [167385] = true, --uber strike
+    [38166] = true, -- Enrage
+    [197797] = true, -- Arcane Blitz
+    [257260] = true, -- Enrage
+    [165213] = true, -- Enraged Growth
+    [255824] = true, -- Fanatic's Rage
+    [428291] = true, -- Slithering Assault
+    [228318] = true, -- Enrage
+    [8599] = true, -- Enrage
+    [167385] = true, -- Uber Strike
     [412012] = true, -- Temposlice
-    [412695] = true, -- Relentless Hunger (Risen Dragon)
-    [412699] = true, -- Relentless Hunger (Risen Dragon)
-    [265368] = true, -- Spirited Defense (Bewitched Captain)
-    [256922] = true, -- Runic Blade (Faceless Maiden)
-    [256849] = true, -- Dino Might (Dinomancer Kish'o)
-    [200248] = true, -- Arcane Blitz (Risen Arcanist)
-    [426618] = true, -- Slithering Assault (Naz'jar Invader)
+    [412695] = true, -- Relentless Hunger
+    [412699] = true, -- Relentless Hunger
+    [265368] = true, -- Spirited Defense
+    [256922] = true, -- Runic Blade
+    [256849] = true, -- Dino Might
+    [200248] = true, -- Arcane Blitz
+    [426618] = true, -- Slithering Assault
 }
 
 common_lists.tankBusterMagic = {
@@ -602,6 +1128,9 @@ common_lists.tankBusterMagic = {
     [265880] = true, -- Dread Mark
     [264378] = true, -- Fragment Soul
     [428530] = true, -- Murk Spew
+    [258151] = true, -- Crushing grip??
+    [164357] = true, -- parched grasp
+    [427512] = true, -- noxious charge
 }
 
 
@@ -640,7 +1169,8 @@ common_lists.PoisonDiseaseList = {
     [201365] = true, -- Darkheart Thicket: Darksoul Drain
     [76363] = true, -- Throne of the Tides: Wave Of Corruption
     --[261440] = true, -- Waycrest Manor: Virulent Pathogen
-    [264050] = true -- Waycrest Manor: Infected Thorn
+    [264050] = true, -- Waycrest Manor: Infected Thorn
+
 
 }
 
@@ -666,7 +1196,8 @@ common_lists.BleedList2 = {
     [411700] = true, -- DOTI: Upper - Slobbering Bite
     [271178] = true, -- Waycrest Manor - Ravaging Leap
     [260741] = true, -- Waycrest Manor - Jagged Nettles
-    [264556] = true  -- Waycrest Manor - Tearing Strike
+    [264556] = true,  -- Waycrest Manor - Tearing Strike
+
 }
 
 
@@ -740,7 +1271,7 @@ common_lists.aoeIncomingWarriorMagic = {
         409465, -- Affix: Cursed Spirit
         265433, -- The Underrot: Withering Curse
         -- Atal'Dazar
-        252781, -- Unstable Hex
+        --252781, -- Unstable Hex
         -- Darkheart Thicket
         201839, -- Curse Of Isolation
         -- DOTI: Upper
@@ -772,8 +1303,9 @@ common_lists.DiseaseList = {
     250372, -- Atal'Dazar: Lingering Nausea
     201365, -- Darkheart Thicket: Darksoul Drain
     76363,  -- Throne of the Tides: Wave Of Corruption
-    261440, -- Waycrest Manor: Virulent Pathogen
-    264050  -- Waycrest Manor: Infected Thorn
+    --261440, -- Waycrest Manor: Virulent Pathogen
+    264050,  -- Waycrest Manor: Infected Thorn
+
 }
 common_lists.MagicList = {
     418200, -- infinite burn

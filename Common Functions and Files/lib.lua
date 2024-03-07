@@ -464,6 +464,29 @@ function api_functions.setTarget(unitGuid)
     return false
 end
 
+function api_functions.getRuneCount()
+    return 0
+end
+
+function api_functions.isRuneReady(runeIndex)
+    return false
+end
+
+function api_functions.getCrit()
+    return 0
+end
+
+function api_functions.getVers()
+    return 0
+end
+
+function api_functions.getMastery()
+    return 0
+end
+
+function api_functions.getHaste()
+    return 0
+end
 
 
 return api_functions
