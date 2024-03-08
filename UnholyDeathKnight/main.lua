@@ -196,7 +196,6 @@ function hasPet()
     return true
 end
 
-
 function DPS()
 
     SoulReaperLogic = state.currentTargetHpPercent < 35
@@ -218,9 +217,9 @@ function DPS()
         ------------- Cooldown priority ================
         if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ArmyoftheDeat)  then
-                    game_api.canCast(spells.ArmyoftheDeat)
-                    API.Debug("ArmyoftheDeat Casted Spell for DPS")
+                if API.CanCast(spells.ArmyoftheDead)  then
+                    game_api.canCast(spells.ArmyoftheDead)
+                    API.Debug("ArmyoftheDead Casted Spell for DPS")
                     return true
                 end
                 

@@ -21,5 +21,10 @@ talents.BreathofSindragosa                = 152279
 talents.Obliteration                      = 281238
 talents.MagusoftheDead                    = 390196
 talents.SummonGargoyle                    = 49206
+talents.ArmyoftheDead                     = 42650
+talents.UnholyBlight                      = 115989
+talents.DarkTransformation                = 63560
+talents.UnholyAssault                     = 207289
+talents.Apocalypse                        = 275699
 
 return talents

@@ -54,6 +54,7 @@ spells.VampiricStrengthBuff               = 408356 -- Tier 30 4pc
 -- Frost specialization
 spells.FrostStrike                        = 49143
 spells.HowlingBlast                       = 49184
+
 -- Talents
 spells.Avalanche                          = 207142
 spells.BitingCold                         = 377056
@@ -80,6 +81,14 @@ spells.ScourgeStrike                      = 55090
 spells.ShatteringBlade                    = 207057
 spells.UnleashedFrenzy                    = 376905
 spells.SummonGargoyle                     = 49206
+spells.ArmyoftheDead                     = 42650
+spells.UnholyBlight                      = 115989
+spells.DarkTransformation                = 63560
+spells.UnholyAssault                     = 207289
+spells.EmpowerRuneWeapon                  = 47568
+spells.Apocalypse                        = 275699
+
+
 -- Buffs
 spells.ChillingRageBuff                   = 424165 -- Tier 31 2pc
 spells.ColdHeartBuff                      = 281209
