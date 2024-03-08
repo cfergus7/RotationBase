@@ -54,6 +54,7 @@ spells.VampiricStrengthBuff               = 408356 -- Tier 30 4pc
 -- Frost specialization
 spells.FrostStrike                        = 49143
 spells.HowlingBlast                       = 49184
+
 -- Talents
 spells.Avalanche                          = 207142
 spells.BitingCold                         = 377056

@@ -196,7 +196,6 @@ function hasPet()
     return true
 end
 
-
 function DPS()
 
     SoulReaperLogic = state.currentTargetHpPercent < 35

@@ -26,4 +26,5 @@ talents.UnholyBlight                      = 115989
 talents.DarkTransformation                = 63560
 talents.UnholyAssault                     = 207289
 talents.Apocalypse                        = 275699
+
 return talents
