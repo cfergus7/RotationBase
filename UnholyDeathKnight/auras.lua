@@ -8,9 +8,9 @@ auras.EmpowerRuneWeaponBuff              = 47568
 auras.IcyTalonsBuff                      = 194879
 auras.RuneofHysteriaBuff                 = 326918
 auras.UnholyStrengthBuff                 = 53365
-auras.FesteringWound                     =194310
-auras.DeathRot                           =377540
-auras.MagusoftheDead
+auras.FesteringWound                     = 194310
+auras.DeathRot                           = 377540
+auras.MagusoftheDead                     = 390196
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095

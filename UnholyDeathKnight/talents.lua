@@ -20,5 +20,6 @@ talents.UnholyGround                       = 374265
 talents.BreathofSindragosa                = 152279
 talents.Obliteration                      = 281238
 talents.MagusoftheDead                    = 390196
+talents.SummonGargoyle                    = 49206
 
 return talents

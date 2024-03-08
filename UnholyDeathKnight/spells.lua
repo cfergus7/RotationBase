@@ -79,6 +79,7 @@ spells.RemorselessWinter                  = 196770
 spells.ScourgeStrike                      = 55090
 spells.ShatteringBlade                    = 207057
 spells.UnleashedFrenzy                    = 376905
+spells.SummonGargoyle                     = 49206
 -- Buffs
 spells.ChillingRageBuff                   = 424165 -- Tier 31 2pc
 spells.ColdHeartBuff                      = 281209

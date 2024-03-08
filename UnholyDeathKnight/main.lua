@@ -204,36 +204,119 @@ function DPS()
     ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
     DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(state.currentPlayer, auras.DeathRot, true) < 10
     OutbreakLogic = --need debuf time on boss 
-    DeathCoilLogicSummonGargoyle -- not letting me use CurrentRunesAvailable and summon Pet
+    DeathCoilLogicSummonGargoyle  = state.CurrentRunesAvailable < 3 or hasPet()-- not letting me use CurrentRunesAvailable and summon Pet 27829
     ScourgeStrikeLogic = API.PlayerHasBuff(auras.MagusoftheDead) and API.PlayerHasBuff(auras.FesteringWound) > 0
-    DeathandDecayLogic = 
-    FesteringStrikeLogic = game_api.unitHasAura(auras.FesteringWound) < 3   --- go back and fix this with the new unit auras
+    DeathandDecayLogic = hasPet()-- pet check 27829
+    FesteringStrikeLogic = API.PlayerHasBuff(auras.FesteringWound) < 3
     ClawingShadowsLogicFestering = API.PlayerHasBuff(auras.FesteringWound) > 3
-    DefileLogic = API.PlayerHasBuff(auras.MagusoftheDead) -- and has pet
+    DefileLogic = API.PlayerHasBuff(auras.MagusoftheDead) and hasPet() -- and has pet 27829
 
     AutoAoe = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
         
-        -- ST Coil Build
-
-        if game_api.getToggle(settings.Cooldown) then 
-            -- Pets insert here
-            if hasPet then 
-                game_api.castSpell(spells.RaiseDead)
-                API.Debug("RaiseDead Casted for DPS")
-                return true
+        ------------- Cooldown priority ================
+        if game_api.getToggle(settings.Cooldown) then
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ArmyoftheDeat)  then
+                    game_api.canCast(spells.ArmyoftheDeat)
+                    API.Debug("ArmyoftheDeat Casted Spell for DPS")
+                    return true
+                end
+                
             end
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
-                game_api.canCast(spells.SoulReaper)
-                API.Debug("SoulReaper Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.UnholyBlight)  then
+                    game_api.canCast(spells.UnholyBlight)
+                    API.Debug("UnholyBlight Casted Spell for DPS")
+                    return true
+                end
+                
             end
+        end
 
+        if game_api.getToggle(settings.Cooldown) then
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.DeathandDecay)  then
+                    game_api.canCast(spells.DeathandDecay)
+                    API.Debug("DeathandDecay Casted Spell for DPS")
+                    return true
+                end
+                
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.DarkTransformation)  then
+                    game_api.canCast(spells.DarkTransformation)
+                    API.Debug("DarkTransformation Casted Spell for DPS")
+                    return true
+                end
+                
+            
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.SummonGargoyle)  then
+                    game_api.canCast(spells.SummonGargoyle)
+                    API.Debug("SummonGargoyle Casted Spell for DPS")
+                    return true
+                end
+                
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.UnholyAssault)  then
+                    game_api.canCast(spells.UnholyAssault)
+                    API.Debug("UnholyAssault Casted Spell for DPS")
+                    return true
+                end
+                
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.EmpowerRuneWeapon)  then
+                    game_api.canCast(spells.EmpowerRuneWeapon)
+                    API.Debug("EmpowerRuneWeapon Casted Spell for DPS")
+                    return true
+                end
+                
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+                if API.CanCast(spells.Apocalypse)  then
+                    game_api.canCast(spells.Apocalypse)
+                    API.Debug("Apocalypse Casted Spell for DPS")
+                    return true
+                end
+                
+        end
+
+
+        -- ST Coil Build
+
+        if game_api.getToggle(settings.Cooldown) then 
+            -- Pets insert here
+            if hasPet() == 1 then
+                if API.CanCast(spells.RaiseDead) then
+                    game_api.castSpell(spells.RaiseDead)
+                    API.Debug("RaiseDead Casted for DPS")
+                    return true
+                end
+            end
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if state.CurrentRunesAvailable > 9 then
+                if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
+                    game_api.canCast(spells.SoulReaper)
+                    API.Debug("SoulReaper Casted Spell for DPS")
+                    return true
+                end
+            end
         end
 
         if game_api.getToggle(settings.Cooldown) then
@@ -247,13 +330,13 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
-                game_api.canCast(spells.ClawingShadows)
-                API.Debug("ClawingShadows Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
+                    game_api.canCast(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    return true
+                end
             end
-
         end
 
         if game_api.getToggle(settings.Cooldown) then
@@ -267,13 +350,13 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.Outbreak) and OutbreakLogic then
-                game_api.canCast(spells.Outbreak)
-                API.Debug("Outbreak Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.Outbreak) and OutbreakLogic then
+                    game_api.canCast(spells.Outbreak)
+                    API.Debug("Outbreak Casted Spell for DPS")
+                    return true
+                end
             end
-
         end
 
         if game_api.getToggle(settings.Cooldown) then
@@ -287,42 +370,48 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
-                game_api.canCast(spells.ScourgeStrike)
-                API.Debug("ScourgeStrike Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
+                    game_api.canCast(spells.ScourgeStrike)
+                    API.Debug("ScourgeStrike Casted Spell for DPS")
+                    return true
+                end
             end
-
         end
 
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.DeathandDecay) and DeathandDecayLogic then
-                game_api.canCast(spells.DeathandDecay)
-                API.Debug("DeathandDecay Casted Spell for DPS")
-                return true
-            end
-
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
-                game_api.canCast(spells.FesteringStrike)
-                API.Debug("FesteringStrike Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.DeathandDecay) and DeathandDecayLogic then
+                    game_api.canCast(spells.DeathandDecay)
+                    API.Debug("DeathandDecay Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
-                game_api.canCast(spells.ClawingShadows)
-                API.Debug("ClawingShadows Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
+                if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
+                    game_api.canCast(spells.FesteringStrike)
+                    API.Debug("FesteringStrike Casted Spell for DPS")
+                    return true
+                end
+                
+            end
+
+        end
+
+        if game_api.getToggle(settings.Cooldown) then
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
+                    game_api.canCast(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
@@ -350,21 +439,25 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
-                game_api.canCast(spells.SoulReaper)
-                API.Debug("SoulReaper Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
+                    game_api.canCast(spells.SoulReaper)
+                    API.Debug("SoulReaper Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.Defile)and DefileLogic then
-                game_api.canCast(spells.Defile)
-                API.Debug("Defile Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.Defile)and DefileLogic then
+                    game_api.canCast(spells.Defile)
+                    API.Debug("Defile Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
@@ -380,11 +473,13 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
-                game_api.canCast(spells.ClawingShadows)
-                API.Debug("ClawingShadows Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
+                    game_api.canCast(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
@@ -410,32 +505,38 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
-                game_api.canCast(spells.ScourgeStrike)
-                API.Debug("ScourgeStrike Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
+                    game_api.canCast(spells.ScourgeStrike)
+                    API.Debug("ScourgeStrike Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
 
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
-                game_api.canCast(spells.FesteringStrike)
-                API.Debug("FesteringStrike Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
+                if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
+                    game_api.canCast(spells.FesteringStrike)
+                    API.Debug("FesteringStrike Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
-                game_api.canCast(spells.ClawingShadows)
-                API.Debug("ClawingShadows Casted Spell for DPS")
-                return true
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
+                    game_api.canCast(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    return true
+                end
+                
             end
 
         end
@@ -449,6 +550,7 @@ function DPS()
             end
 
         end
+
 
     end
 
