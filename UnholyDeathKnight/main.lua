@@ -3,8 +3,8 @@ spells = require ("spells")
 talents = require ("talents")
 auras = require ("auras")
 settings = require ("settings")
-API : require("common_functions")
-cLists : require("common_lists")
+API = require("common_functions")
+cLists = require("common_lists")
 state = {}
 
 --[[
@@ -202,7 +202,7 @@ function DPS()
     SoulReaperLogic = state.currentTargetHpPercent < 35
     DeathCoilLogicSuddenDoom = API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 80
     ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
-    DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(auras.DeathRot, true) < 10
+    DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(state.currentPlayer, auras.DeathRot, true) < 10
     OutbreakLogic = --need debuf time on boss 
     DeathCoilLogicSummonGargoyle  = state.CurrentRunesAvailable < 3 or hasPet()-- not letting me use CurrentRunesAvailable and summon Pet 27829
     ScourgeStrikeLogic = API.PlayerHasBuff(auras.MagusoftheDead) and API.PlayerHasBuff(auras.FesteringWound) > 0
