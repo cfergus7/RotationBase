@@ -12,7 +12,7 @@ common_lists.PlayerCDs = {
 
     -- WARRIOR
     316828, -- Recklessness
-    1719, -- Recklessness
+    1719,   -- Recklessness
 
     -- WARLOCK
     266087, -- Infernal // Rainy Thingy
@@ -23,7 +23,7 @@ common_lists.PlayerCDs = {
     13750,  -- Adrenaline Rush
 
     -- PALADIN
-    31884, -- Avenging Wrath
+    31884,  -- Avenging Wrath
     231895, -- Crusade
 
     -- HUNTER
@@ -39,13 +39,30 @@ common_lists.PlayerCDs = {
     191427 -- Metamorphosis
 }
 
-common_lists.npcIdList = { [198594] = true, [81638] = true, [131009] = true, [133361] = true, [125977] = true, [127315] = true, [48416] = true, [194648] = true,
-    [31146] = true,[153292] = true,[114832] = true, [131989] = true, [196642] = true, [125828] = true, [197833] = true, [101008] = true,
+common_lists.npcIdList = {
+    [198594] = true,
+    [81638] = true,
+    [131009] = true,
+    [133361] = true,
+    [125977] = true,
+    [127315] = true,
+    [48416] = true,
+    [194648] = true,
+    [31146] = true,
+    [153292] = true,
+    [114832] = true,
+    [131989] = true,
+    [196642] = true,
+    [125828] = true,
+    [197833] = true,
+    [101008] = true,
+    [153285] = true,
+
 }
 
 
 common_lists.priorityKickList = {
---Dragon Flight Season 3
+    --Dragon Flight Season 3
     [278444] = true, -- Infest
     [367503] = true, -- Withering Burst
     [411300] = true, -- Fish Bolt Volley
@@ -67,7 +84,7 @@ common_lists.priorityKickList = {
     [415773] = true, -- Temporal Detonation
     [385046] = true, -- Withering Poison
     [256849] = true, -- Dino Might
-    [76820] = true, -- Hex
+    [76820] = true,  -- Hex
     [369365] = true, -- Curse of Stone
     [395694] = true, -- Elemental Focus
     [374339] = true, -- Demoralizing Shout
@@ -139,7 +156,7 @@ common_lists.priorityKickList = {
     [265487] = true, -- Shadow Bolt Volley
     [416256] = true, -- Stonebolt
     [369400] = true, -- Earthen Ward
-    [76813] = true, -- Healing Wave
+    [76813] = true,  -- Healing Wave
     [266106] = true, -- Sonic Screech
     [408805] = true, -- Destabilize
     [265091] = true, -- Gift of G'huun
@@ -157,10 +174,10 @@ common_lists.priorityKickList = {
     [389804] = true, -- Heavy Tome
     [373803] = true, -- Cold Claws
     [225568] = true, -- Curse of Isolation
-    [88170] = true, -- Cloudburst
+    [88170] = true,  -- Cloudburst
     [200642] = true, -- Despair
     [373804] = true, -- Touch of Decay
-    [88186] = true, -- Vapor Form
+    [88186] = true,  -- Vapor Form
     [373932] = true, -- Illusionary Bolt
     [265876] = true, -- Ruinous Volley
     [256060] = true, -- Revitalizing Brew
@@ -183,7 +200,7 @@ common_lists.priorityKickList = {
     [412378] = true, -- Dizzying Sands
     [252923] = true, -- Venom Blast
     [369411] = true, -- Sonic Burst
-    [87779] = true, -- Greater Heal
+    [87779] = true,  -- Greater Heal
     [415770] = true, -- Infinite Bolt Volley
     [369603] = true, -- Defensive Bulwark
     [260698] = true, -- Soul Bolt
@@ -192,7 +209,7 @@ common_lists.priorityKickList = {
     [271174] = true, -- Retch
     [201411] = true, -- Firebolt
     [265089] = true, -- Dark Reconstitution
-    [86331] = true, -- Lightning Bolt
+    [86331] = true,  -- Lightning Bolt
     [375602] = true, -- Erratic Growth
     [164973] = true, -- Dancing Thorns
     [372538] = true, -- Melt
@@ -218,6 +235,7 @@ common_lists.priorityKickList = {
     [268278] = true, -- Wracking Chord
     [426596] = true, -- Soul Bolt
     --[168092] = true, -- Water Bolt
+    [266225] = true, -- darkened lightning
 
 }
 
@@ -253,7 +271,7 @@ common_lists.priorityStunList = {
     [200344] = true, -- Arrow Barrage
     [208068] = true, -- Arrow Barrage
     [200784] = true, -- &quot;Drink&quot; Ancient Potion
-    [76516] = true, -- Poisoned Spear
+    [76516] = true,  -- Poisoned Spear
     [200084] = true, -- Soul Blade
     [214001] = true, -- Raven's Dive
     [200913] = true, -- Indigestion
@@ -262,7 +280,7 @@ common_lists.priorityStunList = {
     [225962] = true, -- Bloodthirsty Leap
     [200343] = true, -- Arrow Barrage
     [172578] = true, -- Bounding Whirl
-    [38166] = true, -- Enrage
+    [38166] = true,  -- Enrage
     [413607] = true, -- Corroding Volley
     [400180] = true, -- Corroding Volley
     [413606] = true, -- Corroding Volley
@@ -281,7 +299,7 @@ common_lists.priorityStunList = {
     [252781] = true, -- Unstable Hex
     [253562] = true, -- Wildfire
     [255041] = true, -- Terrifying Screech
-    --[250096] = true, 
+    --[250096] = true,
 
 
 }
@@ -372,7 +390,7 @@ common_lists.classSpecIDs = {
     [137008] = true, -- Blood Death Knight
 
 
-    
+
 }
 
 common_lists.stoneForm = {
@@ -389,7 +407,7 @@ common_lists.stoneForm = {
     [372718] = true, -- Earthen Shards
     [377732] = true, -- Jagged Bite
     [256363] = true, -- Ripper Punch
-    [413131] = true, -- Whirling Dagger
+    --[413131] = true, -- Whirling Dagger
     [413136] = true, -- Whirling Dagger
     [260455] = true, -- Serrated Fangs
     [265533] = true, -- Blood Maw
@@ -418,7 +436,7 @@ common_lists.stoneForm = {
 common_lists.FreedomList = {
     [387359] = true, -- Waterlogged
     [377561] = true, -- Time Eruption
-    [87618] = true, -- Static Cling
+    [87618] = true,  -- Static Cling
     [369818] = true, -- Diseased Bite
     [265377] = true, -- Hooked Snare
     [408556] = true, -- Entangled
@@ -449,7 +467,7 @@ common_lists.tankBustersCombined = {
     [167385] = true, -- uber strike dummy test
     [413013] = true, -- chronoshear phy cast
     [407159] = true, -- blight reclamation phy cast
-    [414535] = true, -- stone cracker barrage phy cast
+    --[414535] = true, -- stone cracker barrage phy cast
     [401248] = true, -- titanic blow phy cast
     [404916] = true, -- sand blast phy cast
     [410254] = true, -- decapitate phy cast
@@ -468,14 +486,14 @@ common_lists.tankBustersCombined = {
     [416139] = true, -- temporal breath cast magic
     [261438] = true, -- wasting strike magic reflect diffuse
     [266225] = true, -- darkened lightning magic reflect cast
-    [427510] = true, -- noxious charge magic cast 
-    [413131] = true, -- whirling dagger
+    [427510] = true, -- noxious charge magic cast
+    --[413131] = true, -- whirling dagger
     [413529] = true, -- Untwist
     --[265371] = true, -- Focused Strike
     [266036] = true, -- Drain Essence
     [265347] = true, -- Peck
-    [265760] = true, -- Thorned Barrage
-    [265337] = true, -- Snout Smack
+    --[265760] = true, -- Thorned Barrage
+    --[265337] = true, -- Snout Smack
     [265881] = true, -- Decaying Touch
     [256138] = true, -- Feverent Strike
     [273185] = true, -- Shield Bash
@@ -503,7 +521,110 @@ common_lists.tankBustersCombined = {
     [417431] = true, -- fyralaths-bite
     [429037] = true, -- Stormflurry Totem
 
-    
+
+
+}
+
+common_lists.newTankLogic = {
+    --[167385] = true, -- uber strike
+    [421672] = true, -- serpents-fury
+    --[421292] = true, -- constricting-thicket
+    [420907] = true, -- viridian-rain
+    [417455] = true, -- dream-rend
+    [422026] = true, -- Tortured Scream
+    [427899] = true, -- Firestorm EB
+    [169179] = true, -- EB last boss Stomp
+    --[204666] = true, -- Shattered Earth
+    [266181] = true, -- Dread Essence
+    --[260703] = true, -- Runic Mark
+    [260773] = true, -- Dire Ritual
+    [264734] = true, -- Consume Apocalyptic
+    --[415770] = true, -- Infinite Bolt Volley
+    --[413622] = true, -- Infinite Fury
+    --[413607] = true, -- Corroding Volley
+    --[417481] = true, -- Displace Chronosequence
+    [411300] = true, -- Fish Bolt Volley
+    --[409456] = true, -- Earth Surge
+    --[414535] = true, -- Stonecracker
+    --[407978] = true, -- Necrotic Winds
+    [196587] = true, -- Soul Burst
+    --[198073] = true, -- Earthshaking Stomp
+    [202019] = true, -- Shadowbolt Volley
+    --[264150] = true, -- Shattered
+    [263959] = true, -- Soul Volley
+    [265876] = true, -- Ruinous Volley
+    --[259572] = true, -- Noxious Stench
+    --[428868] = true, -- Putrid Roar
+    --[427668] = true, -- Shockwave TOT
+    --[416264] = true, -- Infinite Corruption
+    [200050] = true, -- Apocalyptic Nightmare
+    --[428374] = true, -- Focus Tempest
+    [413023] = true, -- Ancient Radiance
+    [200580] = true, -- Maddening Roar
+    --[427223] = true, -- Cinderbolt Salve Timer
+    [174921] = true, -- Noxious Eruption
+    [177145] = true, -- Noxious Eruption
+    --[76634] = true,  -- Swell
+    --[419327] = true, -- Infinite Schism
+    --[175973] = true, -- Colossal Blow
+    [169445] = true, -- Nox erupt
+    --[220855] = true, -- DHT Pushback
+
+    [413013] = true, -- chronoshear phy cast
+    [407159] = true, -- blight reclamation phy cast
+    --[414535] = true, -- stone cracker barrage phy cast
+    [401248] = true, -- titanic blow phy cast
+    [404916] = true, -- sand blast phy cast
+    [410254] = true, -- decapitate phy cast
+    [255579] = true, -- gilded claws physical cast
+    [255434] = true, -- serrated teeth phy cast
+    [249919] = true, -- skewer phy cast
+    --[260508] = true, -- crush phy cast
+    [197418] = true, -- vengeful shear phy cast
+    [198245] = true, -- brutal haymaker phy cast
+    --[198080] = true, -- hateful charge
+    [198635] = true, -- unerring shear debuff phy instant
+    [198376] = true, -- primal rampage phy instant
+    --[204611] = true, -- crushing crip cast phy, using tankbusterdebuff instead
+    --[405431] = true, -- fragments of time magic cast --- weak now
+    [400641] = true, -- dividing strike magic cast
+    [416139] = true, -- temporal breath cast magic
+    [261438] = true, -- wasting strike magic reflect diffuse
+    --[266225] = true, -- darkened lightning magic reflect cast
+    [427510] = true, -- noxious charge magic cast
+    --[413131] = true, -- whirling dagger
+    [413529] = true, -- Untwist
+    --[265371] = true, -- Focused Strike
+    --[266036] = true, -- Drain Essence
+    --[265347] = true, -- Peck
+    --[265760] = true, -- Thorned Barrage
+    --[265337] = true, -- Snout Smack
+    [265881] = true, -- Decaying Touch
+    [256138] = true, -- Feverent Strike
+    [273185] = true, -- Shield Bash
+    --[252687] = true, -- Venomfang Strike
+    --[255814] = true, -- Rending Maul
+    ---[201902] = true, -- Scorching Shot
+    [225732] = true, -- Strike Down
+    [201139] = true, -- Brutal Assault1
+    --[201176] = true, -- Priceless Artifact
+    [169657] = true, -- Poisonous Claw
+    ---[427245] = true, -- Fungal Fist
+    [426741] = true, -- Shellbreaker
+    [429021] = true, -- Crush
+    [427670] = true, -- Crushing Claw
+    [428530] = true, -- Murk Spew
+    [427512] = true, -- Murk Spew
+    [164357] = true, -- parched gasp
+    [424352] = true, -- Dreadfire Barrage
+    [423117] = true, -- cataclysm-jaws
+    [421020] = true, -- agonizing-claws
+    [418637] = true, -- furious-charge
+    [427722] = true, -- weavers-burden
+    [421343] = true, -- brand-of-damnation
+    [425345] = true, -- fyralaths-flame
+    [417431] = true, -- fyralaths-bite
+    [429037] = true, -- Stormflurry Tote
 
 }
 
@@ -532,24 +653,24 @@ common_lists.aoeIncoming = {
     [196587] = true, -- Soul Burst
     [198073] = true, -- Earthshaking Stomp
     [202019] = true, -- Shadowbolt Volley
-    [264150] = true, -- Shattered
+    --[264150] = true, -- Shattered
     [263959] = true, -- Soul Volley
     [265876] = true, -- Ruinous Volley
-    [259572] = true,  -- Noxious Stench
-    [428868] = true,  -- Putrid Roar
-    [427668] = true,  -- Shockwave TOT
-    [416264] = true,  -- Infinite Corruption
-    [200050] = true,  -- Apocalyptic Nightmare
-    [428374] = true,  -- Focus Tempest
-    [413023] = true,  -- Ancient Radiance
-    [200580] = true,  -- Maddening Roar
-    [427223] = true,  -- Cinderbolt Salve Timer
-    [174921] = true,  -- Noxious Eruption
-    [177145] = true,  -- Noxious Eruption
-    [76634] = true,   -- Swell
-    [419327] = true,  -- Infinite Schism
-    [175973] = true,  -- Colossal Blow
-    [169445] = true,  -- Nox erupt
+    [259572] = true, -- Noxious Stench
+    [428868] = true, -- Putrid Roar
+    [427668] = true, -- Shockwave TOT
+    [416264] = true, -- Infinite Corruption
+    [200050] = true, -- Apocalyptic Nightmare
+    [428374] = true, -- Focus Tempest
+    [413023] = true, -- Ancient Radiance
+    [200580] = true, -- Maddening Roar
+    [427223] = true, -- Cinderbolt Salve Timer
+    [174921] = true, -- Noxious Eruption
+    [177145] = true, -- Noxious Eruption
+    [76634] = true,  -- Swell
+    [419327] = true, -- Infinite Schism
+    [175973] = true, -- Colossal Blow
+    [169445] = true, -- Nox erupt
     [220855] = true, -- DHT Pushback
 }
 
@@ -573,29 +694,29 @@ common_lists.aoeIncomingTank = {
     [417481] = true, -- Displace Chronosequence
     [411300] = true, -- Fish Bolt Volley
     --[409456] = true, -- Earth Surge
-    [414535] = true, -- Stonecracker
+    --[414535] = true, -- Stonecracker
     [407978] = true, -- Necrotic Winds
     [196587] = true, -- Soul Burst
     --[198073] = true, -- Earthshaking Stomp
     [202019] = true, -- Shadowbolt Volley
-    [264150] = true, -- Shattered
+    --[264150] = true, -- Shattered
     [263959] = true, -- Soul Volley
     [265876] = true, -- Ruinous Volley
-    [259572] = true,  -- Noxious Stench
-    [428868] = true,  -- Putrid Roar
-    [427668] = true,  -- Shockwave TOT
-    [416264] = true,  -- Infinite Corruption
-    [200050] = true,  -- Apocalyptic Nightmare
-    [428374] = true,  -- Focus Tempest
-    [413023] = true,  -- Ancient Radiance
-    [200580] = true,  -- Maddening Roar
-    [427223] = true,  -- Cinderbolt Salve Timer
-    [174921] = true,  -- Noxious Eruption
-    [177145] = true,  -- Noxious Eruption
-    [76634] = true,   -- Swell
-    [419327] = true,  -- Infinite Schism
-    [175973] = true,  -- Colossal Blow
-    [169445] = true,  -- Nox erupt
+    [259572] = true, -- Noxious Stench
+    [428868] = true, -- Putrid Roar
+    [427668] = true, -- Shockwave TOT
+    [416264] = true, -- Infinite Corruption
+    [200050] = true, -- Apocalyptic Nightmare
+    [428374] = true, -- Focus Tempest
+    [413023] = true, -- Ancient Radiance
+    [200580] = true, -- Maddening Roar
+    [427223] = true, -- Cinderbolt Salve Timer
+    [174921] = true, -- Noxious Eruption
+    [177145] = true, -- Noxious Eruption
+    [76634] = true,  -- Swell
+    [419327] = true, -- Infinite Schism
+    [175973] = true, -- Colossal Blow
+    [169445] = true, -- Nox erupt
     [220855] = true, -- DHT Pushback
 }
 
@@ -682,7 +803,7 @@ common_lists.reflectAndBlock = {
     [413529] = true, -- Untwist
     [419351] = true, -- Exhalation
     [167385] = true, -- Uber Strike
-   -- [405431] = true, -- Fragments of Time Magic Cast
+    -- [405431] = true, -- Fragments of Time Magic Cast
     [400641] = true, -- Dividing Strike Magic Cast
     [416139] = true, -- Temporal Breath Cast Magic
     [261438] = true, -- Wasting Strike Magic Reflect Diffuse
@@ -766,11 +887,11 @@ common_lists.reflectAndBlock = {
     [428526] = true, -- Ink Blast
     [426783] = true, -- Mind Flay
     [429176] = true, -- Aquablast
-    [76820] = true, -- Hex
+    [76820] = true,  -- Hex
     [303825] = true, -- Crushing Depths
     [428542] = true, -- Crushing Depths
     [426768] = true, -- Lightning Bolt
-    [75992] = true, -- Lightning Surge
+    [75992] = true,  -- Lightning Surge
     [260701] = true, -- Bramble Bolt
     [260700] = true, -- Ruinous Bolt
     [260699] = true, -- Soul Bolt
@@ -794,7 +915,7 @@ common_lists.spellWardingAOE = {
     [200580] = true, --Maddening Roar
     [199389] = true, --Earthshaking Roar
     [427899] = true, -- Firestorm EB
-    [76634] = true,   -- Swell
+    [76634] = true,  -- Swell
     [167385] = true, --uber strike
 
 
@@ -806,102 +927,458 @@ common_lists.spellWardingDebuff = {
     [213611] = true, -- soul rend
     [200084] = true, -- soul blade
     [429263] = true, -- shock blast
-    [409266] = true, --Extinction blast 
+    [409266] = true, --Extinction blast
 
 }
 
 common_lists.reflectable = {
 
-    [410351] = true, [397386] = true, [403699] = true, [403203] = true, [370649] = true, [372275] = true, [381315] = true, [391322] = true, [372315] = true, [372394] = true, 
-    [376851] = true, [385812] = true, [375424] = true, [375653] = true, [250096] = true, [253562] = true, [254959] = true, [252687] = true, [252923] = true, [199663] = true, 
-    [200248] = true, [200238] = true, [200185] = true, [201411] = true, [200684] = true, [200642] = true, [200631] = true, [200630] = true, [204243] = true, [201837] = true, 
-    [201361] = true, [168040] = true, [168092] = true, [427885] = true, [427858] = true, [427863] = true, [164886] = true, [164885] = true, [164965] = true, [164973] = true, 
-    [169840] = true, [169839] = true, [169657] = true, [169658] = true, [413590] = true, [415435] = true, [415436] = true, [411958] = true, [416254] = true, [412285] = true, 
-    [417030] = true, [411763] = true, [418202] = true, [400165] = true, [413606] = true, [413607] = true, [400180] = true, [426783] = true, [429176] = true, [76820] = true, 
-    [426731] = true, [428542] = true, [426768] = true, [75992] = true, [429048] = true, [429173] = true, [428889] = true, [428526] = true, [428263] = true, [428376] = true, 
-    [428374] = true, [428103] = true, [260697] = true, [260701] = true, [260696] = true, [260700] = true, [260698] = true, [260699] = true, [261438] = true, [261439] = true, 
-    [261440] = true, [268271] = true, [268278] = true, [266225] = true, [265372] = true, [264050] = true, [278444] = true, [278456] = true, 
-    [264153] = true, [263943] = true, [264105] = true, [264054] = true, [265881] = true, [265880] = true, [426541] = true, [267824] = true, [264556] = true, [266036] = true, 
-    [381694] = true, [373804] = true, [382474] = true, [378155] = true, [382249] = true, [382798] = true, [281420] = true, [258323] = true, [259092] = true, [257908] = true, 
-    [389443] = true, [374389] = true, [386757] = true, [387571] = true, [387359] = true, [387504] = true, [395690] = true, [375950] = true, [385036] = true, [374706] = true, 
-    [374020] = true, [385963] = true, [373424] = true, [382002] = true, [372538] = true, [383231] = true, [378818] = true, [384597] = true, [375251] = true, 
-    [186269] = true, [200732] = true, [210150] = true, [198496] = true, [369417] = true, [369006] = true, [368996] = true, [369399] = true, [369419] = true, [369674] = true, 
-    [369675] = true, [369823] = true, [377405] = true, [372718] = true, [260879] = true, [265084] = true, [259720] = true, [278961] = true, [266265] = true, 
-    [272180] = true, [188196] = true, [410873] = true, [87762] = true, [87854] = true, [88959] = true, [410760] = true, [374352] = true, [390942] = true, 
-    [387975] = true, [388862] = true, [211401] = true, [211406] = true, [209036] = true, [373364] = true, [209413] = true, [211473] = true, [212784] = true, [191976] = true, 
-    [193668] = true, [192288] = true, [198959] = true, [198962] = true, [198595] = true, [373803] = true, [372808] = true, [372682] = true, [373693] = true, [371984] = true, 
-    [372683] = true, [384194] = true, [385536] = true, [385310] = true, [373869] = true, [392576] = true, [162696] = true, [152853] = true, [398206] = true, [153524] = true, 
-    [152814] = true, [152819] = true, [156776] = true, [156722] = true, [397801] = true, [114571] = true, [106823] = true, [107053] = true, [397914] = true, [397888] = true, 
-    [114803] = true, [397931] = true, [397911] = true, [384978] = true, [371306] = true, [377503] = true, [389804] = true, [374789] = true, [384761] = true, [382670] = true, 
-    [376827] = true, [376829] = true, [381530] = true, [396206] = true, [386012] = true, [387127] = true, [387125] = true, [387613] = true, [386026] = true, [360162] = true, 
-    [361001] = true, [359778] = true, [359976] = true, [364030] = true, [365801] = true, [362885] = true, [363607] = true, [361513] = true, [360959] = true, [366234] = true, 
-    [362383] = true, [360259] = true, [360618] = true, [364865] = true, [365041] = true, [361579] = true, [364073] = true, [360006] = true, [350803] = true, [348969] = true, 
-    [350283] = true, [354231] = true, [350801] = true, [353603] = true, [353931] = true, [353398] = true, [352141] = true, [352650] = true, [358183] = true, [334852] = true, 
-    [335114] = true, [328885] = true, [331573] = true, [342321] = true, [342320] = true, [330968] = true, [346800] = true, [346654] = true, [331634] = true, [326005] = true, 
-    [326994] = true, [326851] = true, [165122] = true, [165152] = true, [173148] = true, [173149] = true, [173150] = true, [173480] = true, [173489] = true, [228252] = true, 
-    [228389] = true, [241788] = true, [228277] = true, [241809] = true, [230161] = true, [230162] = true, [230050] = true, [229711] = true, [374743] = true, [229706] = true, 
-    [227465] = true, [227285] = true, [228991] = true, [227641] = true, [227628] = true, [229083] = true, [298669] = true, [291878] = true, [293827] = true, [294855] = true, 
-    [294860] = true, [299450] = true, [300764] = true, [300659] = true, [300211] = true, [294195] = true, [162422] = true, [162423] = true, [162407] = true, [161588] = true, 
-    [164192] = true, [176032] = true, [176033] = true, [176039] = true, [166335] = true, [166336] = true, [166341] = true, [166340] = true, [176147] = true, [322736] = true, 
-    [323166] = true, [320008] = true, [320230] = true, [325258] = true, [327646] = true, [332605] = true, [334076] = true, [332196] = true, [328707] = true, [333641] = true, 
-    [332234] = true, [333711] = true, [323544] = true, [322977] = true, [323001] = true, [328322] = true, [323538] = true, [328791] = true, [338003] = true, [325700] = true, 
-    [326829] = true, [325876] = true, [323057] = true, [322655] = true, [324923] = true, [322557] = true, [331718] = true, [325223] = true, [325418] = true, [322486] = true, 
-    [324527] = true, [329110] = true, [325550] = true, [322491] = true, [328475] = true, [328002] = true, [328180] = true, [328094] = true, [334926] = true, [320512] = true, 
-    [322554] = true, [328593] = true, [334660] = true, [326712] = true, [321249] = true, [326827] = true, [326837] = true, [326952] = true, [322169] = true, [321038] = true, 
-    [324368] = true, [324662] = true, [324608] = true, [334053] = true, [322817] = true, [317661] = true, [323804] = true, [317959] = true, [328667] = true, [320788] = true, 
-    [322274] = true, [334748] = true, [320462] = true, [320170] = true, [320171] = true, [333479] = true, [323347] = true, [345770] = true, [347632] = true, [347635] = true, 
-    [358919] = true, [357196] = true, [355888] = true, [353836] = true, [355915] = true, [355930] = true, [356031] = true, [356324] = true, [355642] = true, [355641] = true, 
-    [354297] = true, [356843] = true, [355225] = true, [320120] = true, [319669] = true, [324079] = true, [330784] = true, [330700] = true, [330703] = true, [345245] = true, [167385] = true
+    [410351] = true,
+    [397386] = true,
+    [403699] = true,
+    [403203] = true,
+    [370649] = true,
+    [372275] = true,
+    [381315] = true,
+    [391322] = true,
+    [372315] = true,
+    [372394] = true,
+    [376851] = true,
+    [385812] = true,
+    [375424] = true,
+    [375653] = true,
+    [250096] = true,
+    [253562] = true,
+    [254959] = true,
+    [252687] = true,
+    [252923] = true,
+    [199663] = true,
+    [200248] = true,
+    [200238] = true,
+    [200185] = true,
+    [201411] = true,
+    [200684] = true,
+    [200642] = true,
+    [200631] = true,
+    [200630] = true,
+    [204243] = true,
+    [201837] = true,
+    [201361] = true,
+    [168040] = true,
+    [168092] = true,
+    [427885] = true,
+    [427858] = true,
+    [427863] = true,
+    [164886] = true,
+    [164885] = true,
+    [164965] = true,
+    [164973] = true,
+    [169840] = true,
+    [169839] = true,
+    [169657] = true,
+    [169658] = true,
+    [413590] = true,
+    [415435] = true,
+    [415436] = true,
+    [411958] = true,
+    [416254] = true,
+    [412285] = true,
+    [417030] = true,
+    [411763] = true,
+    [418202] = true,
+    [400165] = true,
+    [413606] = true,
+    [413607] = true,
+    [400180] = true,
+    [426783] = true,
+    [429176] = true,
+    [76820] = true,
+    [426731] = true,
+    [428542] = true,
+    [426768] = true,
+    [75992] = true,
+    [429048] = true,
+    [429173] = true,
+    [428889] = true,
+    [428526] = true,
+    [428263] = true,
+    [428376] = true,
+    [428374] = true,
+    [428103] = true,
+    [260697] = true,
+    [260701] = true,
+    [260696] = true,
+    [260700] = true,
+    [260698] = true,
+    [260699] = true,
+    [261438] = true,
+    [261439] = true,
+    [261440] = true,
+    [268271] = true,
+    [268278] = true,
+    [266225] = true,
+    [265372] = true,
+    [264050] = true,
+    [278444] = true,
+    [278456] = true,
+    [264153] = true,
+    [263943] = true,
+    [264105] = true,
+    [264054] = true,
+    [265881] = true,
+    [265880] = true,
+    [426541] = true,
+    [267824] = true,
+    [264556] = true,
+    [266036] = true,
+    [381694] = true,
+    [373804] = true,
+    [382474] = true,
+    [378155] = true,
+    [382249] = true,
+    [382798] = true,
+    [281420] = true,
+    [258323] = true,
+    [259092] = true,
+    [257908] = true,
+    [389443] = true,
+    [374389] = true,
+    [386757] = true,
+    [387571] = true,
+    [387359] = true,
+    [387504] = true,
+    [395690] = true,
+    [375950] = true,
+    [385036] = true,
+    [374706] = true,
+    [374020] = true,
+    [385963] = true,
+    [373424] = true,
+    [382002] = true,
+    [372538] = true,
+    [383231] = true,
+    [378818] = true,
+    [384597] = true,
+    [375251] = true,
+    [186269] = true,
+    [200732] = true,
+    [210150] = true,
+    [198496] = true,
+    [369417] = true,
+    [369006] = true,
+    [368996] = true,
+    [369399] = true,
+    [369419] = true,
+    [369674] = true,
+    [369675] = true,
+    [369823] = true,
+    [377405] = true,
+    [372718] = true,
+    [260879] = true,
+    [265084] = true,
+    [259720] = true,
+    [278961] = true,
+    [266265] = true,
+    [272180] = true,
+    [188196] = true,
+    [410873] = true,
+    [87762] = true,
+    [87854] = true,
+    [88959] = true,
+    [410760] = true,
+    [374352] = true,
+    [390942] = true,
+    [387975] = true,
+    [388862] = true,
+    [211401] = true,
+    [211406] = true,
+    [209036] = true,
+    [373364] = true,
+    [209413] = true,
+    [211473] = true,
+    [212784] = true,
+    [191976] = true,
+    [193668] = true,
+    [192288] = true,
+    [198959] = true,
+    [198962] = true,
+    [198595] = true,
+    [373803] = true,
+    [372808] = true,
+    [372682] = true,
+    [373693] = true,
+    [371984] = true,
+    [372683] = true,
+    [384194] = true,
+    [385536] = true,
+    [385310] = true,
+    [373869] = true,
+    [392576] = true,
+    [162696] = true,
+    [152853] = true,
+    [398206] = true,
+    [153524] = true,
+    [152814] = true,
+    [152819] = true,
+    [156776] = true,
+    [156722] = true,
+    [397801] = true,
+    [114571] = true,
+    [106823] = true,
+    [107053] = true,
+    [397914] = true,
+    [397888] = true,
+    [114803] = true,
+    [397931] = true,
+    [397911] = true,
+    [384978] = true,
+    [371306] = true,
+    [377503] = true,
+    [389804] = true,
+    [374789] = true,
+    [384761] = true,
+    [382670] = true,
+    [376827] = true,
+    [376829] = true,
+    [381530] = true,
+    [396206] = true,
+    [386012] = true,
+    [387127] = true,
+    [387125] = true,
+    [387613] = true,
+    [386026] = true,
+    [360162] = true,
+    [361001] = true,
+    [359778] = true,
+    [359976] = true,
+    [364030] = true,
+    [365801] = true,
+    [362885] = true,
+    [363607] = true,
+    [361513] = true,
+    [360959] = true,
+    [366234] = true,
+    [362383] = true,
+    [360259] = true,
+    [360618] = true,
+    [364865] = true,
+    [365041] = true,
+    [361579] = true,
+    [364073] = true,
+    [360006] = true,
+    [350803] = true,
+    [348969] = true,
+    [350283] = true,
+    [354231] = true,
+    [350801] = true,
+    [353603] = true,
+    [353931] = true,
+    [353398] = true,
+    [352141] = true,
+    [352650] = true,
+    [358183] = true,
+    [334852] = true,
+    [335114] = true,
+    [328885] = true,
+    [331573] = true,
+    [342321] = true,
+    [342320] = true,
+    [330968] = true,
+    [346800] = true,
+    [346654] = true,
+    [331634] = true,
+    [326005] = true,
+    [326994] = true,
+    [326851] = true,
+    [165122] = true,
+    [165152] = true,
+    [173148] = true,
+    [173149] = true,
+    [173150] = true,
+    [173480] = true,
+    [173489] = true,
+    [228252] = true,
+    [228389] = true,
+    [241788] = true,
+    [228277] = true,
+    [241809] = true,
+    [230161] = true,
+    [230162] = true,
+    [230050] = true,
+    [229711] = true,
+    [374743] = true,
+    [229706] = true,
+    [227465] = true,
+    [227285] = true,
+    [228991] = true,
+    [227641] = true,
+    [227628] = true,
+    [229083] = true,
+    [298669] = true,
+    [291878] = true,
+    [293827] = true,
+    [294855] = true,
+    [294860] = true,
+    [299450] = true,
+    [300764] = true,
+    [300659] = true,
+    [300211] = true,
+    [294195] = true,
+    [162422] = true,
+    [162423] = true,
+    [162407] = true,
+    [161588] = true,
+    [164192] = true,
+    [176032] = true,
+    [176033] = true,
+    [176039] = true,
+    [166335] = true,
+    [166336] = true,
+    [166341] = true,
+    [166340] = true,
+    [176147] = true,
+    [322736] = true,
+    [323166] = true,
+    [320008] = true,
+    [320230] = true,
+    [325258] = true,
+    [327646] = true,
+    [332605] = true,
+    [334076] = true,
+    [332196] = true,
+    [328707] = true,
+    [333641] = true,
+    [332234] = true,
+    [333711] = true,
+    [323544] = true,
+    [322977] = true,
+    [323001] = true,
+    [328322] = true,
+    [323538] = true,
+    [328791] = true,
+    [338003] = true,
+    [325700] = true,
+    [326829] = true,
+    [325876] = true,
+    [323057] = true,
+    [322655] = true,
+    [324923] = true,
+    [322557] = true,
+    [331718] = true,
+    [325223] = true,
+    [325418] = true,
+    [322486] = true,
+    [324527] = true,
+    [329110] = true,
+    [325550] = true,
+    [322491] = true,
+    [328475] = true,
+    [328002] = true,
+    [328180] = true,
+    [328094] = true,
+    [334926] = true,
+    [320512] = true,
+    [322554] = true,
+    [328593] = true,
+    [334660] = true,
+    [326712] = true,
+    [321249] = true,
+    [326827] = true,
+    [326837] = true,
+    [326952] = true,
+    [322169] = true,
+    [321038] = true,
+    [324368] = true,
+    [324662] = true,
+    [324608] = true,
+    [334053] = true,
+    [322817] = true,
+    [317661] = true,
+    [323804] = true,
+    [317959] = true,
+    [328667] = true,
+    [320788] = true,
+    [322274] = true,
+    [334748] = true,
+    [320462] = true,
+    [320170] = true,
+    [320171] = true,
+    [333479] = true,
+    [323347] = true,
+    [345770] = true,
+    [347632] = true,
+    [347635] = true,
+    [358919] = true,
+    [357196] = true,
+    [355888] = true,
+    [353836] = true,
+    [355915] = true,
+    [355930] = true,
+    [356031] = true,
+    [356324] = true,
+    [355642] = true,
+    [355641] = true,
+    [354297] = true,
+    [356843] = true,
+    [355225] = true,
+    [320120] = true,
+    [319669] = true,
+    [324079] = true,
+    [330784] = true,
+    [330700] = true,
+    [330703] = true,
+    [345245] = true,
+    [167385] = true
 
-    
+
 }
 
-   
+
 common_lists.Personals = {
-    [48707] = true, -- Anti-Magic Shell
-    [48792] = true, -- Icebound Fortitude
+    [48707] = true,  -- Anti-Magic Shell
+    [48792] = true,  -- Icebound Fortitude
     [198589] = true, -- Blur
     [187827] = true, -- Metamorphosis
     [102342] = true, -- Ironbark
-    [61336] = true, -- Survival Instincts
+    [61336] = true,  -- Survival Instincts
     [363916] = true, -- Obsidian Scales
     [186265] = true, -- Aspect of the Turtle
     [264735] = true, -- Survival of the Fittest
-    [45438] = true, -- Ice Block
+    [45438] = true,  -- Ice Block
     [342245] = true, -- Alter Time
     [116849] = true, -- Life Cocoon
     [122783] = true, -- Diffuse Magic
     [122278] = true, -- Dampen Harm
-    [642] = true, -- Divine Shield
-    [498] = true, -- Divine Protection
-    [47788] = true, -- Guardian Spirit
-    [33206] = true, -- Pain Suppression
-    [47585] = true, -- Dispersion
-    [31224] = true, -- Cloak of Shadows
+    [642] = true,    -- Divine Shield
+    [498] = true,    -- Divine Protection
+    [47788] = true,  -- Guardian Spirit
+    [33206] = true,  -- Pain Suppression
+    [47585] = true,  -- Dispersion
+    [31224] = true,  -- Cloak of Shadows
     [108271] = true, -- Astral Shift
     [104773] = true, -- Unending Resolve
     [108416] = true, -- Dark Pact
     [118038] = true, -- Die by the Sword
-    [6940] = true, -- Blessing of Sacrifice
+    [6940] = true,   -- Blessing of Sacrifice
 }
 
 common_lists.TankDefs = {
     [194679] = true, -- Rune Tap
-    [48792] = true, -- Icebound Fortitude
-    [55233] = true, -- Vampiric Blood
+    [48792] = true,  -- Icebound Fortitude
+    [55233] = true,  -- Vampiric Blood
     [187827] = true, -- Metamorphosis
-    [61336] = true, -- Survival Instincts
-    [22812] = true, -- Barkskin
+    [61336] = true,  -- Survival Instincts
+    [22812] = true,  -- Barkskin
     [122278] = true, -- Dampen Harm
     [122783] = true, -- Diffuse Magic
-    [642] = true, -- Divine Shield
+    [642] = true,    -- Divine Shield
     [228049] = true, -- Guardian of the Forgotten Queen
     [204018] = true, -- Blessing of Spellwarding
-    [31850] = true, -- Ardent Defender
-    [86659] = true, -- Guardian of Ancient Kings
-    [871] = true, -- Shield Wall
+    [31850] = true,  -- Ardent Defender
+    [86659] = true,  -- Guardian of Ancient Kings
+    [871] = true,    -- Shield Wall
     [392966] = true, -- Spell Block
-    [23920] = true, -- Spell Reflection
+    [23920] = true,  -- Spell Reflection
     [322507] = true, -- Celestial Brew
     [115203] = true, -- Fortifying Brew
 }
@@ -936,7 +1413,7 @@ common_lists.harmFulDebuff = {
     [204645] = true, -- Crushing Grip
     [255835] = true, -- Transfusion
 
-    --[409266] = true, --Extinction blast 
+    --[409266] = true, --Extinction blast
 
 
 }
@@ -969,7 +1446,7 @@ common_lists.SacList = {
     [204645] = true, -- oakheart grip
     [255835] = true, -- transfusion
     [198079] = true, -- hateful gaze
-    --[409266] = true, --Extinction blast 
+    --[409266] = true, --Extinction blast
     [196587] = true, -- Soul Burst
     [201733] = true, --stnging swarm
     --[250096] = true, --wracking pain
@@ -1005,7 +1482,7 @@ common_lists.powerPotions = {
     [191389] = true, -- Elemental Potion of Power
     [191388] = true, -- Elemental Potion of Power
 
-    
+
 }
 common_lists.manaPotions = {
     [191386] = true, -- Aerated Mana Potion
@@ -1038,7 +1515,7 @@ common_lists.immunity = {
     [329636] = true, -- Hardened Stone Form
     [367573] = true, -- Genesis Bulwark
     [362505] = true, -- Domination's Grasp
-    [84589] = true, -- Deflecting Winds
+    [84589] = true,  -- Deflecting Winds
     [376724] = true, -- Crackling Shield
     [383840] = true, -- Ablative Barrier
     [388084] = true, -- Glacial Shield
@@ -1054,7 +1531,7 @@ common_lists.immunity = {
     [335141] = true, -- Dark Shroud
     [373233] = true, -- Reconfiguration Emitter
     [406730] = true, -- Crucible Instability
-    [75683] = true, -- High Tide
+    [75683] = true,  -- High Tide
 }
 
 
@@ -1077,7 +1554,7 @@ common_lists.BOPList = {
     [267907] = true, --soul-thorns
     [260551] = true, -- soul thorns
     [257407] = true, -- pursuit
-    [198079] = true, -- hateful gaze
+    --[198079] = true, -- hateful gaze
     [426659] = true, --razor jaws
 }
 
@@ -1094,14 +1571,14 @@ common_lists.purge = {
 
 
 common_lists.soothe = {
-    [38166] = true, -- Enrage
+    [38166] = true,  -- Enrage
     [197797] = true, -- Arcane Blitz
     [257260] = true, -- Enrage
     [165213] = true, -- Enraged Growth
     [255824] = true, -- Fanatic's Rage
     [428291] = true, -- Slithering Assault
     [228318] = true, -- Enrage
-    [8599] = true, -- Enrage
+    [8599] = true,   -- Enrage
     [167385] = true, -- Uber Strike
     [412012] = true, -- Temposlice
     [412695] = true, -- Relentless Hunger
@@ -1149,7 +1626,7 @@ common_lists.PoisonDiseaseList = {
     [169658] = true, -- Everbloom Poisonous Claws
     [427460] = true, -- Everbloom Toxic Bloom
     [76516] = true,  -- Throne of the Tides Poisoned Spear
-    [264520] = true,  -- Waycrest Manor Severing Serpent
+    [264520] = true, -- Waycrest Manor Severing Serpent
     [377864] = true, -- Brakenhide Hollow: Infectious Spit
     [368081] = true, -- Brakenhide Hollow: Withering
     [373753] = true, -- Brakenhide Hollow: Withering
@@ -1167,7 +1644,7 @@ common_lists.PoisonDiseaseList = {
     [273226] = true, -- The Underrot: Decaying Spores
     [250372] = true, -- Atal'Dazar: Lingering Nausea
     [201365] = true, -- Darkheart Thicket: Darksoul Drain
-    [76363] = true, -- Throne of the Tides: Wave Of Corruption
+    [76363] = true,  -- Throne of the Tides: Wave Of Corruption
     --[261440] = true, -- Waycrest Manor: Virulent Pathogen
     [264050] = true, -- Waycrest Manor: Infected Thorn
 
@@ -1196,7 +1673,7 @@ common_lists.BleedList2 = {
     [411700] = true, -- DOTI: Upper - Slobbering Bite
     [271178] = true, -- Waycrest Manor - Ravaging Leap
     [260741] = true, -- Waycrest Manor - Jagged Nettles
-    [264556] = true,  -- Waycrest Manor - Tearing Strike
+    [264556] = true, -- Waycrest Manor - Tearing Strike
 
 }
 
@@ -1208,81 +1685,81 @@ common_lists.aoeIncomingWarriorPhysical = {
     [409456] = true, -- Earth Surge
     [414535] = true, -- Stonecracker
     [198073] = true, -- Earthshaking Stomp
-    [428868] = true,  -- Putrid Roar
-    [200580] = true,  -- Maddening Roar
+    [428868] = true, -- Putrid Roar
+    [200580] = true, -- Maddening Roar
 
 }
 
 common_lists.aoeIncomingWarriorMagic = {
-    
-        [427899] = true, -- Firestorm EB
-        [266181] = true, -- Dread Essence
-        [260703] = true, -- Runic Mark
-        [260773] = true, -- Dire Ritual
-        [264734] = true, -- Consume Apocalyptic
-        [415770] = true, -- Infinite Bolt Volley
-        [413622] = true, -- Infinite Fury
-        [413607] = true, -- Corroding Volley
-        [417481] = true, -- Displace Chronosequence
-        [411300] = true, -- Fish Bolt Volley
-        [196587] = true, -- Soul Burst
-        [202019] = true, -- Shadowbolt Volley
-        [264150] = true, -- Shattered
-        [263959] = true, -- Soul Volley
-        [265876] = true, -- Ruinous Volley
-        [259572] = true,  -- Noxious Stench
-        [416264] = true,  -- Infinite Corruption
-        [200050] = true,  -- Apocalyptic Nightmare
-        [428374] = true,  -- Focus Tempest
-        [413023] = true,  -- Ancient Radiance
-        [427223] = true,  -- Cinderbolt Salve Timer
-        [174921] = true,  -- Noxious Eruption
-        [177145] = true,  -- Noxious Eruption
-        [76634] = true,   -- Swell
-        [419327] = true,  -- Infinite Schism
-        [175973] = true   -- Colossal Blow
-    }
 
-    common_lists.uniqueIDs = {
-        240443, 377405, 389179, 372682, 384161, 370766, 388777,
-        374350, 377510, 397907, 415437, 404141, 403910, 374389,
-        217851, 273226,
-        225909, -- Soul Vemon
-        261440, -- Virulent Pathogen
-        264050,  -- Waycrest Manor: Infected Thorn
-        --255582, -- Molten Gold
-        200182, -- Festering Rip
-        412044, -- Temp Slice
-        416716, -- Sheared Life
-        415554, -- Chronoburst
-        400681, -- spark of tyr
-        429048, -- flameshock
-    }
-    common_lists.CurseList = {
-        369365, -- Uldaman: Curse of Stone
-        369366, -- Uldaman: Trapped in Stone
-        369365, -- Brakenhide Hollow: Curse of Stone
-        391762, -- Netlharus: Curse of Dragon hoard
-        387615, -- Nokhud Offensive: Grasp of the Dead
-        397911, -- Temple of the Jade Serpent: Touch of Ruin
-        397936, -- Temple of the Jade Serpent: Touch of Ruin
-        114803, -- Temple of the Jade Serpent: Throw Torch
-        110125, -- Temple of the Jade Serpent: Shattered Resolve
-        409465, -- Affix: Cursed Spirit
-        265433, -- The Underrot: Withering Curse
-        -- Atal'Dazar
-        --252781, -- Unstable Hex
-        -- Darkheart Thicket
-        201839, -- Curse Of Isolation
-        -- DOTI: Upper
-        413618, -- Timeless Curse
-        -- Throne of the Tides
-        76820, -- Hex
-        -- Waycrest Manor
-        260703, -- Unstable Runic Mark
-        264105, -- Runic Mark
-        265880, -- Dread Mark
-    }
+    [427899] = true, -- Firestorm EB
+    [266181] = true, -- Dread Essence
+    [260703] = true, -- Runic Mark
+    [260773] = true, -- Dire Ritual
+    [264734] = true, -- Consume Apocalyptic
+    [415770] = true, -- Infinite Bolt Volley
+    [413622] = true, -- Infinite Fury
+    [413607] = true, -- Corroding Volley
+    [417481] = true, -- Displace Chronosequence
+    [411300] = true, -- Fish Bolt Volley
+    [196587] = true, -- Soul Burst
+    [202019] = true, -- Shadowbolt Volley
+    --[264150] = true, -- Shattered
+    [263959] = true, -- Soul Volley
+    [265876] = true, -- Ruinous Volley
+    [259572] = true, -- Noxious Stench
+    [416264] = true, -- Infinite Corruption
+    [200050] = true, -- Apocalyptic Nightmare
+    [428374] = true, -- Focus Tempest
+    [413023] = true, -- Ancient Radiance
+    [427223] = true, -- Cinderbolt Salve Timer
+    [174921] = true, -- Noxious Eruption
+    [177145] = true, -- Noxious Eruption
+    [76634] = true,  -- Swell
+    [419327] = true, -- Infinite Schism
+    [175973] = true  -- Colossal Blow
+}
+
+common_lists.uniqueIDs = {
+    240443, 377405, 389179, 372682, 384161, 370766, 388777,
+    374350, 377510, 397907, 415437, 404141, 403910, 374389,
+    217851, 273226,
+    225909, -- Soul Vemon
+    261440, -- Virulent Pathogen
+    264050, -- Waycrest Manor: Infected Thorn
+    --255582, -- Molten Gold
+    200182, -- Festering Rip
+    412044, -- Temp Slice
+    416716, -- Sheared Life
+    415554, -- Chronoburst
+    400681, -- spark of tyr
+    429048, -- flameshock
+}
+common_lists.CurseList = {
+    369365, -- Uldaman: Curse of Stone
+    369366, -- Uldaman: Trapped in Stone
+    369365, -- Brakenhide Hollow: Curse of Stone
+    391762, -- Netlharus: Curse of Dragon hoard
+    387615, -- Nokhud Offensive: Grasp of the Dead
+    397911, -- Temple of the Jade Serpent: Touch of Ruin
+    397936, -- Temple of the Jade Serpent: Touch of Ruin
+    114803, -- Temple of the Jade Serpent: Throw Torch
+    110125, -- Temple of the Jade Serpent: Shattered Resolve
+    409465, -- Affix: Cursed Spirit
+    265433, -- The Underrot: Withering Curse
+    -- Atal'Dazar
+    --252781, -- Unstable Hex
+    -- Darkheart Thicket
+    201839, -- Curse Of Isolation
+    -- DOTI: Upper
+    413618, -- Timeless Curse
+    -- Throne of the Tides
+    76820,  -- Hex
+    -- Waycrest Manor
+    260703, -- Unstable Runic Mark
+    264105, -- Runic Mark
+    265880, -- Dread Mark
+}
 common_lists.DiseaseList = {
     -- 69818, -- Uldaman: Diseased Bite
     377864, -- Brakenhide Hollow: Infectious Spit
@@ -1304,7 +1781,7 @@ common_lists.DiseaseList = {
     201365, -- Darkheart Thicket: Darksoul Drain
     76363,  -- Throne of the Tides: Wave Of Corruption
     --261440, -- Waycrest Manor: Virulent Pathogen
-    264050,  -- Waycrest Manor: Infected Thorn
+    264050, -- Waycrest Manor: Infected Thorn
 
 }
 common_lists.MagicList = {
@@ -1421,6 +1898,7 @@ common_lists.MagicList = {
     412027, -- Dawn of the Infinite Chronal Burn
     412378, -- Dawn of the Infinite Dizzying Sands
     407121, -- Dawn of the Infinite Immolate
+    419517, -- Dawn of the INfinute ChonroSeal
     428084, -- Everbloom Glacial Fusion
     427863, -- Everbloom Frostbolt
     169840, -- Everbloom Frostbolt
@@ -1433,7 +1911,7 @@ common_lists.MagicList = {
     265881, -- Waycrest Manor Decaying Touch
     264378, -- Waycrest Manor Fragment Soul
     264390, -- Waycrest Manor Spellbind
-    264407,  -- Waycrest Manor Horrific Visage
+    264407, -- Waycrest Manor Horrific Visage
     417807, -- Aflame
     200182,
 
@@ -1498,21 +1976,27 @@ common_lists.LocalPlayerCDs = {
     -- 325216 -- Bonedust Brew (not sure on this one)
 
     -- Paladin Cooldowns
-    31884, -- Avenging Wrath
+    31884,  -- Avenging Wrath
+    231895, -- Crusade
 
     -- Shaman Cooldowns
     191634, -- Stormkeeper
     --198067, -- Fire Elemental
-    51533,  -- Feral Spirit
+    333957, -- Feral Spirit
+    114050, -- Ascend
+    114051, -- Ascend
 
     -- Hunter Cooldowns
     288613, -- Trueshot
     19574,  -- Bestial Wrath
+    193530, -- Aspect of the Wild
+    360952, -- Aspect of the Turtle
 
     -- Mage Cooldowns
     190319, -- Combustion
     365350, -- Arcane Surge
     12472,  -- Icy Veins
+    12042,  -- AP
 
     -- Warrior Cooldowns
     107574, -- Avatar
@@ -1521,6 +2005,7 @@ common_lists.LocalPlayerCDs = {
     -- Demon Hunter Cooldowns
     323639, -- The Hunt
     191427, -- Metamorphosis
+    200166, -- Meta
 
     -- Priest Cooldowns
     194249, -- Voidform
@@ -1533,6 +2018,9 @@ common_lists.LocalPlayerCDs = {
     315443, -- Abomination Limb
     317250, -- Summon Gargoyle
     207289, -- Unholy Assault
+    47568,  -- Empower Rune Weapon
+    49028,  -- Rune Weapon
+    152279, -- Breathe
 
     -- Druid Cooldowns
     102543, -- Incarnation: Avatar of Ashamane
@@ -1540,6 +2028,8 @@ common_lists.LocalPlayerCDs = {
     102560, -- Incarnation: Chosen of Elune
     194223, -- Celestial Alignment
     323764, -- Convoke the Spirits
+    383410, -- Obs
+    390414, -- Incan + Obs
 
     -- Warlock Cooldowns
     325640, -- Soul Rot
@@ -1548,12 +2038,16 @@ common_lists.LocalPlayerCDs = {
     265187, -- Summon Demonic Tyrant
     267171, -- Demonic Strength
     1122,   -- Summon Infernal
+    265273, -- Demonic Power
 
     -- Rogue Cooldowns
     360194, -- Deathmark
     328305, -- Sepsis
     13750,  -- Adrenaline Rush
     121471, -- Shadow Blades
+
+    -- Evoker
+    375087 -- Dragonrage
 }
 
 common_lists.BleedList = {
@@ -1563,23 +2057,23 @@ common_lists.BleedList = {
     372570, -- Bold Ambush
     367481, -- Bloody Bite
     378020, -- Gash Frenzy
-    372718,  -- Earthen Shards
+    372718, -- Earthen Shards
     255814, -- Atal'Dazar - Rending Maul
-    225963,       -- Black Rook Hold - Bloodthirsty Leap
-    197546,       -- Black Rook Hold - Brutal Glaive
-    196376,       -- Darkheart Thicket - Grievous Tear
-    225484,       -- Darkheart Thicket - Grievous Rip
-    412285,       -- DOTI: Lower - Stonebolt
-    418009,       -- DOTI: Upper - Serrated Arrows
-    407120,       -- DOTI: Upper - Serrated Axe
-    416258,       -- DOTI: Upper - Stonebolt
-    407313,       -- DOTI: Upper - Shrapnel
-    412505,       -- DOTI: Upper - Rending Cleave
-    411700,       -- DOTI: Upper - Slobbering Bite
-    271178,       -- Waycrest Manor - Ravaging Leap
-    260741,       -- Waycrest Manor - Jagged Nettles
-    264556,       -- Waycrest Manor - Tearing Strike
-    393444,       -- Gushing Wound
+    225963, -- Black Rook Hold - Bloodthirsty Leap
+    197546, -- Black Rook Hold - Brutal Glaive
+    196376, -- Darkheart Thicket - Grievous Tear
+    225484, -- Darkheart Thicket - Grievous Rip
+    412285, -- DOTI: Lower - Stonebolt
+    418009, -- DOTI: Upper - Serrated Arrows
+    407120, -- DOTI: Upper - Serrated Axe
+    416258, -- DOTI: Upper - Stonebolt
+    407313, -- DOTI: Upper - Shrapnel
+    412505, -- DOTI: Upper - Rending Cleave
+    411700, -- DOTI: Upper - Slobbering Bite
+    271178, -- Waycrest Manor - Ravaging Leap
+    260741, -- Waycrest Manor - Jagged Nettles
+    264556, -- Waycrest Manor - Tearing Strike
+    393444, -- Gushing Wound
 }
 common_lists.HeavyDmgList = {
     410873, -- Rushing Wind
@@ -1588,12 +2082,12 @@ common_lists.HeavyDmgList = {
 }
 
 common_lists.HoTList = { -- Not sure on the IDs for these (the actual AURA ID)
-    139,          -- Renew
-    774,          -- Rejuvenation
-    8936,         -- Regrowth
-    48438,        -- Wild Growth
-    254419,       -- Riptide
-    124682        -- Enveloping Mist
+    139,                 -- Renew
+    774,                 -- Rejuvenation
+    8936,                -- Regrowth
+    48438,               -- Wild Growth
+    254419,              -- Riptide
+    124682               -- Enveloping Mist
 }
 common_lists.shieldList = {
     17,    -- Word: Shield
@@ -1610,9 +2104,10 @@ common_lists.npcsToHealDictionary = {
     [204449] = true, -- Chromie
     [208459] = true, -- Fiery tree (RAID)
     [208461] = true, -- Scorching Roots (RAID)
-    [207800] = true,  -- Spirit of the Kaldorei (RAID)
-    [194646] = true,  -- Dummy
-    [212590] = true,  -- Treant Seedling
+    [207800] = true, -- Spirit of the Kaldorei (RAID)
+    [194646] = true, -- Dummy
+    [212590] = true, -- Treant Seedling
+    [204773] = true, -- Afflicted
 
 }
 
@@ -1620,7 +2115,7 @@ common_lists.PhysicalDmgList = {
     -- Atal'Dazar
     256882, -- Wild Trash
     -- Blackrook Hold
-    200291, -- Knife Dance   
+    200291, -- Knife Dance
 }
 
 common_lists.MagicalDmgList = {
@@ -1641,201 +2136,201 @@ common_lists.MagicalDmgList = {
     -- DOTI: Murozonds Rise
     413606, -- Corroding Volley
     411952, -- Millenium Aid
-    -- Everbloom 
+    -- Everbloom
     427223, -- Cinderbolt Salvo
     428951, -- Vibrant Flourish
     169445, -- Noxious Eruption
     -- Throne of Tides
     427668, -- Frestering Shockwave
     428868, -- Putrid Roar
-    76634, -- Swell
+    76634,  -- Swell
     -- Waycrest Manor
     260702, -- Unstable Runic Mark
 }
 
 
 common_lists.dummies = {
--- Misc/Unknown
-	[79987]  = "Training Dummy", 	          -- Location Unknown
-	[92169]  = "Raider's Training Dummy",     -- Tanking (Eastern Plaguelands)
-	[96442]  = "Training Dummy", 			  -- Damage (Location Unknown)
-	[109595] = "Training Dummy",              -- Location Unknown
-	[113963] = "Raider's Training Dummy", 	  -- Damage (Location Unknown)
-	[131985] = "Dungeoneer's Training Dummy", -- Damage (Zuldazar)
-	[131990] = "Raider's Training Dummy",     -- Tanking (Zuldazar)
-	[132976] = "Training Dummy", 			  -- Morale Booster (Zuldazar)
--- Level 1
-	[17578]  = "Hellfire Training Dummy",     -- Lvl 1 (The Shattered Halls)
-	[60197]  = "Training Dummy",              -- Lvl 1 (Scarlet Monastery)
-	[64446]  = "Training Dummy",              -- Lvl 1 (Scarlet Monastery)
-	[144077] = "Training Dummy",              -- Lvl 1 (Dazar'alor) - Morale Booster
--- Level 3
-	[44171]  = "Training Dummy",              -- Lvl 3 (New Tinkertown, Dun Morogh)
-	[44389]  = "Training Dummy",              -- Lvl 3 (Coldridge Valley)
-	[44848]  = "Training Dummy", 			  -- Lvl 3 (Camp Narache, Mulgore)
-	[44548]  = "Training Dummy",              -- Lvl 3 (Elwynn Forest)
-	[44614]  = "Training Dummy",              -- Lvl 3 (Teldrassil, Shadowglen)
-	[44703]  = "Training Dummy", 			  -- Lvl 3 (Ammen Vale)
-	[44794]  = "Training Dummy", 			  -- Lvl 3 (Dethknell, Tirisfal Glades)
-	[44820]  = "Training Dummy",              -- Lvl 3 (Valley of Trials, Durotar)
-	[44937]  = "Training Dummy",              -- Lvl 3 (Eversong Woods, Sunstrider Isle)
-	[48304]  = "Training Dummy",              -- Lvl 3 (Kezan)
--- Level 55
-	[32541]  = "Initiate's Training Dummy",   -- Lvl 55 (Plaguelands: The Scarlet Enclave)
-	[32545]  = "Initiate's Training Dummy",   -- Lvl 55 (Eastern Plaguelands)
--- Level 60
-	[32666]  = "Training Dummy",              -- Lvl 60 (Siege of Orgrimmar, Darnassus, Ironforge, ...)
--- Level 65
-	[32542]  = "Disciple's Training Dummy",   -- Lvl 65 (Eastern Plaguelands)
--- Level 70
-	[32667]  = "Training Dummy",              -- Lvl 70 (Orgrimmar, Darnassus, Silvermoon City, ...)
--- Level 75
-	[32543]  = "Veteran's Training Dummy",    -- Lvl 75 (Eastern Plaguelands)
--- Level 80
-	[31144]  = "Training Dummy",              -- Lvl 80 (Orgrimmar, Darnassus, Ironforge, ...)
-	[32546]  = "Ebon Knight's Training Dummy",-- Lvl 80 (Eastern Plaguelands)
--- Level 85
-	[46647]  = "Training Dummy",              -- Lvl 85 (Orgrimmar, Stormwind City)
--- Level 90
-	[67127]  = "Training Dummy",              -- Lvl 90 (Vale of Eternal Blossoms)
--- Level 95
-	[79414]  = "Training Dummy",              -- Lvl 95 (Broken Shore, Talador)
--- Level 100
-	[87317]  = "Training Dummy",              -- Lvl 100 (Lunarfall, Frostwall) - Damage
-	[87321]  = "Training Dummy",              -- Lvl 100 (Stormshield) - Healing
-	[87760]  = "Training Dummy",              -- Lvl 100 (Frostwall) - Damage
-	[88289]  = "Training Dummy",              -- Lvl 100 (Frostwall) - Healing
-	[88316]  = "Training Dummy",              -- Lvl 100 (Lunarfall) - Healing
-	[88835]  = "Training Dummy",              -- Lvl 100 (Warspear) - Healing
-	[88906]  = "Combat Dummy",                -- Lvl 100 (Nagrand)
-	[88967]  = "Training Dummy",              -- Lvl 100 (Lunarfall, Frostwall)
-	[89078]  = "Training Dummy",              -- Lvl 100 (Frostwall, Lunarfall)
--- Levl 100 - 110
-	[92164]  = "Training Dummy", 			  -- Lvl 100 - 110 (Dalaran) - Damage
-	[92165]  = "Dungeoneer's Training Dummy", -- Lvl 100 - 110 (Eastern Plaguelands) - Damage
-	[92167]  = "Training Dummy",              -- Lvl 100 - 110 (The Maelstrom, Eastern Plaguelands, The Wandering Isle)
-	[92168]  = "Dungeoneer's Training Dummy", -- Lvl 100 - 110 (The Wandering Isles, Easter Plaguelands)
-	[100440] = "Training Bag", 				  -- Lvl 100 - 110 (The Wandering Isles)
-	[100441] = "Dungeoneer's Training Bag",   -- Lvl 100 - 110 (The Wandering Isles)
-	[102045] = "Rebellious Wrathguard",       -- Lvl 100 - 110 (Dreadscar Rift) - Dungeoneer
-	[102048] = "Rebellious Felguard",         -- Lvl 100 - 110 (Dreadscar Rift)
-	[102052] = "Rebellious Imp", 			  -- Lvl 100 - 110 (Dreadscar Rift) - AoE
-	[103402] = "Lesser Bulwark Construct",    -- Lvl 100 - 110 (Hall of the Guardian)
-	[103404] = "Bulwark Construct",           -- Lvl 100 - 110 (Hall of the Guardian) - Dungeoneer
-	[107483] = "Lesser Sparring Partner",     -- Lvl 100 - 110 (Skyhold)
-	[107555] = "Bound Void Wraith",           -- Lvl 100 - 110 (Netherlight Temple)
-	[107557] = "Training Dummy",              -- Lvl 100 - 110 (Netherlight Temple) - Healing
-	[108420] = "Training Dummy",              -- Lvl 100 - 110 (Stormwind City, Durotar)
-	[111824] = "Training Dummy", 			  -- Lvl 100 - 110 (Azsuna)
-	[113674] = "Imprisoned Centurion",        -- Lvl 100 - 110 (Mardum, the Shattered Abyss) - Dungeoneer
-	[113676] = "Imprisoned Weaver", 	      -- Lvl 100 - 110 (Mardum, the Shattered Abyss)
-	[113687] = "Imprisoned Imp",              -- Lvl 100 - 110 (Mardum, the Shattered Abyss) - Swarm
-	[113858] = "Training Dummy",              -- Lvl 100 - 110 (Trueshot Lodge) - Damage
-	[113859] = "Dungeoneer's Training Dummy", -- Lvl 100 - 110 (Trueshot Lodge) - Damage
-	[113862] = "Training Dummy",              -- Lvl 100 - 110 (Trueshot Lodge) - Damage
-	[113863] = "Dungeoneer's Training Dummy", -- Lvl 100 - 110 (Trueshot Lodge) - Damage
-	[113871] = "Bombardier's Training Dummy", -- Lvl 100 - 110 (Trueshot Lodge) - Damage
-	[113966] = "Dungeoneer's Training Dummy", -- Lvl 100 - 110 - Damage
-	[113967] = "Training Dummy",              -- Lvl 100 - 110 (The Dreamgrove) - Healing
-	[114832] = "PvP Training Dummy",          -- Lvl 100 - 110 (Stormwind City)
-	[114840] = "PvP Training Dummy",          -- Lvl 100 - 110 (Orgrimmar)
--- Level 102
-	[87318]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Lunarfall) - Damage
-	[87322]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Stormshield) - Tank
-	[87761]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Frostwall) - Damage
-	[88288]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Frostwall) - Tank
-	[88314]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Lunarfall) - Tank
-	[88836]  = "Dungeoneer's Training Dummy", -- Lvl 102 (Warspear) - Tank
-	[93828]  = "Training Dummy",              -- Lvl 102 (Hellfire Citadel)
-	[97668]  = "Boxer's Trianing Dummy",      -- Lvl 102 (Highmountain)
-	[98581]  = "Prepfoot Training Dummy",     -- Lvl 102 (Highmountain)
--- Level 110 - 120
-	[126781] = "Training Dummy", 			  -- Lvl 110 - 120 (Boralus) - Damage
-	[131989] = "Training Dummy", 			  -- Lvl 110 - 120 (Boralus) - Damage
-	[131994] = "Training Dummy", 			  -- Lvl 110 - 120 (Boralus) - Healing
-	[144082] = "Training Dummy",              -- Lvl 110 - 120 (Dazar'alor) - PVP Damage
-	[144085] = "Training Dummy", 			  -- Lvl 110 - 120 (Dazar'alor) - Damage
-	[144081] = "Training Dummy",              -- Lvl 110 - 120 (Dazar'alor) - Damage
-	[153285] = "Training Dummy", 			  -- Lvl 110 - 120 (Ogrimmar) - Damage
-	[153292] = "Training Dummy", 			  -- Lvl 110 - 120 (Stormwind) - Damage
--- Level 111 - 120
-	[131997] = "Training Dummy", 			  -- Lvl 111 - 120 (Boralus, Zuldazar) - PVP Damage
-	[131998] = "Training Dummy",              -- Lvl 111 - 120 (Boralus, Zuldazar) - PVP Healing
--- Level 112 - 120
-	[144074] = "Training Dummy", 			  -- Lvl 112 - 120 (Dazar'alor) - PVP Healing
--- Level 112 - 122
-	[131992] = "Dungeoneer's Training Dummy",  -- Lvl 112 - 122 (Boralus) - Tanking
--- Level 113 - 120
-	[132036] = "Training Dummy", 			  -- Lvl 113 - 120 (Boralus) - Healing
--- Level 113 - 122
-	[144078] = "Dungeoneer's Training Dummy", -- Lvl 113 - 122 (Dazar'alor) - Tanking
--- Level 114 - 120
-	[144075] = "Training Dummy", 			  -- Lvl 114 - 120 (Dazar'alor) - Healing
--- Level 60
-	[174569] = "Training Dummy",			  -- Lvl 60 (Ardenweald)
-	[174570] = "Swarm Training Dummy",		  -- Lvl 60 (Ardenweald)
-	[174571] = "Cleave Training Dummy",		  -- Lvl 60 (Ardenweald)
-	[174487] = "Competent Veteran", 		  -- Lvl 60 (Location Unknown)
-	[173942] = "Training Dummy",			  -- Lvl 60 (Revendreth)
-	[175456] = "Swarm Training Dummy",		  -- Lvl 60 (Revendreth)
-	[175455] = "Cleave Training Dummy",		  -- Lvl 60 (Revendreth)
--- Level 62
-	[174484] = "Immovable Champion", 		  -- Lvl 62 (Location Unknown)
-	[175449] = "Dungeoneer's Training Dummy", -- Lvl 62 (Revendreth)
-	[173957] = "Necrolord's Resolve",		  -- Lvl 62 (Oribos)
-	[173955] = "Pride's Resolve",		 	  -- Lvl 62 (Oribos)
-	[173954] = "Nature's Resolve",		 	  -- Lvl 62 (Oribos)
-	[173919] = "Valiant's Resolve",		 	  -- Lvl 62 (Oribos)
--- Level ??
-	[24792]  = "Advanced Training Dummy",     -- Lvl ?? Boss (Location Unknown)
-	[30527]  = "Training Dummy", 		      -- Lvl ?? Boss (Location Unknown)
-	[31146]  = "Raider's Training Dummy",     -- Lvl ?? (Orgrimmar, Stormwind City, Ironforge, ...)
-	[87320]  = "Raider's Training Dummy",     -- Lvl ?? (Lunarfall, Stormshield) - Damage
-	[87329]  = "Raider's Training Dummy",     -- Lvl ?? (Stormshield) - Tank
-	[87762]  = "Raider's Training Dummy",     -- Lvl ?? (Frostwall, Warspear) - Damage
-	[88837]  = "Raider's Training Dummy",     -- Lvl ?? (Warspear) - Tank
-	[92166]  = "Raider's Training Dummy",     -- Lvl ?? (The Maelstrom, Dalaran, Eastern Plaguelands, ...) - Damage
-	[101956] = "Rebellious Fel Lord",         -- lvl ?? (Dreadscar Rift) - Raider
-	[103397] = "Greater Bulwark Construct",   -- Lvl ?? (Hall of the Guardian) - Raider
-	[107202] = "Reanimated Monstrosity", 	  -- Lvl ?? (Broken Shore) - Raider
-	[107484] = "Greater Sparring Partner",    -- Lvl ?? (Skyhold)
-	[107556] = "Bound Void Walker",           -- Lvl ?? (Netherlight Temple) - Raider
-	[113636] = "Imprisoned Forgefiend",       -- Lvl ?? (Mardum, the Shattered Abyss) - Raider
-	[113860] = "Raider's Training Dummy",     -- Lvl ?? (Trueshot Lodge) - Damage
-	[113864] = "Raider's Training Dummy",     -- Lvl ?? (Trueshot Lodge) - Damage
-	[70245]  = "Training Dummy",              -- Lvl ?? (Throne of Thunder)
-	[113964] = "Raider's Training Dummy",     -- Lvl ?? (The Dreamgrove) - Tanking
-	[131983] = "Raider's Training Dummy",     -- Lvl ?? (Boralus) - Damage
-	[144086] = "Raider's Training Dummy",     -- Lvl ?? (Dazal'alor) - Damage
-	[174565] = "Raider's Training Dummy",	  -- Lvl ?? (Ardenweald)
-	[174566] = "Dungeoneer's Tanking Dummy",  -- Lvl ?? (Ardenweald)
-	[174567] = "Raider's Training Dummy",	  -- Lvl ?? (Ardenweald)
-	[174568] = "Dungeoneer's Tanking Dummy",  -- Lvl ?? (Ardenweald)
-	[174491] = "Iron Tester", 				  -- Lvl ?? (Location Unknown)
-	[174488] = "Unbreakable Defender", 		  -- Lvl ?? (Location Unknown)
-	-- [174489] = "Necromantic Guide", 		  -- Lvl ?? (Location Unknown)
-	[174489] = "Raider's Training Dummy",	  -- Lvl ?? (Revendreth)
-	[175452] = "Raider's Training Dummy",	  -- Lvl ?? (Location Unknown)
-	[175451] = "Dungeoneer's Tanking Dummy",  -- Lvl ?? (Revendreth)
-	[154580] = "Reinforced Guardian", 		  -- Elysian Hold
-	[154583] = "Stalward Guardian", 		  -- Elysian Hold
-	[154585] = "Valiant's Resolve",			  -- Elysian Hold
-	[154586] = "Stalward Phalanx", 			  -- Elysian Hold
-	[154564] = "Valiant's Humility", 		  -- Elysian Hold
-	[154567] = "Purity's Cleansing", 		  -- Elysian Hold
-	[160325] = "Humility's Obedience", 		  -- Elysian Hold
--- Dragonflight
-	[194648] = "Training Dummy", 			  -- Valdrakken
-	[194645] = "Training Dummy", 			  -- Valdrakken (Healing)
-	[194649] = "Normal Tank Dummy",			  -- Valdrakken
-	[198594] = "Cleave Training Dummy",	      -- Valdrakken
-	--[197833] = "PvP Training Dummy",		  -- Valdrakken
-	[197834] = "PvP Training Dummy", 		  -- Valdrakken (Healing)
-	[194646] = "Cleave Training Dummy",	      -- Valdrakken (Healing)
-	--[194643] = "Dungeoneer's Training Dummy", -- Valdrakken
-	--[194644] = "Dungeoneer's Training Dummy", -- Valdrakken (Tanking)
-	--[189632] = "Animated Duelist", 			  -- Valdrakken (Raider's Training Dummy)
-	--[189617] = "Boulderfist", 			      -- Valdrakken (Raider's Tanking Dummy)
+    -- Misc/Unknown
+    [79987]  = "Training Dummy",               -- Location Unknown
+    [92169]  = "Raider's Training Dummy",      -- Tanking (Eastern Plaguelands)
+    [96442]  = "Training Dummy",               -- Damage (Location Unknown)
+    [109595] = "Training Dummy",               -- Location Unknown
+    [113963] = "Raider's Training Dummy",      -- Damage (Location Unknown)
+    [131985] = "Dungeoneer's Training Dummy",  -- Damage (Zuldazar)
+    [131990] = "Raider's Training Dummy",      -- Tanking (Zuldazar)
+    [132976] = "Training Dummy",               -- Morale Booster (Zuldazar)
+    -- Level 1
+    [17578]  = "Hellfire Training Dummy",      -- Lvl 1 (The Shattered Halls)
+    [60197]  = "Training Dummy",               -- Lvl 1 (Scarlet Monastery)
+    [64446]  = "Training Dummy",               -- Lvl 1 (Scarlet Monastery)
+    [144077] = "Training Dummy",               -- Lvl 1 (Dazar'alor) - Morale Booster
+    -- Level 3
+    [44171]  = "Training Dummy",               -- Lvl 3 (New Tinkertown, Dun Morogh)
+    [44389]  = "Training Dummy",               -- Lvl 3 (Coldridge Valley)
+    [44848]  = "Training Dummy",               -- Lvl 3 (Camp Narache, Mulgore)
+    [44548]  = "Training Dummy",               -- Lvl 3 (Elwynn Forest)
+    [44614]  = "Training Dummy",               -- Lvl 3 (Teldrassil, Shadowglen)
+    [44703]  = "Training Dummy",               -- Lvl 3 (Ammen Vale)
+    [44794]  = "Training Dummy",               -- Lvl 3 (Dethknell, Tirisfal Glades)
+    [44820]  = "Training Dummy",               -- Lvl 3 (Valley of Trials, Durotar)
+    [44937]  = "Training Dummy",               -- Lvl 3 (Eversong Woods, Sunstrider Isle)
+    [48304]  = "Training Dummy",               -- Lvl 3 (Kezan)
+    -- Level 55
+    [32541]  = "Initiate's Training Dummy",    -- Lvl 55 (Plaguelands: The Scarlet Enclave)
+    [32545]  = "Initiate's Training Dummy",    -- Lvl 55 (Eastern Plaguelands)
+    -- Level 60
+    [32666]  = "Training Dummy",               -- Lvl 60 (Siege of Orgrimmar, Darnassus, Ironforge, ...)
+    -- Level 65
+    [32542]  = "Disciple's Training Dummy",    -- Lvl 65 (Eastern Plaguelands)
+    -- Level 70
+    [32667]  = "Training Dummy",               -- Lvl 70 (Orgrimmar, Darnassus, Silvermoon City, ...)
+    -- Level 75
+    [32543]  = "Veteran's Training Dummy",     -- Lvl 75 (Eastern Plaguelands)
+    -- Level 80
+    [31144]  = "Training Dummy",               -- Lvl 80 (Orgrimmar, Darnassus, Ironforge, ...)
+    [32546]  = "Ebon Knight's Training Dummy", -- Lvl 80 (Eastern Plaguelands)
+    -- Level 85
+    [46647]  = "Training Dummy",               -- Lvl 85 (Orgrimmar, Stormwind City)
+    -- Level 90
+    [67127]  = "Training Dummy",               -- Lvl 90 (Vale of Eternal Blossoms)
+    -- Level 95
+    [79414]  = "Training Dummy",               -- Lvl 95 (Broken Shore, Talador)
+    -- Level 100
+    [87317]  = "Training Dummy",               -- Lvl 100 (Lunarfall, Frostwall) - Damage
+    [87321]  = "Training Dummy",               -- Lvl 100 (Stormshield) - Healing
+    [87760]  = "Training Dummy",               -- Lvl 100 (Frostwall) - Damage
+    [88289]  = "Training Dummy",               -- Lvl 100 (Frostwall) - Healing
+    [88316]  = "Training Dummy",               -- Lvl 100 (Lunarfall) - Healing
+    [88835]  = "Training Dummy",               -- Lvl 100 (Warspear) - Healing
+    [88906]  = "Combat Dummy",                 -- Lvl 100 (Nagrand)
+    [88967]  = "Training Dummy",               -- Lvl 100 (Lunarfall, Frostwall)
+    [89078]  = "Training Dummy",               -- Lvl 100 (Frostwall, Lunarfall)
+    -- Levl 100 - 110
+    [92164]  = "Training Dummy",               -- Lvl 100 - 110 (Dalaran) - Damage
+    [92165]  = "Dungeoneer's Training Dummy",  -- Lvl 100 - 110 (Eastern Plaguelands) - Damage
+    [92167]  = "Training Dummy",               -- Lvl 100 - 110 (The Maelstrom, Eastern Plaguelands, The Wandering Isle)
+    [92168]  = "Dungeoneer's Training Dummy",  -- Lvl 100 - 110 (The Wandering Isles, Easter Plaguelands)
+    [100440] = "Training Bag",                 -- Lvl 100 - 110 (The Wandering Isles)
+    [100441] = "Dungeoneer's Training Bag",    -- Lvl 100 - 110 (The Wandering Isles)
+    [102045] = "Rebellious Wrathguard",        -- Lvl 100 - 110 (Dreadscar Rift) - Dungeoneer
+    [102048] = "Rebellious Felguard",          -- Lvl 100 - 110 (Dreadscar Rift)
+    [102052] = "Rebellious Imp",               -- Lvl 100 - 110 (Dreadscar Rift) - AoE
+    [103402] = "Lesser Bulwark Construct",     -- Lvl 100 - 110 (Hall of the Guardian)
+    [103404] = "Bulwark Construct",            -- Lvl 100 - 110 (Hall of the Guardian) - Dungeoneer
+    [107483] = "Lesser Sparring Partner",      -- Lvl 100 - 110 (Skyhold)
+    [107555] = "Bound Void Wraith",            -- Lvl 100 - 110 (Netherlight Temple)
+    [107557] = "Training Dummy",               -- Lvl 100 - 110 (Netherlight Temple) - Healing
+    [108420] = "Training Dummy",               -- Lvl 100 - 110 (Stormwind City, Durotar)
+    [111824] = "Training Dummy",               -- Lvl 100 - 110 (Azsuna)
+    [113674] = "Imprisoned Centurion",         -- Lvl 100 - 110 (Mardum, the Shattered Abyss) - Dungeoneer
+    [113676] = "Imprisoned Weaver",            -- Lvl 100 - 110 (Mardum, the Shattered Abyss)
+    [113687] = "Imprisoned Imp",               -- Lvl 100 - 110 (Mardum, the Shattered Abyss) - Swarm
+    [113858] = "Training Dummy",               -- Lvl 100 - 110 (Trueshot Lodge) - Damage
+    [113859] = "Dungeoneer's Training Dummy",  -- Lvl 100 - 110 (Trueshot Lodge) - Damage
+    [113862] = "Training Dummy",               -- Lvl 100 - 110 (Trueshot Lodge) - Damage
+    [113863] = "Dungeoneer's Training Dummy",  -- Lvl 100 - 110 (Trueshot Lodge) - Damage
+    [113871] = "Bombardier's Training Dummy",  -- Lvl 100 - 110 (Trueshot Lodge) - Damage
+    [113966] = "Dungeoneer's Training Dummy",  -- Lvl 100 - 110 - Damage
+    [113967] = "Training Dummy",               -- Lvl 100 - 110 (The Dreamgrove) - Healing
+    [114832] = "PvP Training Dummy",           -- Lvl 100 - 110 (Stormwind City)
+    [114840] = "PvP Training Dummy",           -- Lvl 100 - 110 (Orgrimmar)
+    -- Level 102
+    [87318]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Lunarfall) - Damage
+    [87322]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Stormshield) - Tank
+    [87761]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Frostwall) - Damage
+    [88288]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Frostwall) - Tank
+    [88314]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Lunarfall) - Tank
+    [88836]  = "Dungeoneer's Training Dummy",  -- Lvl 102 (Warspear) - Tank
+    [93828]  = "Training Dummy",               -- Lvl 102 (Hellfire Citadel)
+    [97668]  = "Boxer's Trianing Dummy",       -- Lvl 102 (Highmountain)
+    [98581]  = "Prepfoot Training Dummy",      -- Lvl 102 (Highmountain)
+    -- Level 110 - 120
+    [126781] = "Training Dummy",               -- Lvl 110 - 120 (Boralus) - Damage
+    [131989] = "Training Dummy",               -- Lvl 110 - 120 (Boralus) - Damage
+    [131994] = "Training Dummy",               -- Lvl 110 - 120 (Boralus) - Healing
+    [144082] = "Training Dummy",               -- Lvl 110 - 120 (Dazar'alor) - PVP Damage
+    [144085] = "Training Dummy",               -- Lvl 110 - 120 (Dazar'alor) - Damage
+    [144081] = "Training Dummy",               -- Lvl 110 - 120 (Dazar'alor) - Damage
+    [153285] = "Training Dummy",               -- Lvl 110 - 120 (Ogrimmar) - Damage
+    [153292] = "Training Dummy",               -- Lvl 110 - 120 (Stormwind) - Damage
+    -- Level 111 - 120
+    [131997] = "Training Dummy",               -- Lvl 111 - 120 (Boralus, Zuldazar) - PVP Damage
+    [131998] = "Training Dummy",               -- Lvl 111 - 120 (Boralus, Zuldazar) - PVP Healing
+    -- Level 112 - 120
+    [144074] = "Training Dummy",               -- Lvl 112 - 120 (Dazar'alor) - PVP Healing
+    -- Level 112 - 122
+    [131992] = "Dungeoneer's Training Dummy",  -- Lvl 112 - 122 (Boralus) - Tanking
+    -- Level 113 - 120
+    [132036] = "Training Dummy",               -- Lvl 113 - 120 (Boralus) - Healing
+    -- Level 113 - 122
+    [144078] = "Dungeoneer's Training Dummy",  -- Lvl 113 - 122 (Dazar'alor) - Tanking
+    -- Level 114 - 120
+    [144075] = "Training Dummy",               -- Lvl 114 - 120 (Dazar'alor) - Healing
+    -- Level 60
+    [174569] = "Training Dummy",               -- Lvl 60 (Ardenweald)
+    [174570] = "Swarm Training Dummy",         -- Lvl 60 (Ardenweald)
+    [174571] = "Cleave Training Dummy",        -- Lvl 60 (Ardenweald)
+    [174487] = "Competent Veteran",            -- Lvl 60 (Location Unknown)
+    [173942] = "Training Dummy",               -- Lvl 60 (Revendreth)
+    [175456] = "Swarm Training Dummy",         -- Lvl 60 (Revendreth)
+    [175455] = "Cleave Training Dummy",        -- Lvl 60 (Revendreth)
+    -- Level 62
+    [174484] = "Immovable Champion",           -- Lvl 62 (Location Unknown)
+    [175449] = "Dungeoneer's Training Dummy",  -- Lvl 62 (Revendreth)
+    [173957] = "Necrolord's Resolve",          -- Lvl 62 (Oribos)
+    [173955] = "Pride's Resolve",              -- Lvl 62 (Oribos)
+    [173954] = "Nature's Resolve",             -- Lvl 62 (Oribos)
+    [173919] = "Valiant's Resolve",            -- Lvl 62 (Oribos)
+    -- Level ??
+    [24792]  = "Advanced Training Dummy",      -- Lvl ?? Boss (Location Unknown)
+    [30527]  = "Training Dummy",               -- Lvl ?? Boss (Location Unknown)
+    [31146]  = "Raider's Training Dummy",      -- Lvl ?? (Orgrimmar, Stormwind City, Ironforge, ...)
+    [87320]  = "Raider's Training Dummy",      -- Lvl ?? (Lunarfall, Stormshield) - Damage
+    [87329]  = "Raider's Training Dummy",      -- Lvl ?? (Stormshield) - Tank
+    [87762]  = "Raider's Training Dummy",      -- Lvl ?? (Frostwall, Warspear) - Damage
+    [88837]  = "Raider's Training Dummy",      -- Lvl ?? (Warspear) - Tank
+    [92166]  = "Raider's Training Dummy",      -- Lvl ?? (The Maelstrom, Dalaran, Eastern Plaguelands, ...) - Damage
+    [101956] = "Rebellious Fel Lord",          -- lvl ?? (Dreadscar Rift) - Raider
+    [103397] = "Greater Bulwark Construct",    -- Lvl ?? (Hall of the Guardian) - Raider
+    [107202] = "Reanimated Monstrosity",       -- Lvl ?? (Broken Shore) - Raider
+    [107484] = "Greater Sparring Partner",     -- Lvl ?? (Skyhold)
+    [107556] = "Bound Void Walker",            -- Lvl ?? (Netherlight Temple) - Raider
+    [113636] = "Imprisoned Forgefiend",        -- Lvl ?? (Mardum, the Shattered Abyss) - Raider
+    [113860] = "Raider's Training Dummy",      -- Lvl ?? (Trueshot Lodge) - Damage
+    [113864] = "Raider's Training Dummy",      -- Lvl ?? (Trueshot Lodge) - Damage
+    [70245]  = "Training Dummy",               -- Lvl ?? (Throne of Thunder)
+    [113964] = "Raider's Training Dummy",      -- Lvl ?? (The Dreamgrove) - Tanking
+    [131983] = "Raider's Training Dummy",      -- Lvl ?? (Boralus) - Damage
+    [144086] = "Raider's Training Dummy",      -- Lvl ?? (Dazal'alor) - Damage
+    [174565] = "Raider's Training Dummy",      -- Lvl ?? (Ardenweald)
+    [174566] = "Dungeoneer's Tanking Dummy",   -- Lvl ?? (Ardenweald)
+    [174567] = "Raider's Training Dummy",      -- Lvl ?? (Ardenweald)
+    [174568] = "Dungeoneer's Tanking Dummy",   -- Lvl ?? (Ardenweald)
+    [174491] = "Iron Tester",                  -- Lvl ?? (Location Unknown)
+    [174488] = "Unbreakable Defender",         -- Lvl ?? (Location Unknown)
+    -- [174489] = "Necromantic Guide", 		  -- Lvl ?? (Location Unknown)
+    [174489] = "Raider's Training Dummy",      -- Lvl ?? (Revendreth)
+    [175452] = "Raider's Training Dummy",      -- Lvl ?? (Location Unknown)
+    [175451] = "Dungeoneer's Tanking Dummy",   -- Lvl ?? (Revendreth)
+    [154580] = "Reinforced Guardian",          -- Elysian Hold
+    [154583] = "Stalward Guardian",            -- Elysian Hold
+    [154585] = "Valiant's Resolve",            -- Elysian Hold
+    [154586] = "Stalward Phalanx",             -- Elysian Hold
+    [154564] = "Valiant's Humility",           -- Elysian Hold
+    [154567] = "Purity's Cleansing",           -- Elysian Hold
+    [160325] = "Humility's Obedience",         -- Elysian Hold
+    -- Dragonflight
+    [194648] = "Training Dummy",               -- Valdrakken
+    [194645] = "Training Dummy",               -- Valdrakken (Healing)
+    [194649] = "Normal Tank Dummy",            -- Valdrakken
+    [198594] = "Cleave Training Dummy",        -- Valdrakken
+    --[197833] = "PvP Training Dummy",		  -- Valdrakken
+    [197834] = "PvP Training Dummy",           -- Valdrakken (Healing)
+    [194646] = "Cleave Training Dummy",        -- Valdrakken (Healing)
+    --[194643] = "Dungeoneer's Training Dummy", -- Valdrakken
+    --[194644] = "Dungeoneer's Training Dummy", -- Valdrakken (Tanking)
+    --[189632] = "Animated Duelist", 			  -- Valdrakken (Raider's Training Dummy)
+    --[189617] = "Boulderfist", 			      -- Valdrakken (Raider's Tanking Dummy)
 }
 
 return common_lists

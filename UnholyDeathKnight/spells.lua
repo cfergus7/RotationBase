@@ -2,7 +2,7 @@ local spells = {}
 
 spells.DeathAndDecay                      = 43265
 spells.DeathCoil                          = 47541
-
+spells.Defile                             = 152280
 
 -- Racials
 spells.AncestralCall                      = 274738

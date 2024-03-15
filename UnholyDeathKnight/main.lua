@@ -177,15 +177,92 @@ function  StateUpdate()
     
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer) 
     state.Pets = game_api.getUnitsByNpcId(26125)
+    state.Garg = game_api.getUnitsByNpcId(27829)
+    state.Magus = game_api.getUnitsByNpcId(163366)
     state.CurrentRunicPower = game_api.getPower(1)/10
     state.CurrentRunesAvailable = game_api.getRuneCount()
+
+    state.DeathAndDecaySpellID = game_api.hasTalentEntry(talents.DefileEntryID) and spells.Defile or spells.DeathAndDecay
+
+
     
 end
+local combatStartTime = nil
+local isInCombat = nil
+local lastTarget = nil
+
+function TimeToReachHealth(targetHealthThreshold)
+    local targetHealthMax = game_api.unitMaxHealth(state.currentTarget)
+    local targetHealthCurrent = game_api.unitHealth(state.currentTarget)
+    local currentTarget = game_api.getCurrentUnitTarget()
+    
+    -- Check if the target has changed and update combat start time if necessary
+    if lastTarget ~= currentTarget then
+        combatStartTime = game_api.currentTime()
+        isInCombat = true
+        lastTarget = currentTarget
+    end
+
+    -- If the target is still alive
+    if targetHealthCurrent > 0 then
+        local currentTime = game_api.currentTime()
+
+        -- If not in combat, consider combat starting now
+        if not isInCombat then
+            combatStartTime = currentTime
+            isInCombat = true
+        end
+
+        -- Calculate time to reach health threshold
+        local elapsedTime = currentTime - combatStartTime
+        if elapsedTime == 0 then
+            return math.huge -- To indicate that it's currently impossible to determine the time
+        end
+        local healthLost = targetHealthMax - targetHealthCurrent
+        if healthLost <= 0 then
+            return math.huge -- Health is not being lost, or target is healing
+        end
+        local healthLostRate = healthLost / elapsedTime
+        local healthToLose = targetHealthThreshold - targetHealthCurrent
+        local timeToReachHealth = healthToLose / healthLostRate
+        
+        return timeToReachHealth 
+    else
+        -- Reset when the target is dead
+        combatStartTime = nil
+        isInCombat = false
+        lastTarget = nil
+        return 0
+    end
+end
+
 
 local AutoAoE, SoulReaperLogic, DeathCoilLogicSuddenDoom, ClawingShadowsLogicRottenTouch, DeathCoilLogicDeathRot, OutbreakLogic, DeathCoilLogicSummonGargoyle, ScourgeStrikeLogic, DeathandDecayLogic, FesteringStrikeLogic, ClawingShadowsLogicFestering, DefileLogic
 
 function hasPet()
     local Pets = state.Pets
+    for _, Pet in pairs(Pets) do
+        if game_api.unitOwner(Pet) == state.currentPlayer and game_api.distanceToUnit(Pet) <= 40 then
+            if game_api.unitHealthPercent(Pet) == 0 then
+                return false
+            end
+        end
+    end
+    return true
+end
+function hasPetGarg()
+    local Pets = state.Garg
+    for _, Pet in pairs(Pets) do
+        if game_api.unitOwner(Pet) == state.currentPlayer and game_api.distanceToUnit(Pet) <= 40 then
+            if game_api.unitHealthPercent(Pet) == 0 then
+                return false
+            end
+        end
+    end
+    return true
+end
+function hasPetMagus()
+    local Pets = state.Magus
     for _, Pet in pairs(Pets) do
         if game_api.unitOwner(Pet) == state.currentPlayer and game_api.distanceToUnit(Pet) <= 40 then
             if game_api.unitHealthPercent(Pet) == 0 then
@@ -202,360 +279,250 @@ function DPS()
     DeathCoilLogicSuddenDoom = API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 80
     ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
     DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(state.currentPlayer, auras.DeathRot, true) < 10
-    OutbreakLogic = --need debuf time on boss 
-    DeathCoilLogicSummonGargoyle  = state.CurrentRunesAvailable < 3 or hasPet()-- not letting me use CurrentRunesAvailable and summon Pet 27829
+    OutbreakLogic = TimeToReachHealth(34) < 5
+    DeathCoilLogicSummonGargoyle = hasPet() or (state.CurrentRunesAvailable < 3)  -- not letting me use CurrentRunesAvailable and summon Pet 27829
     ScourgeStrikeLogic = API.PlayerHasBuff(auras.MagusoftheDead) and API.PlayerHasBuff(auras.FesteringWound) > 0
     DeathandDecayLogic = hasPet()-- pet check 27829
     FesteringStrikeLogic = API.PlayerHasBuff(auras.FesteringWound) < 3
     ClawingShadowsLogicFestering = API.PlayerHasBuff(auras.FesteringWound) > 3
     DefileLogic = API.PlayerHasBuff(auras.MagusoftheDead) and hasPet() -- and has pet 27829
-
-    AutoAoe = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
+    AutoAoE = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
         
         ------------- Cooldown priority ================
         if game_api.getToggle(settings.Cooldown) then
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ArmyoftheDead)  then
-                    game_api.canCast(spells.ArmyoftheDead)
-                    API.Debug("ArmyoftheDead Casted Spell for DPS")
-                    return true
-                end
-                
-            end
-        end
 
-        if game_api.getToggle(settings.Cooldown) then
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.UnholyBlight)  then
-                    game_api.canCast(spells.UnholyBlight)
-                    API.Debug("UnholyBlight Casted Spell for DPS")
-                    return true
-                end
-                
-            end
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.DeathandDecay)  then
-                    game_api.canCast(spells.DeathandDecay)
-                    API.Debug("DeathandDecay Casted Spell for DPS")
-                    return true
-                end
-                
-            end
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-                if API.CanCast(spells.DarkTransformation)  then
-                    game_api.canCast(spells.DarkTransformation)
-                    API.Debug("DarkTransformation Casted Spell for DPS")
-                    return true
-                end
-                
-            
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-                if API.CanCast(spells.SummonGargoyle)  then
-                    game_api.canCast(spells.SummonGargoyle)
-                    API.Debug("SummonGargoyle Casted Spell for DPS")
-                    return true
-                end
-                
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-                if API.CanCast(spells.UnholyAssault)  then
-                    game_api.canCast(spells.UnholyAssault)
-                    API.Debug("UnholyAssault Casted Spell for DPS")
-                    return true
-                end
-                
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-                if API.CanCast(spells.EmpowerRuneWeapon)  then
-                    game_api.canCast(spells.EmpowerRuneWeapon)
-                    API.Debug("EmpowerRuneWeapon Casted Spell for DPS")
-                    return true
-                end
-                
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-                if API.CanCast(spells.Apocalypse)  then
-                    game_api.canCast(spells.Apocalypse)
-                    API.Debug("Apocalypse Casted Spell for DPS")
-                    return true
-                end
-                
-        end
-
-
-        -- ST Coil Build
-
-        if game_api.getToggle(settings.Cooldown) then 
-            -- Pets insert here
-            if hasPet() == 1 then
+            if not hasPet() then
                 if API.CanCast(spells.RaiseDead) then
                     game_api.castSpell(spells.RaiseDead)
-                    API.Debug("RaiseDead Casted for DPS")
+                    API.Debug("RaiseDead Casted -- Cooldown Priority")
                     return true
                 end
             end
-        end
 
-        if game_api.getToggle(settings.Cooldown) then
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.ArmyoftheDead)  then
+                    game_api.castSpell(spells.ArmyoftheDead)
+                    API.Debug("ArmyoftheDead Casted Spell -- Cooldown Priority")
+                    return true
+                end       
+            end
+
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(spells.UnholyBlight) and game_api.isOnCooldown(spells.ArmyoftheDead) then
+                    game_api.castSpell(spells.UnholyBlight)
+                    API.Debug("Unholy Blight Casted Spell -- Cooldown Priority")
+                    return true
+                end                
+            end
+
+            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
+                if API.CanCast(state.DeathAndDecaySpellID)  then
+                    game_api.castAOESpellOnSelf(state.DeathAndDecaySpellID)
+                    API.Debug("DeathandDecay Casted Spell -- Cooldown Priority")
+                    return true
+                end         
+            end
+
+            if API.CanCast(spells.DarkTransformation) and game_api.isOnCooldown(spells.ArmyoftheDead) then
+                game_api.castSpell(spells.DarkTransformation)
+                API.Debug("DarkTransformation Casted Spell -- Cooldown Priority")
+                return true
+            end    
+
+            if API.CanCast(spells.SummonGargoyle)  then
+                game_api.castSpell(spells.SummonGargoyle)
+                API.Debug("SummonGargoyle Casted Spell -- Cooldown Priority")
+                return true
+            end
+            -- Missing Death Coil 3x (no more, no less)
+
+            if API.CanCast(spells.UnholyAssault)  then
+                game_api.castSpell(spells.UnholyAssault)
+                API.Debug("UnholyAssault Casted Spell -- Cooldown Priority")
+                return true
+            end
+
+            if API.CanCast(spells.EmpowerRuneWeapon)  then
+                game_api.castSpell(spells.EmpowerRuneWeapon)
+                API.Debug("EmpowerRuneWeapon Casted Spell -- Cooldown Priority")
+                return true
+            end
+
+            -- Trinkets go here (I will help with that one) -- Freddy
+
+            if API.CanCast(spells.Apocalypse)  then
+                game_api.castSpell(spells.Apocalypse)
+                API.Debug("Apocalypse Casted Spell -- Cooldown Priority")
+                return true
+            end
+        end
+                -- ST Coil Build
+
             if state.CurrentRunesAvailable > 9 then
                 if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
-                    game_api.canCast(spells.SoulReaper)
-                    API.Debug("SoulReaper Casted Spell for DPS")
+                    game_api.castSpell(spells.SoulReaper)
+                    API.Debug("SoulReaper Casted Spell -- DPS Priority")
                     return true
                 end
             end
-        end
 
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil)and DeathCoilLogicSuddenDoom then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
+            -- Clawing Shadows Needs Speical ID Check due to Talent (Replaces Scourge Strike)
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
-                    game_api.canCast(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    game_api.castSpell(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
                 end
             end
-        end
 
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil) and DeathCoilLogicDeathRot then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.Outbreak) and OutbreakLogic then
-                    game_api.canCast(spells.Outbreak)
-                    API.Debug("Outbreak Casted Spell for DPS")
+                    game_api.castSpell(spells.Outbreak)
+                    API.Debug("Outbreak Casted Spell -- DPS Priority")
                     return true
                 end
             end
-        end
 
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil) and DeathCoilLogicSummonGargoyle then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
+            -- Scourge Strike Extra Needed due to Talent
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
-                    game_api.canCast(spells.ScourgeStrike)
-                    API.Debug("ScourgeStrike Casted Spell for DPS")
+                    game_api.castSpell(spells.ScourgeStrike)
+                    API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
                 end
             end
-        end
 
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.DeathandDecay) and DeathandDecayLogic then
-                    game_api.canCast(spells.DeathandDecay)
-                    API.Debug("DeathandDecay Casted Spell for DPS")
+                if API.CanCast(state.DeathAndDecaySpellID) and DeathandDecayLogic then
+                    game_api.castSpell(state.DeathAndDecaySpellID)
+                    API.Debug("DeathandDecay Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end              
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
                 if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
-                    game_api.canCast(spells.FesteringStrike)
-                    API.Debug("FesteringStrike Casted Spell for DPS")
+                    game_api.castSpell(spells.FesteringStrike)
+                    API.Debug("FesteringStrike Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end     
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
-                    game_api.canCast(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    game_api.castSpell(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
+                    return true
+                end          
+            end
+
+            if API.CanCast(spells.DeathCoil) then
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
+                return true
+            end
+
+                -- Defile Start
+            if not hasPet() then
+                if API.CanCast(spells.RaiseDead) then
+                    game_api.castSpell(spells.RaiseDead)
+                    API.Debug("RaiseDead Casted -- DPS Priority")
                     return true
                 end
-                
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
-            if API.CanCast(spells.DeathCoil) then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
-                return true
-            end
-
-        end
-
-        -- Defile Start
-
-        if game_api.getToggle(settings.Cooldown) then 
-            -- Pets insert here
-            
-            if API.CanCast(spells.RaiseDead) then
-                game_api.castSpell(spells.RaiseDead)
-                API.Debug("RaiseDead Casted for DPS")
-                return true
-            end
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
-                    game_api.canCast(spells.SoulReaper)
-                    API.Debug("SoulReaper Casted Spell for DPS")
+                    game_api.castSpell(spells.SoulReaper)
+                    API.Debug("SoulReaper Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end              
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.Defile)and DefileLogic then
-                    game_api.canCast(spells.Defile)
-                    API.Debug("Defile Casted Spell for DPS")
+                    game_api.castSpell(spells.Defile)
+                    API.Debug("Defile Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end               
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil)and DeathCoilLogicSuddenDoom then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
-                    game_api.canCast(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    game_api.castSpell(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end                
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil) and DeathCoilLogicDeathRot then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil) and DeathCoilLogicSummonGargoyle then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
-                    game_api.canCast(spells.ScourgeStrike)
-                    API.Debug("ScourgeStrike Casted Spell for DPS")
+                    game_api.castSpell(spells.ScourgeStrike)
+                    API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end               
             end
-
-        end
-
-
-        if game_api.getToggle(settings.Cooldown) then
+            -- Festering Strike Talent Change
             if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
                 if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
-                    game_api.canCast(spells.FesteringStrike)
-                    API.Debug("FesteringStrike Casted Spell for DPS")
+                    game_api.castSpell(spells.FesteringStrike)
+                    API.Debug("FesteringStrike Casted Spell -- DPS Priority")
                     return true
-                end
-                
+                end          
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
-                    game_api.canCast(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell for DPS")
+                    game_api.castSpell(spells.ClawingShadows)
+                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
-                end
-                
+               end               
             end
 
-        end
-
-        if game_api.getToggle(settings.Cooldown) then
-            
             if API.CanCast(spells.DeathCoil) then
-                game_api.canCast(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell for DPS")
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug("DeathCoil Casted Spell -- DPS Priority")
                 return true
             end
-
         end
-
-
-    end
-
-    
-
-
 end
     
 --[[
@@ -571,6 +538,16 @@ function OnUpdate()
 
     if game_api.currentPlayerIsCasting() or game_api.currentPlayerIsMounted() or game_api.currentPlayerIsChanneling() or game_api.isAOECursor() then
         return
+    end
+
+    if not state.PlayerIsInCombat then
+        if not hasPet() then
+            if API.CanCast(spells.RaiseDead) then
+                game_api.castSpell(spells.RaiseDead)
+                API.Debug("Raise Dead -- No Pet OOC")
+                return true
+            end
+        end
     end
 
 end

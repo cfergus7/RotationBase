@@ -26,5 +26,6 @@ talents.UnholyBlight                      = 115989
 talents.DarkTransformation                = 63560
 talents.UnholyAssault                     = 207289
 talents.Apocalypse                        = 275699
+talents.DefileEntryID                     = 96294
 
 return talents

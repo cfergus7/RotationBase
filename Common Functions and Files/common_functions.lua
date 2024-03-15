@@ -88,7 +88,7 @@ function common_functions.BestNPCToHeal(range)
         local units = game_api.getUnitsByNpcId(npcId)
         for _, unit in ipairs(units) do
             local unitHealthPercent = game_api.unitHealthPercent(unit)
-            if common_functions.IsInRange(range, unit) and unitHealthPercent > 0 and unitHealthPercent < LowestHealthPercent then
+            if common_functions.IsInRange(range, unit) and not game_api.unitHasAura(unit,417666,false) and unitHealthPercent > 0 and unitHealthPercent < LowestHealthPercent then
                 BestUnit = unit
                 LowestHealthPercent = unitHealthPercent
             end
@@ -758,7 +758,7 @@ end
 
 function common_functions.UnitToDispel(DispelType, DispelType2, DispelType3, DispelType4)
     lowestHealthUnit = nil
-    lowestHealth = 101  -- Set to a number higher than 100 to ensure we catch the first unit
+    lowestHealth = 101 -- Set to a number higher than 100 to ensure we catch the first unit
 
     for _, playerPartyUnit in ipairs(party) do
         if common_functions.IsInRange(40, playerPartyUnit) and shouldDispelUnit(playerPartyUnit, DispelType, DispelType2, DispelType3, DispelType4) then
@@ -775,7 +775,7 @@ end
 
 function common_functions.EvokerUnitToDispel(DispelType, DispelType2, DispelType3, DispelType4)
     lowestHealthUnit = nil
-    lowestHealth = 101  -- Set to a number higher than 100 to ensure we catch the first unit
+    lowestHealth = 101 -- Set to a number higher than 100 to ensure we catch the first unit
 
     for _, playerPartyUnit in ipairs(party) do
         if common_functions.IsInRange(30, playerPartyUnit) and shouldDispelUnit(playerPartyUnit, DispelType, DispelType2, DispelType3, DispelType4) then
@@ -1093,6 +1093,18 @@ function common_functions.applyHumanizerPct(value, minVariation, maxVariation)
     return value
 end
 
+function common_functions.GetDPSUnitWithCDs(spellIDs)
+    local randomNumber = functions.randomBetween(500, 1500)
+    for _, unit in ipairs(party) do
+        for _, id in ipairs(spellIDs) do
+            if (game_api.unitHasAura(unit, id, false) and game_api.unitAuraElapsedTime(unit, id, false) >= randomNumber) and game_api.unitInCombat(unit) and game_api.unitIsRole(unit, "DPS") and game_api.unitHealthPercent(unit) > 0 then
+                return unit
+            end
+        end
+    end
+    return false
+end
+
 function common_functions.PartyCheckCount(raidCount, mplusCount)
     local checkcount
     if game_api.getPartySize() >= 6 then
@@ -1131,9 +1143,9 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
 ]]
     local PotionMode = game_api.getSetting(settings.potionOfPower)
     local isUnderLust = game_api.currentPlayerHasAura(390386, false) or game_api.currentPlayerHasAura(80353, false) or
-    game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or
-    game_api.currentPlayerHasAura(264667, false) or game_api.currentPlayerHasAura(381301, false) or
-    game_api.currentPlayerHasAura(390386, false)
+        game_api.currentPlayerHasAura(2825, false) or game_api.currentPlayerHasAura(32182, false) or
+        game_api.currentPlayerHasAura(264667, false) or game_api.currentPlayerHasAura(381301, false) or
+        game_api.currentPlayerHasAura(390386, false)
     local shouldUsePotionOfPower = (PotionMode == "On Cooldown") or
         (PotionMode == "With Cooldown" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)))) or
         (PotionMode == "With Lust or Cooldowns" and ((potionOfPowerAlign1 and game_api.currentPlayerHasAura(potionOfPowerAlign1, false)) or (potionOfPowerAlign2 and game_api.currentPlayerHasAura(potionOfPowerAlign2, false)) or isUnderLust)) or
@@ -1144,7 +1156,6 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
             if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                 print("Using Power Potion:", potionID)
                 game_api.castObject(potionID)
-                return true
             end
         end
     end
@@ -1152,7 +1163,6 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
         if not game_api.objectIsOnCooldown(5512) and game_api.canCastObject(5512) then
             print("Using Healthstone")
             game_api.castObject(5512)
-            return true
         end
     end
 
@@ -1161,7 +1171,6 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
             if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                 print("Using Healing Potion:", potionID)
                 game_api.castObject(potionID)
-                return true
             end
         end
     end
@@ -1171,7 +1180,6 @@ settings.manaPotionManaText = "Mana to Use Mana Potion"
                 if not game_api.objectIsOnCooldown(potionID) and game_api.canCastObject(potionID) then
                     print("Using Mana Potion:", potionID)
                     game_api.castObject(potionID)
-                    return true
                 end
             end
         end
@@ -1223,7 +1231,6 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
             if not game_api.isOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
                 print("Using Trinket 1")
                 game_api.castObjectOnTarget(trinket1, game_api.getCurrentUnitTarget())
-                return true
             end
         end
     end
@@ -1234,7 +1241,6 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
                 if not game_api.isOnCooldown(trinket1) and game_api.canCastObject(trinket1) then
                     print("Using Trinket 1 Defensive")
                     game_api.castObjectOnTarget(trinket1, game_api.getCurrentUnitTarget())
-                    return true
                 end
             end
         end
@@ -1246,7 +1252,6 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
             if not game_api.objectIsOnCooldown(trinket2) and game_api.canCastObject(trinket2) then
                 print("Using Trinket 2")
                 game_api.castObjectOnTarget(trinket2, game_api.getCurrentUnitTarget())
-                return true
             end
         end
     end
@@ -1258,7 +1263,6 @@ settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
                     print("Using Trinket 2 Defensive")
                     print(game_api.getCurrentUnitTarget())
                     game_api.castObjectOnTarget(trinket2, game_api.getCurrentUnitTarget())
-                    return true
                 end
             end
         end
@@ -1334,6 +1338,7 @@ function common_functions.getCombatUnits()
 
     return combatUnits
 end
+
 function common_functions.getCombatUnits2()
     local units = getHostileUnits
     local combatUnits = {}
@@ -1581,6 +1586,11 @@ function common_functions.timeToDieUnit(unit)
     end
 end
 
+
+
+
+
+
 function common_functions.ProactiveLogic(List)
     local enemyUnits = game_api.getUnits()
     for _, enemy in ipairs(enemyUnits) do -- Some way to loop enemies
@@ -1642,7 +1652,7 @@ function common_functions.BoSUnitTank(range)
         return false
     end
     for _, playerPartyUnit in ipairs(party) do
-        if functions.IsInRange(range, playerPartyUnit) and (not unitHasAnyAura(playerPartyUnit, cLists.Personals) or game_api.unitHealthPercent(playerPartyUnit) <= 40) and game_api.unitHealthPercent(playerPartyUnit) > 0 and (functions.ProactiveLogicTable(cLists.aoeIncoming)) then
+        if common_functions.IsInRange(range, playerPartyUnit) and (not unitHasAnyAura(playerPartyUnit, cLists.Personals) or game_api.unitHealthPercent(playerPartyUnit) <= 40) and game_api.unitHealthPercent(playerPartyUnit) > 0 and (common_functions.ProactiveLogicTable(cLists.aoeIncoming)) then
             local unitHealth = game_api.unitHealth(playerPartyUnit)
             if unitHealth > 0 and unitHealth < lowestHealth then
                 lowestHealth = unitHealth
@@ -1705,8 +1715,8 @@ end
 -- settings.useRacialsText = "Decide if you would like to use racials or not"
 -- settings.racialsName = "Racials mode"
 -- settings.racialsNameText = "Decide which racial to use"
---settings.racialsClass = "Racials Class"
---settings.racialsClassText = "Decide Which Racial Class to Use"
+-- settings.racialsClass = "Racials Class"
+-- settings.racialsClassText = "Decide Which Racial Class to Use"
 
 -- game_api.createSetting(settings.useRacials, settings.useRacialsText, true, {})
 -- game_api.createSetting(settings.racialsName, settings.racialsNameText, "None", { "None", "Fireblood","Shadowmeld", "Blood fury", "Gift of the Naaru", "Berserking", "Stoneform", "Ancestral call", "Will to survive", "Escape artist", "War stomp"})
@@ -1714,7 +1724,7 @@ end
 function common_functions.useRacialCommon()
     local racialName = game_api.getSetting(settings.racialsName)
     local racialClass = game_api.getSetting(settings.racialsClass)
-    randomNumber = common_functions.randomBetween(50,90)
+    randomNumber = common_functions.randomBetween(50, 90)
 
     if not game_api.unitInCombat(game_api.getCurrentPlayer()) then return end
     if racialName == "None" or racialClass == "None" then
@@ -1772,7 +1782,7 @@ function common_functions.useRacialCommon()
 
     local racialLogic = {
         Fireblood = function()
-            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({"DISEASE","POISON","CURSE"}))) then
+            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({ "DISEASE", "POISON", "CURSE" }))) then
                 print("Using Fireblood to remove debuff(s)")
                 game_api.castSpell(racialID)
             end
@@ -1780,24 +1790,24 @@ function common_functions.useRacialCommon()
         Shadowmeld = function()
             if common_functions.CanCast(racialID) and game_api.getUnitRole(game_api.getCurrentPlayer()) ~= "TANK" then
                 for _, playerPartyUnit in ipairs(party) do
-                    if game_api.unitHasAura(playerPartyUnit, 257407,false) then -- pursuit on AD
+                    if game_api.unitHasAura(playerPartyUnit, 257407, false) then -- pursuit on AD
                         print("Using Shadowmeld to Ignore Debuff Application")
                         game_api.castSpell(racialID)
                     end
                 end
-        
+
                 for _, unit in ipairs(getHostileUnits) do
                     if game_api.isUnitHostile(unit, true) then
                         if game_api.unitIsCasting(unit) and not game_api.unitIsChanneling(unit) then
                             unitCasting = true
-                            castPercentage =game_api.unitCastPercentage(unit)
+                            castPercentage = game_api.unitCastPercentage(unit)
                         end
                         if game_api.unitIsChanneling(unit) then
                             unitCasting = true
-                            castPercentage =game_api.unitChannelPercentage(unit)
+                            castPercentage = game_api.unitChannelPercentage(unit)
                         end
                         --257407 pursuit debuff
-                        local spellId = game_api.unitCastingSpellID(unit) 
+                        local spellId = game_api.unitCastingSpellID(unit)
                         local channelId = game_api.unitChannelingSpellID(unit)
                         if unitCasting then
                             if castPercentage >= randomNumber and game_api.unitTarget(unit) == game_api.getCurrentPlayer() then
@@ -1808,9 +1818,9 @@ function common_functions.useRacialCommon()
                             end
                         end
                         --specific boss meld logic
-                        if game_api.unitNpcID(unit) == 201790 then
+                        if unitCasting and game_api.unitNpcID(unit) == 201790 then
                             if castPercentage >= randomNumber and game_api.unitTarget(unit) == game_api.getCurrentPlayer() then
-                                if cLists.shadowMeldTarget[spellId] or cLists.shadowMeldTarget[channelId] then
+                                if spellId == 406886 then
                                     print("Using Shadowmeld to Ignore Targeted Cast")
                                     game_api.castSpell(racialID)
                                 end
@@ -1846,7 +1856,7 @@ function common_functions.useRacialCommon()
             end
         end,
         Stoneform = function()
-            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({"DISEASE","POISON","CURSE"}))) then
+            if common_functions.CanCast(racialID) and (common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), cLists.stoneForm) or common_functions.UnitHasAnyAura(game_api.getCurrentPlayer(), common_functions.getCombinedList({ "DISEASE", "POISON", "CURSE" }))) then
                 print("Using Stoneform to remove debuff(s)")
                 game_api.castSpell(racialID)
             end
@@ -1870,7 +1880,7 @@ function common_functions.useRacialCommon()
             end
         end,
         ["War stomp"] = function()
-            local units = game_api.getCombatUnits()
+            local units = game_api.getHostileUnits()
             local count = 0
 
             -- First, count how many units that are casting/channeling and are hostile and in combat
@@ -1881,7 +1891,7 @@ function common_functions.useRacialCommon()
             end
 
             if count >= 2 and common_functions.CanCast(racialID) then
-                print("Using War stomp")
+                print("Using War stomp as interrupt")
                 game_api.castSpell(racialID)
             end
         end
@@ -1894,6 +1904,37 @@ function common_functions.useRacialCommon()
         end
     end
     return false
+end
+
+-- Auto target (Common module)
+-- Remember to create the "settings.autoRetarget" setting + have a "state.currentPlayer", "state.currentTarget".
+function EnemyWithHighestHealth(range)
+    local highestHealthUnit = nil
+    local highestEffectiveHealth = 0
+    for _, unit in ipairs(common_functions.getCombatUnits()) do
+        if game_api.distanceToUnit(unit) <= range then
+            local effectiveHealth = game_api.unitHealthPercent(unit)
+            if effectiveHealth > highestEffectiveHealth then
+                highestEffectiveHealth = effectiveHealth
+                highestHealthUnit = unit
+            end
+        end
+    end
+    return highestHealthUnit
+end
+
+function common_functions.autoTarget(range)
+    if game_api.getSetting(settings.autoRetarget) then
+        if game_api.unitInCombat(state.currentPlayer) then
+            if state.currentTarget == "00" or (game_api.unitHealthPercent(state.currentTarget) == 0 and state.currentTarget ~= "00") then
+                local newTarget = EnemyWithHighestHealth(range)
+                if newTarget then
+                    print("Switching Target")
+                    game_api.setTarget(newTarget)
+                end
+            end
+        end
+    end
 end
 
 -- Calculates the Time to Die for the current target
@@ -1974,5 +2015,89 @@ function common_functions.checkAndPerformCleanup()
         lastCleanupTime = currentTime
     end
 end
+
+
+
+
+
+common_functions.damageHistory = {}
+common_functions.previousHealth = game_api.unitHealth(game_api.getCurrentPlayer()) -- may goof with later
+
+function common_functions.recordDamageTaken(damage, timestamp)
+    local totalHealth = game_api.unitHealth(game_api.getCurrentPlayer())
+    local percentHealthLost = (damage / totalHealth) * 100
+    table.insert(common_functions.damageHistory, {percentHealthLost = percentHealthLost, time = timestamp})
+
+
+    local cutoffTime = timestamp - 10000
+    for i = #common_functions.damageHistory, 1, -1 do
+        if common_functions.damageHistory[i].time < cutoffTime then
+            table.remove(common_functions.damageHistory, i)
+        end
+    end
+end
+
+function common_functions.detectDangerBasedOnHealthLoss()
+    local timestamp = game_api.currentTime()  
+    local currentHealth = game_api.unitHealth(game_api.getCurrentPlayer())
+
+    if not common_functions.previousHealth then
+        common_functions.previousHealth = currentHealth
+    end
+
+    local damageAmount = common_functions.previousHealth - currentHealth
+
+
+    if damageAmount > 0 then
+        common_functions.recordDamageTaken(damageAmount, timestamp)
+    end
+
+    common_functions.previousHealth = currentHealth  
+
+    local totalPercentLostLast10Seconds = 0
+    local cutoffTime = timestamp - 10000  
+    for _, entry in ipairs(common_functions.damageHistory) do
+        if entry.time >= cutoffTime then
+            totalPercentLostLast10Seconds = totalPercentLostLast10Seconds + entry.percentHealthLost
+        end
+    end
+
+    local averagePercentLostPerSecond = totalPercentLostLast10Seconds / 10
+    print(averagePercentLostPerSecond)
+    if averagePercentLostPerSecond >= 8 then
+        return "High Danger"
+    elseif averagePercentLostPerSecond >= 4 and averagePercentLostPerSecond < 8 then
+        return "Moderate Danger"
+    else
+        return "Safe"
+    end
+end
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 return common_functions
