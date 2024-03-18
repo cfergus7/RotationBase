@@ -27,5 +27,14 @@ talents.DarkTransformation                = 63560
 talents.UnholyAssault                     = 207289
 talents.Apocalypse                        = 275699
 talents.DefileEntryID                     = 96294
+talents.ScourgeStrike                     = 55090
+talents.FesteringStrike                   = 85948
+talents.Outbreak                          = 77575
+talents.ClawingShadows                    = 207311
+talents.MagusoftheDead                    = 390196
+talents.DeathRot                          = 377540
+talents.ArmyoftheDead                     = 42650
+talents.SummonGargoyle                    = 49206
+
 
 return talents
