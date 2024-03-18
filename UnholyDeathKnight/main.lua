@@ -12,7 +12,7 @@ state = {}
 ]]
 function OnInit()
     settings.createSettings()
-    print("Sample rotation !")
+    print("Unholy Death Knight Rise Up !")
 end
 
 local BloodlustExhaustSpells = {57724, 57723, 80354, 264689, 390435}
@@ -336,7 +336,24 @@ function DPS()
                 API.Debug("SummonGargoyle Casted Spell -- Cooldown Priority")
                 return true
             end
-            -- Missing Death Coil 3x (no more, no less)
+
+            if API.CanCast(spells.DeathCoil) then
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug(" Death Coil Casted Spell -- CoolDown Priority")
+                return true
+            end
+
+            if API.CanCast(spells.DeathCoil) then
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug(" Death Coil Casted Spell -- CoolDown Priority")
+                return true
+            end
+
+            if API.CanCast(spells.DeathCoil) then
+                game_api.castSpell(spells.DeathCoil)
+                API.Debug(" Death Coil Casted Spell -- CoolDown Priority")
+                return true
+            end
 
             if API.CanCast(spells.UnholyAssault)  then
                 game_api.castSpell(spells.UnholyAssault)
@@ -405,7 +422,7 @@ function DPS()
 
             -- Scourge Strike Extra Needed due to Talent
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
+                if game_api.hasTalentEntry(talents.ScourgeStrike) and API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
                     game_api.castSpell(spells.ScourgeStrike)
                     API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
@@ -502,7 +519,7 @@ function DPS()
             end
             -- Festering Strike Talent Change
             if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
-                if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
+                if game_api.hasTalentEntry(talents.FesteringStrike) and API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
                     game_api.castSpell(spells.FesteringStrike)
                     API.Debug("FesteringStrike Casted Spell -- DPS Priority")
                     return true
@@ -514,7 +531,7 @@ function DPS()
                     game_api.castSpell(spells.ClawingShadows)
                     API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
-               end               
+                end               
             end
 
             if API.CanCast(spells.DeathCoil) then

@@ -87,6 +87,13 @@ spells.DarkTransformation                = 63560
 spells.UnholyAssault                     = 207289
 spells.EmpowerRuneWeapon                  = 47568
 spells.Apocalypse                        = 275699
+spells.FesteringStrike                   = 85948
+spells.Outbreak                          = 77575
+spells.ClawingShadows                    = 207311
+spells.MagusoftheDead                    = 390196
+spells.DeathRot                          = 377540
+spells.ArmyoftheDead                     = 42650
+spells.SummonGargoyle                    = 49206
 
 
 -- Buffs
