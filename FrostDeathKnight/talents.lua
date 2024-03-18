@@ -20,4 +20,11 @@ talents.UnholyGround                       = 374265
 talents.BreathofSindragosa                = 152279
 talents.Obliteration                      = 281238
 
+talents.FrostStrike                       = 49143
+talents.Obliterate                        = 49020
+talents.HowlingBlast                      = 49184
+talents.HornofWinter                      = 57330
+talents.Avalanche                         = 207142
+talents.BreathofSindragosa                = 152279
+
 return talents
