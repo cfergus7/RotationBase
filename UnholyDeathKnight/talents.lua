@@ -37,4 +37,8 @@ talents.ArmyoftheDead                     = 42650
 talents.SummonGargoyle                    = 49206
 
 
+talents.ScourgeStrikeEntryID = 96327
+talents.ClawingShadowsEntryID = 96320
+
+
 return talents

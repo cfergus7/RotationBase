@@ -183,7 +183,9 @@ function  StateUpdate()
     state.CurrentRunesAvailable = game_api.getRuneCount()
 
     state.DeathAndDecaySpellID = game_api.hasTalentEntry(talents.DefileEntryID) and spells.Defile or spells.DeathAndDecay
-
+    state.DnDCanCast = not game_api.isOnCooldown(state.DeathAndDecaySpellID)
+    state.ScourgeOrClaw = game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and spells.ClawingShadows or spells.ScourgeStrike
+    state.ScourgeOrClawCanCast = not game_api.isOnCooldown(state.ScourgeOrClaw)
 
     
 end
@@ -318,7 +320,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(state.DeathAndDecaySpellID)  then
+                if state.DnDCanCast  then
                     game_api.castAOESpellOnSelf(state.DeathAndDecaySpellID)
                     API.Debug("DeathandDecay Casted Spell -- Cooldown Priority")
                     return true
@@ -393,7 +395,7 @@ function DPS()
 
             -- Clawing Shadows Needs Speical ID Check due to Talent (Replaces Scourge Strike)
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
+                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and  state.ScourgeOrClawCanCast and ClawingShadowsLogicRottenTouch then
                     game_api.castSpell(spells.ClawingShadows)
                     API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
@@ -422,7 +424,7 @@ function DPS()
 
             -- Scourge Strike Extra Needed due to Talent
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if game_api.hasTalentEntry(talents.ScourgeStrike) and API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
+                if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and ScourgeStrikeLogic then
                     game_api.castSpell(spells.ScourgeStrike)
                     API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
@@ -430,7 +432,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(state.DeathAndDecaySpellID) and DeathandDecayLogic then
+                if state.DnDCanCast and DeathandDecayLogic then
                     game_api.castSpell(state.DeathAndDecaySpellID)
                     API.Debug("DeathandDecay Casted Spell -- DPS Priority")
                     return true
@@ -446,7 +448,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
+                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicFestering then
                     game_api.castSpell(spells.ClawingShadows)
                     API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
@@ -477,7 +479,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.Defile)and DefileLogic then
+                if game_api.hasTalentEntry(talents.DefileEntryID) and state.DnDCanCast and DefileLogic then
                     game_api.castSpell(spells.Defile)
                     API.Debug("Defile Casted Spell -- DPS Priority")
                     return true
@@ -491,7 +493,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicRottenTouch then
+                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicRottenTouch then
                     game_api.castSpell(spells.ClawingShadows)
                     API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
@@ -511,7 +513,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ScourgeStrike) and ScourgeStrikeLogic then
+                if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and ScourgeStrikeLogic then
                     game_api.castSpell(spells.ScourgeStrike)
                     API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
@@ -519,7 +521,7 @@ function DPS()
             end
             -- Festering Strike Talent Change
             if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
-                if game_api.hasTalentEntry(talents.FesteringStrike) and API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
+                if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
                     game_api.castSpell(spells.FesteringStrike)
                     API.Debug("FesteringStrike Casted Spell -- DPS Priority")
                     return true
@@ -527,7 +529,7 @@ function DPS()
             end
 
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.ClawingShadows) and ClawingShadowsLogicFestering then
+                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicFestering then
                     game_api.castSpell(spells.ClawingShadows)
                     API.Debug("ClawingShadows Casted Spell -- DPS Priority")
                     return true
