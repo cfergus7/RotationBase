@@ -94,8 +94,9 @@ spells.MagusoftheDead                    = 390196
 spells.DeathRot                          = 377540
 spells.ArmyoftheDead                     = 42650
 spells.SummonGargoyle                    = 49206
-
-
+spells.VileContagion = 390279
+spells.AbominationLimb = 383269
+spells.Epidemic = 207317
 -- Buffs
 spells.ChillingRageBuff                   = 424165 -- Tier 31 2pc
 spells.ColdHeartBuff                      = 281209

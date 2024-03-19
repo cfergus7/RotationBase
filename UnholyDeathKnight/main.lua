@@ -50,7 +50,7 @@ function getCombatUnits()
 
     for _, unit in ipairs(units) do
         if API.isInCombatOrHasNpcId(unit, cLists.npcIdList) and
-        game_api.unitHealthPercent(unit) > 0 and game_api.isFacing(unit) and (game_api.currentPlayerDistanceFromTarget() <= 40 or game_api.unitNpcID(state.currentTarget)== 44566) and game_api.unitNpcID(unit) ~= 125977 and game_api.unitNpcID(unit) ~= 100991  and game_api.unitNpcID(unit) ~= 174773  then
+        game_api.unitHealthPercent(unit) > 0 and game_api.isFacing(unit) and (game_api.currentPlayerDistanceFromTarget() <= 10 or game_api.unitNpcID(state.currentTarget)== 44566) and game_api.unitNpcID(unit) ~= 125977 and game_api.unitNpcID(unit) ~= 100991  and game_api.unitNpcID(unit) ~= 174773  then
             insert(combatUnits, unit)
         end
     end
@@ -65,7 +65,7 @@ function UnitWithAura(units, range, auras)
         local unitHealthPercent = game_api.unitHealthPercent(unit)
         if unitHealthPercent > 0 then
             for _, auraID in ipairs(auras) do
-                if game_api.unitHasAura(unit, auraID, true) then
+                if API.IsInRange(range, unit) and game_api.unitHasAura(unit, auraID, true) then
                     if unitHealthPercent < lowestHealthPercent then
                         lowestHealthPercent = unitHealthPercent
                         lowestHealthUnit = unit
@@ -78,6 +78,84 @@ function UnitWithAura(units, range, auras)
 
     return lowestHealthUnit
 end
+function UnitWithoutAura(units, range, aura)
+    local highestHealthUnit = nil
+    local highestHealthPercent = 0 -- Start lower than any health percentage to catch the first unit above 0% health
+
+    for _, unit in ipairs(units) do
+        if API.IsInRange(range, unit) and game_api.unitHealthPercent(unit) > 0 and not game_api.unitHasAura(unit, aura, true) then
+            local unitHealthPercent = game_api.unitHealthPercent(unit)
+            if unitHealthPercent > highestHealthPercent then
+                highestHealthPercent = unitHealthPercent
+                highestHealthUnit = unit
+            end
+        end
+    end
+
+    return highestHealthUnit
+end
+function FindUnitWithoutAura(units, range, auras)
+    for _, unit in ipairs(units) do
+        if API.IsInRange(range, unit) then
+            local unitHasNoAuras = true
+            for _, auraID in ipairs(auras) do
+                if game_api.unitHasAura(unit, auraID, true) then
+                    unitHasNoAuras = false
+                    break -- This unit has one of the auras, stop checking and move to the next unit
+                end
+            end
+            if unitHasNoAuras then
+                return unit -- Found a unit without any of the specified auras
+            end
+        end
+    end
+
+    return nil -- If no unit found without the auras
+end
+
+function UnitWithLowestAuraStacks(units, range, auras)
+    local targetUnit = nil
+    local lowestStacks = nil -- Use nil to indicate no stacks found yet
+
+    for _, unit in ipairs(units) do
+        if game_api.unitHealthPercent(unit) > 0 then -- Check if unit is alive
+            for _, auraID in ipairs(auras) do
+                if API.IsInRange(range, unit) and game_api.unitHasAura(unit, auraID, true) then -- Make sure to use the range variable passed to the function
+                    local stacks = game_api.unitAuraStackCount(unit, auraID, true)
+                    if stacks and (not lowestStacks or stacks < lowestStacks) then
+                        lowestStacks = stacks
+                        targetUnit = unit
+                        -- No break here; we want to keep checking in case there's a unit with even lower stacks
+                    end
+                end
+            end
+        end
+    end
+
+    return targetUnit
+end
+function UnitWithHighestAuraStacks(units, range, auras)
+    local targetUnit = nil
+    local highestStacks = nil -- Use nil to indicate no stacks found yet
+
+    for _, unit in ipairs(units) do
+        if game_api.unitHealthPercent(unit) > 0 then -- Check if the unit is alive
+            for _, auraID in ipairs(auras) do
+                if API.IsInRange(range, unit) and game_api.unitHasAura(unit, auraID, true) then
+                    local stacks = game_api.unitAuraStackCount(unit, auraID, true)
+                    if stacks and (not highestStacks or stacks > highestStacks) then
+                        highestStacks = stacks
+                        targetUnit = unit
+                        -- Keep checking; there might be a unit with even higher stacks
+                    end
+                end
+            end
+        end
+    end
+
+    return targetUnit
+end
+
 
 function Interrupt()
     if not game_api.getToggle(settings.Kick) then
@@ -155,6 +233,17 @@ function UnitWithHighestHealth()
     end
 end
 
+function AuraTracking(units, aura)
+    local count = 0
+
+    for _, unit in ipairs(units) do
+        if API.IsInRange(40, unit) and game_api.unitHasAura(unit, aura, true) and game_api.unitHealthPercent(unit) > 0 then
+            count = count + 1
+        end
+    end
+    return count
+end
+
 function  StateUpdate()
     API.RefreshFunctionsState();
     state.currentPower = game_api.getPower(0) /5 --runes
@@ -169,9 +258,12 @@ function  StateUpdate()
     state.TargetCheck = game_api.unitInCombat(state.currentPlayer) and state.currentTarget ~= 00 and functions.isInCombatOrHasNpcId(state.currentTarget, cLists.npcIdList) and (game_api.currentPlayerDistanceFromTarget() <=6 or  game_api.unitNpcID(state.currentTarget)== 44566) and game_api.isFacing(state.currentTarget) and game_api.isTargetHostile(true) and game_api.unitHealthPercent(state.currentTarget) > 0     state.getUnits = game_api.getUnits()
     state.PlayerIsInCombat = game_api.unitInCombat(state.currentPlayer)
     state.HostileUnits = getCombatUnits()
-    state.HostileUnitCount = API.CountUnitsInRange(40, state.HostileUnits)
-
-
+    state.HostileUnitCount = API.CountUnitsInRange(6, state.HostileUnits)
+    state.VirulentPlaugeCount = AuraTracking(state.HostileUnits, auras.VirulentPlagueDebuff)
+    state.LowestStackFesteringUnit = UnitWithLowestAuraStacks(state.HostileUnits, 6, auras.FesteringWound)
+    state.HighestStackFesteringUnit = UnitWithHighestAuraStacks(state.HostileUnits, 6, auras.FesteringWound)
+    state.FesteringTarget = UnitWithoutAura(state.HostileUnits, 6, auras.FesteringWound)
+    state.FesteringWoundCount = AuraTracking(state.HostileUnits, auras.FesteringWound)
     state.afflictedUnits = game_api.getUnitsByNpcId(204773)
     state.incorporealUnits = game_api.getUnitsByNpcId(204560)
     
@@ -238,6 +330,10 @@ function TimeToReachHealth(targetHealthThreshold)
     end
 end
 
+function TargetHasAura(aura)
+    return game_api.unitHasAura(state.currentTarget, aura, true)
+end
+
 
 local AutoAoE, SoulReaperLogic, DeathCoilLogicSuddenDoom, ClawingShadowsLogicRottenTouch, DeathCoilLogicDeathRot, OutbreakLogic, DeathCoilLogicSummonGargoyle, ScourgeStrikeLogic, DeathandDecayLogic, FesteringStrikeLogic, ClawingShadowsLogicFestering, DefileLogic
 
@@ -245,6 +341,17 @@ function hasPet()
     local Pets = state.Pets
     for _, Pet in pairs(Pets) do
         if game_api.unitOwner(Pet) == state.currentPlayer and game_api.distanceToUnit(Pet) <= 40 then
+            if game_api.unitHealthPercent(Pet) == 0 then
+                return false
+            end
+        end
+    end
+    return true
+end
+function hasPetWithDarkTransformation()
+    local Pets = state.Pets
+    for _, Pet in pairs(Pets) do
+        if game_api.unitOwner(Pet) == state.currentPlayer and game_api.distanceToUnit(Pet) <= 40 and game_api.unitHasAura(unit, auras.DarkTransformation, false) then
             if game_api.unitHealthPercent(Pet) == 0 then
                 return false
             end
@@ -277,17 +384,17 @@ end
 
 function DPS()
 
-    SoulReaperLogic = state.currentTargetHpPercent < 35
+    SoulReaperLogic = state.currentTargetHpPercent < 35 or TimeToReachHealth(34) < 5
     DeathCoilLogicSuddenDoom = API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 80
     ClawingShadowsLogicRottenTouch = API.PlayerHasBuff(auras.RottenTouch) and API.PlayerHasBuff(auras.FesteringWound) > 0
     DeathCoilLogicDeathRot = game_api.currentPlayerAuraRemainingTime(auras.DeathRot, true) <= 1250 or game_api.unitAuraStackCount(state.currentPlayer, auras.DeathRot, true) < 10
-    OutbreakLogic = TimeToReachHealth(34) < 5
-    DeathCoilLogicSummonGargoyle = hasPet() or (state.CurrentRunesAvailable < 3)  -- not letting me use CurrentRunesAvailable and summon Pet 27829
-    ScourgeStrikeLogic = API.PlayerHasBuff(auras.MagusoftheDead) and API.PlayerHasBuff(auras.FesteringWound) > 0
-    DeathandDecayLogic = hasPet()-- pet check 27829
+    OutbreakLogic = not game_api.unitHasAura(state.currentTarget, auras.VirulentPlagueDebuff, true)
+    DeathCoilLogicSummonGargoyle = hasPetGarg() or (state.CurrentRunesAvailable < 3)  -- not letting me use CurrentRunesAvailable and summon Pet 27829
+    ScourgeStrikeLogic = hasPetMagus() and API.PlayerHasBuff(auras.FesteringWound) > 0
+    DeathandDecayLogic = hasPetGarg()-- pet check 27829
     FesteringStrikeLogic = API.PlayerHasBuff(auras.FesteringWound) < 3
     ClawingShadowsLogicFestering = API.PlayerHasBuff(auras.FesteringWound) > 3
-    DefileLogic = API.PlayerHasBuff(auras.MagusoftheDead) and hasPet() -- and has pet 27829
+    DefileLogic = hasPetMagus() and hasPetGarg() -- and has pet 27829
     AutoAoE = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
@@ -369,7 +476,10 @@ function DPS()
                 return true
             end
 
-            -- Trinkets go here (I will help with that one) -- Freddy
+            if API.dpsTrinket(auras.EmpowerRuneWeaponBuff,false) then
+                return true
+            end
+
 
             if API.CanCast(spells.Apocalypse)  then
                 game_api.castSpell(spells.Apocalypse)
@@ -377,7 +487,6 @@ function DPS()
                 return true
             end
         end
-                -- ST Coil Build
 
             if state.CurrentRunesAvailable > 9 then
                 if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
@@ -393,11 +502,18 @@ function DPS()
                 return true
             end
 
-            -- Clawing Shadows Needs Speical ID Check due to Talent (Replaces Scourge Strike)
+            if game_api.hasTalentEntry(talents.DefileEntryID) then
+                if API.CanCast(state.DeathAndDecaySpellID) and (hasPetGarg() or hasPetMagus()) then
+                    game_api.castAOESpellOnSelf(state.DeathAndDecaySpellID)
+                    API.Debug("Defile Casted - DPS Priority")
+                    return true
+                end
+            end
+
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and  state.ScourgeOrClawCanCast and ClawingShadowsLogicRottenTouch then
                     game_api.castSpell(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
+                    API.Debug("Clawing Shadows -- Rotten Shadows Casted Spell -- DPS Priority")
                     return true
                 end
             end
@@ -422,7 +538,6 @@ function DPS()
                 return true
             end
 
-            -- Scourge Strike Extra Needed due to Talent
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
                 if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and ScourgeStrikeLogic then
                     game_api.castSpell(spells.ScourgeStrike)
@@ -455,85 +570,12 @@ function DPS()
                 end          
             end
 
-            if API.CanCast(spells.DeathCoil) then
-                game_api.castSpell(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell -- DPS Priority")
-                return true
-            end
-
-                -- Defile Start
-            if not hasPet() then
-                if API.CanCast(spells.RaiseDead) then
-                    game_api.castSpell(spells.RaiseDead)
-                    API.Debug("RaiseDead Casted -- DPS Priority")
-                    return true
-                end
-            end
-
             if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if API.CanCast(spells.SoulReaper) and SoulReaperLogic then
-                    game_api.castSpell(spells.SoulReaper)
-                    API.Debug("SoulReaper Casted Spell -- DPS Priority")
-                    return true
-                end              
-            end
-
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if game_api.hasTalentEntry(talents.DefileEntryID) and state.DnDCanCast and DefileLogic then
-                    game_api.castSpell(spells.Defile)
-                    API.Debug("Defile Casted Spell -- DPS Priority")
-                    return true
-                end               
-            end
-
-            if API.CanCast(spells.DeathCoil)and DeathCoilLogicSuddenDoom then
-                game_api.castSpell(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell -- DPS Priority")
-                return true
-            end
-
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicRottenTouch then
-                    game_api.castSpell(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
-                    return true
-                end                
-            end
-
-            if API.CanCast(spells.DeathCoil) and DeathCoilLogicDeathRot then
-                game_api.castSpell(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell -- DPS Priority")
-                return true
-            end
-
-            if API.CanCast(spells.DeathCoil) and DeathCoilLogicSummonGargoyle then
-                game_api.castSpell(spells.DeathCoil)
-                API.Debug("DeathCoil Casted Spell -- DPS Priority")
-                return true
-            end
-
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and ScourgeStrikeLogic then
+                if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicFestering then
                     game_api.castSpell(spells.ScourgeStrike)
                     API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
                     return true
-                end               
-            end
-            -- Festering Strike Talent Change
-            if state.CurrentRunesAvailable > 1 or state.CurrentRunicPower > 20 then
-                if API.CanCast(spells.FesteringStrike) and FesteringStrikeLogic then
-                    game_api.castSpell(spells.FesteringStrike)
-                    API.Debug("FesteringStrike Casted Spell -- DPS Priority")
-                    return true
-                end          
-            end
-
-            if state.CurrentRunesAvailable > 0 or state.CurrentRunicPower > 10 then
-                if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast and ClawingShadowsLogicFestering then
-                    game_api.castSpell(spells.ClawingShadows)
-                    API.Debug("ClawingShadows Casted Spell -- DPS Priority")
-                    return true
-                end               
+                end
             end
 
             if API.CanCast(spells.DeathCoil) then
@@ -542,6 +584,121 @@ function DPS()
                 return true
             end
         end
+
+        if AutoAoE then
+            if not hasPet() then
+                if API.CanCast(spells.RaiseDead) then
+                    game_api.castSpell(spells.RaiseDead)
+                    API.Debug("RaiseDead Casted -- AoE Priority")
+                    return true
+                end
+            end
+            -- Wound AoE Build 
+            if game_api.hasTalentEntry(talents.PestilenceEntryID) then
+                if state.FesteringWoundCount >= (state.HostileUnitCount >= 7 and 7 or state.HostileUnitCount) then
+                    if game_api.getToggle(settings.Cooldown) then
+                        if state.CurrentRunesAvailable > 0 then
+                            if state.DnDCanCast then
+                                game_api.castSpell(state.DeathAndDecaySpellID)
+                                API.Debug("DeathandDecay Casted Spell -- DPS Priority")
+                                return true
+                            end              
+                        end 
+                    end
+                end
+                if state.CurrentRunesAvailable > 0 then
+                    if  game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and game_api.hasTalentEntry(talents.PlagueBringerEntryID) and (not API.PlayerHasBuff(auras.Plaugebringer) or API.PlayerHasBuff(auras.Plaugebringer) and game_api.currentPlayerAuraRemainingTime(auras.Plaugebringer, true) <= 750) then
+                        game_api.castSpell(spells.ScourgeStrike)
+                        API.Debug("Scourge Strike - Apply Plaguebringer or Refresh - AoE")
+                        return true
+                    end
+                end
+                if API.timeToDieGroup() >= 10 then
+                    if API.CanCast(spells.UnholyBlight) and state.CurrentRunesAvailable > 0 then
+                        game_api.castSpell(spells.UnholyBlight)
+                        API.Debug("Unholy Blight - TTD Greater than 10 Seconds - AoE")
+                    end
+                end
+                if game_api.isOnCooldown(spells.UnholyBlight) and not API.PlayerHasBuff(auras.UnholyBlight) then
+                    if state.VirulentPlaugeCount ~= state.HostileUnitCount then
+                        if state.CurrentRunesAvailable > 0 and API.CanCast(spells.Outbreak) then
+                            game_api.castSpell(spells.Outbreak)
+                            API.Debug("Outbreak Casted - Unholy Blight on CD and no Buff")
+                            return true
+                        end
+                    end
+                end
+                if API.PlayerHasBuff(auras.DeathAndDecayBuff) then
+                    if state.CurrentRunesAvailable > 0 then
+                        if game_api.hasTalentEntry(talents.ClawingShadowsEntryID) and state.ScourgeOrClawCanCast then
+                            game_api.castSpell(spells.ClawingShadows)
+                            API.Debug("ClawingShadows Casted Spell -- DPS Priority")
+                            return true
+                        end          
+                    end
+                    if state.CurrentRunesAvailable > 0 then
+                        if game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast then
+                            game_api.castSpell(spells.ScourgeStrike)
+                            API.Debug("ScourgeStrike Casted Spell -- DPS Priority")
+                            return true
+                        end
+                    end
+                end
+                if API.CanCast(spells.DarkTransformation) then
+                    game_api.castSpell(spells.DarkTransformation)
+                    API.Debug("Dark Transformation - AoE Check")
+                    return true
+                end
+                if hasPetWithDarkTransformation() then
+                    if API.CanCast(spells.EmpowerRuneWeapon) then
+                        game_api.castSpell(spells.EmpowerRuneWeapon)
+                        API.Debug("Empower Rune Weapon Casted")
+                        return true
+                    end
+                end
+                if state.LowestStackFesteringUnit ~= nil then
+                    if API.CanCast(spells.Apocalypse) then
+                        game_api.castSpellOnTarget(spells.Apocalypse, state.LowestStackFesteringUnit)
+                        API.Debug("Apoc on Lowest Stack Count of Festering Wound")
+                        return true
+                    end
+                end
+                if state.HighestStackFesteringUnit ~= nil then
+                    if API.CanCast(spells.VileContagion) then
+                        game_api.castSpellOnTarget(spells.VileContagion, state.HighestStackFesteringUnit)
+                        API.Debug("Vile Contagion - On Highest Festering Unit")
+                        return true
+                    end
+                end
+                if state.FesteringTarget ~= nil then
+                    if API.CanCast(spells.FesteringStrike) and state.CurrentRunesAvailable >= 2 then
+                        game_api.castSpellOnTarget(spells.FesteringStrike, state.FesteringTarget)
+                        API.Debug("Festering Strike Spread")
+                    end
+                end
+                if (state.FesteringWoundCount == state.HostileUnitCount) or (API.PlayerHasBuff(auras.DeathAndDecayBuff) and game_api.currentPlayerAuraRemainingTime(auras.DeathAndDecayBuff, true) <= 1000) then
+                    if API.CanCast(state.DeathAndDecaySpellID) then
+                        game_api.castSpell(state.DeathAndDecaySpellID)
+                        API.Debug("Defile/DND Casted - Festering Count = Enemy Count OR DnD Buff about to be gone")
+                        return true
+                    end
+                end
+                if API.CanCast(spells.AbominationLimb) then
+                    game_api.castSpell(spells.AbominationLimb)
+                    API.Debug("Abom Limb Casted - AoE")
+                    return true
+                end
+                if state.CurrentRunicPower >= 30 and API.CanCast(spells.Epidemic) and state.CurrentRunesAvailable < 2 then
+                    game_api.castSpell(spells.Epidemic)
+                    API.Debug("Epidemic Casted - AoE")
+                    return true
+                end
+            else
+                -- Disease AoE Build
+
+            end
+        end
+
 end
     
 --[[
@@ -566,6 +723,12 @@ function OnUpdate()
                 API.Debug("Raise Dead -- No Pet OOC")
                 return true
             end
+        end
+    end
+
+    if state.TargetCheck then
+        if DPS() then
+            return true
         end
     end
 

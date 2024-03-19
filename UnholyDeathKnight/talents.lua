@@ -35,8 +35,8 @@ talents.MagusoftheDead                    = 390196
 talents.DeathRot                          = 377540
 talents.ArmyoftheDead                     = 42650
 talents.SummonGargoyle                    = 49206
-
-
+talents.PestilenceEntryID  = 96291
+talents.PlagueBringerEntryID = 96319
 talents.ScourgeStrikeEntryID = 96327
 talents.ClawingShadowsEntryID = 96320
 
