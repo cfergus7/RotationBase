@@ -13,6 +13,8 @@ auras.DeathRot                           = 377540
 auras.MagusoftheDead                     = 390196
 auras.Plaugebringer = 390178
 auras.UnholyBlight = 115989
+auras.DefileBuff = 218100
+auras.FesterMight = 377591
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095

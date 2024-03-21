@@ -180,31 +180,13 @@ function Interrupt()
                 local isStun = cLists.priorityStunList[spellId] or cLists.priorityStunList[channelId]
                 local isKick = cLists.priorityKickList[spellId] or cLists.priorityKickList[channelId]
 
-                if isKick and API.CanCast(spells.Counterspell) and game_api.distanceToUnit(unit) <= 30 and
+                if isKick and API.CanCast(spells.MindFreeze) and game_api.distanceToUnit(unit) <= 15 and
                     game_api.isFacing(unit) and castPercentage >= math.random(25, 75) then
                     API.Debug(
-                        "Casting Counterspell on " .. (game_api.unitIsCasting(unit) and "Casting" or "Channeling") ..
+                        "Casting Mind Freeze on " .. (game_api.unitIsCasting(unit) and "Casting" or "Channeling") ..
                             " Unit")
-                    game_api.castSpellOnTarget(spells.Counterspell, unit)
+                    game_api.castSpellOnTarget(spells.MindFreeze, unit)
                     return true
-                end
-                if ((isKick and game_api.isOnCooldown(spells.Counterspell)) or isStun) and
-                    API.CanCast(spells.DragonsBreath) and game_api.distanceToUnit(unit) <= 11 and
-                    game_api.isFacing(unit) and castPercentage >= math.random(25, 75) then
-                    API.Debug("Casting DragonsBreath on " ..
-                                  (game_api.unitIsCasting(unit) and "Casting" or "Channeling") .. " Unit")
-                    game_api.castSpell(spells.DragonsBreath)
-                    return true
-                end
-                if game_api.isOnCooldown(spells.DragonsBreath) then
-                    if ((isKick and game_api.isOnCooldown(spells.Counterspell)) or isStun) and
-                        API.CanCast(spells.BlastWave) and game_api.distanceToUnit(unit) <= 7 and game_api.isFacing(unit) and
-                        castPercentage >= math.random(25, 75) then
-                        API.Debug("Casting DragonsBreath on " ..
-                                      (game_api.unitIsCasting(unit) and "Casting" or "Channeling") .. " Unit")
-                        game_api.castSpell(spells.BlastWave)
-                        return true
-                    end
                 end
             end
         end
@@ -272,6 +254,7 @@ function  StateUpdate()
     state.Garg = game_api.getUnitsByNpcId(27829)
     state.Magus = game_api.getUnitsByNpcId(163366)
     state.CurrentRunicPower = game_api.getPower(1)/10
+    state.CurrentMaxRunicPower = game_api.getMaxPower(1)/10
     state.CurrentRunesAvailable = game_api.getRuneCount()
 
     state.DeathAndDecaySpellID = game_api.hasTalentEntry(talents.DefileEntryID) and spells.Defile or spells.DeathAndDecay
@@ -695,7 +678,86 @@ function DPS()
                 end
             else
                 -- Disease AoE Build
-
+                if state.CurrentRunesAvailable > 0 then
+                    if  game_api.hasTalentEntry(talents.ScourgeStrikeEntryID) and state.ScourgeOrClawCanCast and game_api.hasTalentEntry(talents.PlagueBringerEntryID) and (not API.PlayerHasBuff(auras.Plaugebringer) or API.PlayerHasBuff(auras.Plaugebringer) and game_api.currentPlayerAuraRemainingTime(auras.Plaugebringer, true) <= 750) then
+                        game_api.castSpell(spells.ScourgeStrike)
+                        API.Debug("Scourge Strike - Apply Plaguebringer or Refresh - AoE")
+                        return true
+                    end
+                end
+                if API.timeToDieGroup() >= 10 then
+                    if API.CanCast(spells.UnholyBlight) and state.CurrentRunesAvailable > 0 then
+                        game_api.castSpell(spells.UnholyBlight)
+                        API.Debug("Unholy Blight - TTD Greater than 10 Seconds - AoE")
+                    end
+                end
+                if game_api.isOnCooldown(spells.UnholyBlight) and not API.PlayerHasBuff(auras.UnholyBlight) then
+                    if state.VirulentPlaugeCount ~= state.HostileUnitCount then
+                        if state.CurrentRunesAvailable > 0 and API.CanCast(spells.Outbreak) then
+                            game_api.castSpell(spells.Outbreak)
+                            API.Debug("Outbreak Casted - Unholy Blight on CD and no Buff")
+                            return true
+                        end
+                    end
+                end
+                if API.CanCast(spells.DarkTransformation) then
+                    game_api.castSpell(spells.DarkTransformation)
+                    API.Debug("Dark Transformation - AoE Check")
+                    return true
+                end
+                if hasPetWithDarkTransformation() then
+                    if API.CanCast(spells.EmpowerRuneWeapon) then
+                        game_api.castSpell(spells.EmpowerRuneWeapon)
+                        API.Debug("Empower Rune Weapon Casted")
+                        return true
+                    end
+                    if API.CanCast(spells.UnholyAssault) then
+                        game_api.castSpell(spells.UnholyAssault)
+                        API.Debug("Unholy Assualt Casted - AoE Check")
+                        return true
+                    end
+                end
+                if state.HighestStackFesteringUnit ~= nil then
+                    if API.CanCast(spells.Apocalypse) then
+                        game_api.castSpellOnTarget(spells.Apocalypse, state.HighestStackFesteringUnit)
+                        API.Debug("Apoc Casted on Unit With Highest Festering Wound Stack")
+                        return true
+                    end
+                end
+                if state.DnDCanCast and game_api.hasTalentEntry(talents.DefileEntryID) and (not API.PlayerHasBuff(auras.DefileBuff) or API.PlayerHasBuff(auras.DefileBuff) and game_api.currentPlayerAuraRemainingTime(auras.DefileBuff) <= 1000) then
+                    game_api.castAOESpellOnSelf(spells.Defile) 
+                    API.Debug("Defile Casted - Defile Buff Not Present or About to Fall Off")
+                    return true
+                end
+                if API.PlayerHasBuff(auras.SuddenDoom) or state.CurrentRunicPower >= 95 then
+                    if API.CanCast(spells.Epidemic) then
+                        game_api.castSpell(spells.Epidemic)
+                        API.Debug("Epidemic Casted - AoE - Sudden Doom or Close to Max Runic Power")
+                        return true
+                    end
+                end
+                if state.FesteringWoundCount >= 1 and API.PlayerHasBuff(auras.DeathAndDecayBuff) then
+                    if state.ScourgeOrClawCanCast and game_api.unitAuraStackCount(state.currentPlayer, auras.FesterMight, true) < 20 then
+                        game_api.castSpell(state.ScourgeOrClaw)
+                        API.Debug("Scourge Strike or Claw - Festermight < 20 and in DnD/Defile")
+                        return true
+                    end
+                end
+                if API.CanCast(spells.AbominationLimb) then
+                    game_api.castSpell(spells.AbominationLimb)
+                    API.Debug("Abom Limb Casted - AoE")
+                    return true
+                end
+                if state.CurrentRunicPower >= 30 and API.CanCast(spells.Epidemic) and state.CurrentRunesAvailable < 2 then
+                    game_api.castSpell(spells.Epidemic)
+                    API.Debug("Epidemic Casted - AoE")
+                    return true
+                end
+                if state.ScourgeOrClawCanCast then
+                    game_api.castSpell(state.ScourgeOrClaw)
+                    API.Debug("Scourge Strike or Claw Filler")
+                    return true
+                end
             end
         end
 
@@ -710,6 +772,11 @@ function OnUpdate()
 
     if game_api.getToggle("Pause") then
         return
+    end
+
+    if not game_api.isSpec(137007) then
+        API.Debug("Not in Unholy Spec")
+        return true
     end
 
     if game_api.currentPlayerIsCasting() or game_api.currentPlayerIsMounted() or game_api.currentPlayerIsChanneling() or game_api.isAOECursor() then
@@ -727,6 +794,9 @@ function OnUpdate()
     end
 
     if state.TargetCheck then
+        if Interrupt() then
+            return true
+        end
         if DPS() then
             return true
         end
