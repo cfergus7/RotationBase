@@ -39,6 +39,6 @@ talents.PestilenceEntryID  = 96291
 talents.PlagueBringerEntryID = 96319
 talents.ScourgeStrikeEntryID = 96327
 talents.ClawingShadowsEntryID = 96320
-
+talents.UnholyEnduranceEntryID = 96192
 
 return talents

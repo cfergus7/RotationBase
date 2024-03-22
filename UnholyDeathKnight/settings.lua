@@ -35,6 +35,13 @@ settings.trinket2Text = "How to use 2nd trinket (bottom slot)"
 settings.defensiveTrinketHP = "Trinket - Defensive"
 settings.defensiveTrinketHPText = "Health to Use Defensive Trinket"
 
+settings.IceboundFort = "Ice Bound Fortitude"
+settings.AntiMagicShell = "Anti Magic Shell"
+settings.AntiMagicZone = "Anti Magic Zone"
+settings.LichBorne = "Lichborne"
+settings.DeathStrike = "DeathStrike"
+
+
 function settings.createSettings()
 
     game_api.createToggle(settings.AoE, "Auto AoE toggle",true,0);
@@ -52,6 +59,12 @@ function settings.createSettings()
     game_api.createSetting(settings.trinket1, settings.trinket1Text, "Dont Use", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
     game_api.createSetting(settings.trinket2, settings.trinket2Text, "Dont Use", {"On Cooldown", "With Cooldown", "Dont Use", "With Lust", "With Lust or Cooldowns", "Defensive" })
     game_api.createSetting(settings.defensiveTrinketHP, settings.defensiveTrinketHPText, 50, { 0, 100 })
+
+    game_api.createSetting(settings.IceboundFort, settings.DefenseLifePercent, 45, { 0, 100 })
+  --  game_api.createSetting(settings.AntiMagicShell, settings.DefenseLifePercent, 45, { 0, 100 })
+    game_api.createSetting(settings.DeathStrike, settings.DefenseLifePercent, 45, { 0, 100 })
+    game_api.createSetting(settings.LichBorne, settings.DefenseLifePercent, 45, { 0, 100 })
+
 end
 
 return settings
