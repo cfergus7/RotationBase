@@ -86,7 +86,12 @@ spells.HornofWinter                      = 57330
 spells.Avalanche                         = 207142
 spells.BreathofSindragosa                = 152279
 spells.ChainsOfIce                       = 45524
-
+spells.RaiseDead = 46584
+spells.IceboundFortitude = 48792
+spells.Lichborne = 49039
+spells.AntiMagicShell = 48707
+spells.AnitMagicZone = 51052
+spells.DeathStrike = 49998
 -- Buffs
 spells.ChillingRageBuff                   = 424165 -- Tier 31 2pc
 spells.ColdHeartBuff                      = 281209

@@ -64,6 +64,10 @@ function api_functions.petAttack()
     return false
 end
 
+function api_functions.petCastSpellOnTarget(spellID,unitGuid)
+    return false
+end
+
 function api_functions.canCast(spellID)
     return false
 end
@@ -90,6 +94,14 @@ end
 
 function api_functions.getWeaponID()
     return 0
+end
+
+function api_functions.getWeapon2ID()
+    return 0
+end
+
+function api_functions.isTwoHandWeapon()
+    return false
 end
 
 function api_functions.stopCast()
@@ -137,7 +149,7 @@ function api_functions.getUnitCountInRangeFromUnit(unitGuid,range,checkPlayer)
 end
 
 function api_functions.currentPlayerHasAura(spellID,isLocalPlayerSource)
-    return 0
+    return true
 end
 
 function api_functions.currentPlayerAuraRemainingTime(spellID,isLocalPlayerSource)
@@ -453,6 +465,18 @@ function api_functions.castOptimizedAOE(spellID,range,radius,isDPS,checkHostile,
 end
 
 function api_functions.countUnitInCone(range,angle,isDPS,checkHostile,includeNeutral)
+    return 0
+end
+
+function api_functions.castOptimizedAOEFromUnitList(spellID,radius,unitArray)
+    return 0
+end
+
+function api_functions.canCastOptimizedAOEFromUnitList(spellID,radius,unitArray)
+    return 0
+end
+
+function api_functions.countOptimizedAOETargetFromUnitList(spellID,radius,unitArray)
     return 0
 end
 

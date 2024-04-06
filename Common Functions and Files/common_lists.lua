@@ -57,6 +57,12 @@ common_lists.npcIdList = {
     [197833] = true,
     [101008] = true,
     [153285] = true,
+    [65310] = true,
+    [189632] = true,
+    [190484] = true,
+
+    
+
 
 }
 
@@ -247,6 +253,10 @@ common_lists.ignoreUnits = {
     [174773] = true, -- Spiteful
     [204773] = true, -- Afflicted
     [204560] = true, -- Incorp
+    [206352] = true, -- Battlefield
+    [203857] = true, -- Battlefield
+    [203688] = true, -- Battlefield
+
 
 }
 
@@ -393,6 +403,22 @@ common_lists.classSpecIDs = {
 
 }
 
+
+common_lists.magicPurge = {
+
+
+    [200248] = true, -- Arcane Blitz
+    [256849] = true, -- Dino Might
+    [255579] = true, -- Guilded Claws
+    [428329] = true, -- Icy Veins
+    [265368] = true, -- Spirited Defense
+
+
+
+
+
+}
+
 common_lists.stoneForm = {
     [373735] = true, -- Dragon Strike
     [372570] = true, -- Bold Ambush
@@ -447,7 +473,7 @@ common_lists.FreedomList = {
     [257483] = true, -- Pile of Bones
     [199063] = true, -- Strangling Roots
     [426500] = true, -- Gnarled Roots
-    [411994] = true, -- Chronomelt
+    --[411994] = true, -- Chronomelt
     [204852] = true, -- Awakening Roots
     [413606] = true, -- Corroding Volley
     [169840] = true, -- Frostbolt
@@ -477,7 +503,7 @@ common_lists.tankBustersCombined = {
     --[260508] = true, -- crush phy cast
     [197418] = true, -- vengeful shear phy cast
     [198245] = true, -- brutal haymaker phy cast
-    [198080] = true, -- hateful charge
+    --[198080] = true, -- hateful charge
     [198635] = true, -- unerring shear debuff phy instant
     [198376] = true, -- primal rampage phy instant
     --[204611] = true, -- crushing crip cast phy, using tankbusterdebuff instead
@@ -1642,7 +1668,7 @@ common_lists.PoisonDiseaseList = {
     [258321] = true, -- Freehold: Filthy Blade
     [278961] = true, -- The Underrot: Decaying Mind
     [273226] = true, -- The Underrot: Decaying Spores
-    [250372] = true, -- Atal'Dazar: Lingering Nausea
+    --[250372] = true, -- Atal'Dazar: Lingering Nausea
     [201365] = true, -- Darkheart Thicket: Darksoul Drain
     [76363] = true,  -- Throne of the Tides: Wave Of Corruption
     --[261440] = true, -- Waycrest Manor: Virulent Pathogen
@@ -1721,114 +1747,128 @@ common_lists.aoeIncomingWarriorMagic = {
 }
 
 common_lists.uniqueIDs = {
-    240443, 377405, 389179, 372682, 384161, 370766, 388777,
-    374350, 377510, 397907, 415437, 404141, 403910, 374389,
-    217851, 273226,
-    225909, -- Soul Vemon
+    240443,
+    377405,
+    389179,
+    372682,
+    384161,
+    370766,
+    388777,
+    374350,
+    377510,
+    397907,
+    415437,
+    404141,
+    403910,
+    374389,
+    217851,
+    273226,
     261440, -- Virulent Pathogen
-    264050, -- Waycrest Manor: Infected Thorn
-    --255582, -- Molten Gold
-    200182, -- Festering Rip
-    412044, -- Temp Slice
     416716, -- Sheared Life
+    264050, -- Waycrest Manor: Infected Thorn
+    225909, -- Soul Vemon
+    200182, -- Festering Rip
     415554, -- Chronoburst
-    400681, -- spark of tyr
+    412044, -- Temp Slice
     429048, -- flameshock
+    400681, -- spark of tyr
+    
 }
 common_lists.CurseList = {
-    369365, -- Uldaman: Curse of Stone
-    369366, -- Uldaman: Trapped in Stone
-    369365, -- Brakenhide Hollow: Curse of Stone
-    391762, -- Netlharus: Curse of Dragon hoard
-    387615, -- Nokhud Offensive: Grasp of the Dead
-    397911, -- Temple of the Jade Serpent: Touch of Ruin
-    397936, -- Temple of the Jade Serpent: Touch of Ruin
-    114803, -- Temple of the Jade Serpent: Throw Torch
-    110125, -- Temple of the Jade Serpent: Shattered Resolve
-    409465, -- Affix: Cursed Spirit
-    265433, -- The Underrot: Withering Curse
-    -- Atal'Dazar
-    --252781, -- Unstable Hex
-    -- Darkheart Thicket
-    201839, -- Curse Of Isolation
-    -- DOTI: Upper
-    413618, -- Timeless Curse
-    -- Throne of the Tides
-    76820,  -- Hex
-    -- Waycrest Manor
-    260703, -- Unstable Runic Mark
-    264105, -- Runic Mark
-    265880, -- Dread Mark
+-- Throne of the Tides
+76820, -- Hex
+265433, -- The Underrot: Withering Curse
+114803, -- Temple of the Jade Serpent: Throw Torch
+369365, -- Brakenhide Hollow: Curse of Stone
+397936, -- Temple of the Jade Serpent: Touch of Ruin
+369366, -- Uldaman: Trapped in Stone
+369365, -- Uldaman: Curse of Stone
+391762, -- Netlharus: Curse of Dragon hoard
+110125, -- Temple of the Jade Serpent: Shattered Resolve
+387615, -- Nokhud Offensive: Grasp of the Dead
+409465, -- Affix: Cursed Spirit
+397911, -- Temple of the Jade Serpent: Touch of Ruin
+-- Darkheart Thicket
+201839, -- Curse Of Isolation
+-- Atal'Dazar
+-- DOTI: Upper
+413618, -- Timeless Curse
+-- Waycrest Manor
+260703, -- Unstable Runic Mark
+264105, -- Runic Mark
+265880, -- Dread Mark
+--252781, -- Unstable Hex
+
 }
 common_lists.DiseaseList = {
-    -- 69818, -- Uldaman: Diseased Bite
     377864, -- Brakenhide Hollow: Infectious Spit
-    368081, -- Brakenhide Hollow: Withering
-    373753, -- Brakenhide Hollow: Withering
-    382805, -- Brakenhide Hollow: Necrotic Breath
-    382808, -- Brakenhide Hollow: Withering Contagion
-    391613, -- HoI: Creeping Mold
-    156718, -- Shadowmoon Burial Grounds: Necrotic Burst
-    153524, -- Shadowmoon Burial Grounds: Plague Spit
-    387629, -- The Nokhud Offensive: Rotting Wind
-    409472, -- Affix: Diseased Spirit
-    258323, -- Freehold: Infected Wound
-    257775, -- Freehold: Plague Step
-    258321, -- Freehold: Filthy Blade
-    278961, -- The Underrot: Decaying Mind
-    273226, -- The Underrot: Decaying Spores
-    250372, -- Atal'Dazar: Lingering Nausea
     201365, -- Darkheart Thicket: Darksoul Drain
-    76363,  -- Throne of the Tides: Wave Of Corruption
-    --261440, -- Waycrest Manor: Virulent Pathogen
+    153524, -- Shadowmoon Burial Grounds: Plague Spit
+    409472, -- Affix: Diseased Spirit
+    278961, -- The Underrot: Decaying Mind
+    382805, -- Brakenhide Hollow: Necrotic Breath
+    391613, -- HoI: Creeping Mold
+    257775, -- Freehold: Plague Step
+    156718, -- Shadowmoon Burial Grounds: Necrotic Burst
+    258321, -- Freehold: Filthy Blade
     264050, -- Waycrest Manor: Infected Thorn
+    382808, -- Brakenhide Hollow: Withering Contagion
+    387629, -- The Nokhud Offensive: Rotting Wind
+    76363, -- Throne of the Tides: Wave Of Corruption
+    368081, -- Brakenhide Hollow: Withering
+    258323, -- Freehold: Infected Wound
+    273226, -- The Underrot: Decaying Spores
+    373753, -- Brakenhide Hollow: Withering
+    
 
 }
 common_lists.MagicList = {
-    418200, -- infinite burn
-    413606, -- corroding volley
-    412131, -- orb of contemplation
-    411644, -- soggy bonk
-    400681, -- spark of tyr
-    --411994, -- chrono melt
-    415554, -- Chronoburst
     145206, -- Aqua Bomb
-    376827, -- conductive-strike
     200642, -- Despair
-    204246, -- Tormenting Fear
-    164965,
+    411644, -- soggy bonk
     253562,
+    400681, -- spark of tyr
     200182, -- Festering Rip
+    415554, -- Chronoburst
     412044, -- Temposlice
-    -- Uldaman
-    375286, -- Searing Cannonfire
-    369006, -- Burning Heat
-    377405, -- Time Sink
-    377510, -- Stolen Time
+    --411994, -- chrono melt
+    204246, -- Tormenting Fear
+    376827, -- conductive-strike
+    164965,
+    413606, -- corroding volley
+    418200, -- infinite burn
+    412131, -- orb of contemplation
+    
     -- Brakenhide Hollow
     381379, -- Decayed Senses
-    373899, -- Decaying Roots
     373897, -- Decaying Roots ID 2
+    373899, -- Decaying Roots
     -- Halls of Infusion
-    383935, -- Spark Volley
-    389443, -- Purifying Blast
-    387359, -- Waterlogged
     374563, -- Dazzle
     391610, -- Binding Winds
     391634, -- Deep Chill
     374724, -- Molten Subduction
+    383935, -- Spark Volley
+    389443, -- Purifying Blast
+    387359, -- Waterlogged
+
+        --377510, -- Stolen Time
+    369006, -- Burning Heat
+    377405, -- Time Sink
     -- Algeth'ar Academy
     391977, -- Oversurge
     388392, -- Monotnous Letcure
+    
+        -- Uldaman
+        375286, -- Searing Cannonfire
     -- Ruby Life Pools
     381513, -- Stormslam
-    381514, -- Stormslam second ID
     392641, -- Rolling Thunder
     373869, -- Burning Touch
     392924, -- Shock Blast
-    -- Neltharus
-    372461, -- Imbued Magma
-    384161, -- Mote of Combustion
+    381514, -- Stormslam second ID
+
+
     -- Azure Vault
     384978, -- Dragon Strike
     371352, -- Forbidden Knowledge
@@ -1836,13 +1876,17 @@ common_lists.MagicList = {
     386368, -- Poly
     386549, -- Waking Bane
     -- Temple of the Jade Serpent
-    106823, -- Serpent Strike
-    106113, -- Touch of Nothingness
-    397878, -- Tainted Ripple
     114803, -- Throw Torch
     395859, -- Haunting Scream
     395872, -- Sleepy Soliloquy
     114826, -- Songbird Serenade
+    106823, -- Serpent Strike
+    106113, -- Touch of Nothingness
+    397878, -- Tainted Ripple
+
+        -- Neltharus
+        372461, -- Imbued Magma
+        384161, -- Mote of Combustion
     -- Court of Stars
     207278, -- Arcane Lockdown
     207261, -- Resonant Slash
@@ -1882,41 +1926,49 @@ common_lists.MagicList = {
     410873, -- Rushing Wind
     410997, -- Rushing Wind
     -- Dawn of Infinite
-    415769, -- Chronoburst
-    413547, -- Bloom
-    400649, -- Spark of Tyr
-    401667, -- Time Stasis
-    255371, -- Atal'Dazar Terrifying Visage
-    255041, -- Atal'Dazar Terrifying Screech
-    255582, -- Atal'Dazar Molten Gold
-    200084, -- Black Rook Hold Soul Blade
-    194960, -- Black Rook Hold Soul Echoes
-    225909, -- Black Rook Hold Soul Venom
-    201902, -- Darkheart Thicket Scorching Shot
-    416716, -- Dawn of the Infinite Sheared Lifespan
-    417030, -- Dawn of the Infinite Fireball
-    412027, -- Dawn of the Infinite Chronal Burn
-    412378, -- Dawn of the Infinite Dizzying Sands
-    407121, -- Dawn of the Infinite Immolate
-    419517, -- Dawn of the INfinute ChonroSeal
+    419517, -- Dawn of the Infinite ChonroSeal
     428084, -- Everbloom Glacial Fusion
-    427863, -- Everbloom Frostbolt
-    169840, -- Everbloom Frostbolt
-    164965, -- Everbloom Choking Vines
-    169839, -- Everbloom Pyroblast
-    426849, -- Everbloom Cold Fusion
-    75992,  -- Throne of the Tides Lightning Surge
-    429048, -- Throne of the Tides Flame Shock
-    428103, -- Throne of the Tides Frostbolt
-    265881, -- Waycrest Manor Decaying Touch
+    412378, -- Dawn of the Infinite Dizzying Sands
+    255041, -- Atal'Dazar Terrifying Screech
     264378, -- Waycrest Manor Fragment Soul
+    169839, -- Everbloom Pyroblast
+    255582, -- Atal'Dazar Molten Gold
+    225909, -- Black Rook Hold Soul Venom
+    416716, -- Dawn of the Infinite Sheared Lifespan
+    413547, -- Bloom
+    164965, -- Everbloom Choking Vines
     264390, -- Waycrest Manor Spellbind
     264407, -- Waycrest Manor Horrific Visage
-    417807, -- Aflame
+    200084, -- Black Rook Hold Soul Blade
+    194960, -- Black Rook Hold Soul Echoes
+    412027, -- Dawn of the Infinite Chronal Burn
+    75992, -- Throne of the Tides Lightning Surge
+    -- Dawn of Infinite
+    427863, -- Everbloom Frostbolt
+    201902, -- Darkheart Thicket Scorching Shot
+    401667, -- Time Stasis
+    429048, -- Throne of the Tides Flame Shock
+    417030, -- Dawn of the Infinite Fireball
+    255371, -- Atal'Dazar Terrifying Visage
     200182,
+    400649, -- Spark of Tyr
+    417807, -- Aflame
+    265881, -- Waycrest Manor Decaying Touch
+    169840, -- Everbloom Frostbolt
+    407121, -- Dawn of the Infinite Immolate
+    426849, -- Everbloom Cold Fusion
+    415769, -- Chronoburst
+    428103, -- Throne of the Tides Frostbolt
+    
 
 }
 common_lists.PoisonList = {
+        -- Freehold
+        257436, -- Poisoning Strike
+        -- Nelths Lair
+        217851, -- Toxic Retch
+        -- Affix
+        409470, -- Poisoned Spirit
     -- Uldaman
     369419, -- Venomous Fangs
     -- Brakenhide
@@ -1924,34 +1976,37 @@ common_lists.PoisonList = {
     385039, -- Withering Poison
     -- Algeth'ar Academy
     389033, -- Lasher Toxin
-    -- Freehold
-    257436, -- Poisoning Strike
-    -- Nelths Lair
-    217851, -- Toxic Retch
-    -- Affix
-    409470, -- Poisoned Spirit
 
-    252687, -- Atal'Dazar Venomfang Strike
-    200684, -- Atal'Dazar Nightmare Toxin
-    198904, -- Atal'Dazar Poison Spear
+
+    76516,  -- Throne of the Tides Poisoned Spear
+
     165123, -- Everbloom Venom Burst
     169658, -- Everbloom Poisonous Claws
     427460, -- Everbloom Toxic Bloom
-    76516,  -- Throne of the Tides Poisoned Spear
-    264520  -- Waycrest Manor Severing Serpent
+    264520,  -- Waycrest Manor Severing Serpent
+    252687, -- Atal'Dazar Venomfang Strike
+    198904, -- Atal'Dazar Poison Spear
+    200684, -- Atal'Dazar Nightmare Toxin
 }
 common_lists.RaidList = {
+        -- Leaping Flame
+        389213,
+        394917,
+        -- Mythic Sark Dispel
+        402051,
+        -- Fyrakk Dispel
+        417807,
     -- Unshakeable Dread
-    347286, -- Players with this debuff are feared. Prioritize dispelling melee players.
+    347286, 
     -- Slothful Corruption
-    350713, -- Magic debuff that reduces Haste and movement speed of affected players.
+    350713, 
     -- Fragments of Destiny
-    350542, -- Stacking debuff; monitor stacks.
+    350542, 
     -- Frozen Binds
-    357298, -- Magic debuff that roots players.
+    357298, 
     -- Crushing Dread
-    351117, -- Magic debuff in Phase 2.
-    -- Gloom - Anduin Hope Debuff
+    351117, 
+    -- Gloom 
     364031,
     -- Devouring Blood
     364522,
@@ -1959,13 +2014,7 @@ common_lists.RaidList = {
     365297,
     -- Creation Spark
     369505,
-    -- Leaping Flame
-    389213,
-    394917,
-    -- Mythic Sark Dispel
-    402051,
-    -- Fyrakk Dispel
-    417807
+
 }
 
 common_lists.LocalPlayerCDs = {
@@ -2051,29 +2100,29 @@ common_lists.LocalPlayerCDs = {
 }
 
 common_lists.BleedList = {
-    393444, -- Gushing Wound
-    367521, -- Bone Bolt
-    372566, -- Bold Ambush
-    372570, -- Bold Ambush
-    367481, -- Bloody Bite
-    378020, -- Gash Frenzy
-    372718, -- Earthen Shards
-    255814, -- Atal'Dazar - Rending Maul
-    225963, -- Black Rook Hold - Bloodthirsty Leap
-    197546, -- Black Rook Hold - Brutal Glaive
-    196376, -- Darkheart Thicket - Grievous Tear
     225484, -- Darkheart Thicket - Grievous Rip
-    412285, -- DOTI: Lower - Stonebolt
+    367521, -- Bone Bolt
     418009, -- DOTI: Upper - Serrated Arrows
-    407120, -- DOTI: Upper - Serrated Axe
-    416258, -- DOTI: Upper - Stonebolt
-    407313, -- DOTI: Upper - Shrapnel
     412505, -- DOTI: Upper - Rending Cleave
+    407313, -- DOTI: Upper - Shrapnel
     411700, -- DOTI: Upper - Slobbering Bite
-    271178, -- Waycrest Manor - Ravaging Leap
-    260741, -- Waycrest Manor - Jagged Nettles
     264556, -- Waycrest Manor - Tearing Strike
     393444, -- Gushing Wound
+    367481, -- Bloody Bite
+    407120, -- DOTI: Upper - Serrated Axe
+    372718, -- Earthen Shards
+    372566, -- Bold Ambush
+    416258, -- DOTI: Upper - Stonebolt
+    260741, -- Waycrest Manor - Jagged Nettles
+    255814, -- Atal'Dazar - Rending Maul
+    372570, -- Bold Ambush
+    412285, -- DOTI: Lower - Stonebolt
+    197546, -- Black Rook Hold - Brutal Glaive
+    393444, -- Gushing Wound (Note: Duplicate entry included for demonstration)
+    225963, -- Black Rook Hold - Bloodthirsty Leap
+    271178, -- Waycrest Manor - Ravaging Leap
+    196376, -- Darkheart Thicket - Grievous Tear
+    378020, -- Gash Frenzy
 }
 common_lists.HeavyDmgList = {
     410873, -- Rushing Wind
@@ -2118,6 +2167,9 @@ common_lists.PhysicalDmgList = {
     200291, -- Knife Dance
 }
 
+
+
+
 common_lists.MagicalDmgList = {
     -- Atal'Dazar
     259572, -- Noxious Stench
@@ -2148,6 +2200,17 @@ common_lists.MagicalDmgList = {
     260702, -- Unstable Runic Mark
 }
 
+common_lists.goofyRange = {
+
+    [44566] = true, -- Ozumat
+
+
+
+
+
+
+
+}
 
 common_lists.dummies = {
     -- Misc/Unknown
@@ -2324,13 +2387,17 @@ common_lists.dummies = {
     [194645] = "Training Dummy",               -- Valdrakken (Healing)
     [194649] = "Normal Tank Dummy",            -- Valdrakken
     [198594] = "Cleave Training Dummy",        -- Valdrakken
-    --[197833] = "PvP Training Dummy",		  -- Valdrakken
+    [197833] = "PvP Training Dummy",		  -- Valdrakken
     [197834] = "PvP Training Dummy",           -- Valdrakken (Healing)
     [194646] = "Cleave Training Dummy",        -- Valdrakken (Healing)
     --[194643] = "Dungeoneer's Training Dummy", -- Valdrakken
     --[194644] = "Dungeoneer's Training Dummy", -- Valdrakken (Tanking)
-    --[189632] = "Animated Duelist", 			  -- Valdrakken (Raider's Training Dummy)
+    [189632] = "Animated Duelist", 			  -- Valdrakken (Raider's Training Dummy)
     --[189617] = "Boulderfist", 			      -- Valdrakken (Raider's Tanking Dummy)
 }
+
+
+
+
 
 return common_lists

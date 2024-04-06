@@ -16,7 +16,8 @@ auras.ChillingRageBuff                   = 424165
 auras.ColdHeartBuff                      = 281209
 auras.GatheringStormBuff = 211805
 auras.KillingMachineBuff     = 51124
-                
+auras.T312P = 422852
+auras.T314P = 424350                
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095

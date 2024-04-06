@@ -40,5 +40,7 @@ talents.FrostscytheEntryID = 96225
 talents.EverFrostEntryID = 96164
 talents.GatheringStormEntryID = 96239
 talents.GlacialAdvanceEntryID = 96221
+talents.IceCapEntryID = 96162
+talents.UnholyEnduranceEntryID = 96192
 
 return talents
