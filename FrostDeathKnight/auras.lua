@@ -12,11 +12,16 @@ auras.UnleashedFrenzy                    = 376905
 auras.PillarofFrostBuff                  = 51271
 auras.RimeBuff                           = 59057
 auras.BreathofSindragosa                 = 152279
+auras.ChillingRageBuff                   = 424165
+auras.ColdHeartBuff                      = 281209
+auras.GatheringStormBuff = 211805
+auras.KillingMachineBuff     = 51124
+                
 -- Debuffs
 auras.BloodPlagueDebuff                  = 55078
 auras.FrostFeverDebuff                   = 55095
 auras.MarkofFyralathDebuff               = 414532
 auras.SoulReaperDebuff                   = 343294
 auras.VirulentPlagueDebuff               = 191587
-
+auras.RazoriceDebuff               = 51714          
 return auras

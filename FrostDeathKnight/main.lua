@@ -43,14 +43,29 @@ function PlayerHasAnyAuraUp(spellIDs)
     return false
 end
 
-function getCombatUnits()
+function getCombatUnitsCount()
     local units = game_api.getHostileUnits()
     local combatUnits = {}
     local insert = table.insert
 
     for _, unit in ipairs(units) do
-        if API.isInCombatOrHasNpcId(unit, cLists.npcIdList) and
-        game_api.unitHealthPercent(unit) > 0 and game_api.isFacing(unit) and (game_api.currentPlayerDistanceFromTarget() <= 40 or game_api.unitNpcID(state.currentTarget)== 44566) and game_api.unitNpcID(unit) ~= 125977 and game_api.unitNpcID(unit) ~= 100991  and game_api.unitNpcID(unit) ~= 174773  then
+        if game_api.distanceBetweenUnits(state.currentTarget, unit) <= 10 and game_api.unitHealthPercent(unit) > 0 and
+            API.isInCombatOrHasNpcId(unit, cLists.npcIdList) and not API.ignoreUnit(unit) and not API.hasImmunity(unit) then
+            insert(combatUnits, unit)
+        end
+    end
+    local numberOfUnits = #combatUnits
+    return numberOfUnits
+end
+
+function getCombatUnits()
+    local units = game_api.getHostileUnits()
+    local combatUnits = {}
+    local insert = table.insert
+    for _, unit in ipairs(units) do
+        if API.isInCombatOrHasNpcId(unit, cLists.npcIdList) and game_api.unitHealthPercent(unit) > 0 and
+            game_api.distanceToUnit(unit) < 10 and game_api.isFacing(unit) and not API.ignoreUnit(unit) and
+            not API.hasImmunity(unit) then
             insert(combatUnits, unit)
         end
     end
@@ -102,31 +117,13 @@ function Interrupt()
                 local isStun = cLists.priorityStunList[spellId] or cLists.priorityStunList[channelId]
                 local isKick = cLists.priorityKickList[spellId] or cLists.priorityKickList[channelId]
 
-                if isKick and API.CanCast(spells.Counterspell) and game_api.distanceToUnit(unit) <= 30 and
+                if isKick and API.CanCast(spells.MindFreeze) and game_api.distanceToUnit(unit) <= 15 and
                     game_api.isFacing(unit) and castPercentage >= math.random(25, 75) then
                     API.Debug(
-                        "Casting Counterspell on " .. (game_api.unitIsCasting(unit) and "Casting" or "Channeling") ..
+                        "Casting Mind Freeze on " .. (game_api.unitIsCasting(unit) and "Casting" or "Channeling") ..
                             " Unit")
-                    game_api.castSpellOnTarget(spells.Counterspell, unit)
+                    game_api.castSpellOnTarget(spells.MindFreeze, unit)
                     return true
-                end
-                if ((isKick and game_api.isOnCooldown(spells.Counterspell)) or isStun) and
-                    API.CanCast(spells.DragonsBreath) and game_api.distanceToUnit(unit) <= 11 and
-                    game_api.isFacing(unit) and castPercentage >= math.random(25, 75) then
-                    API.Debug("Casting DragonsBreath on " ..
-                                  (game_api.unitIsCasting(unit) and "Casting" or "Channeling") .. " Unit")
-                    game_api.castSpell(spells.DragonsBreath)
-                    return true
-                end
-                if game_api.isOnCooldown(spells.DragonsBreath) then
-                    if ((isKick and game_api.isOnCooldown(spells.Counterspell)) or isStun) and
-                        API.CanCast(spells.BlastWave) and game_api.distanceToUnit(unit) <= 7 and game_api.isFacing(unit) and
-                        castPercentage >= math.random(25, 75) then
-                        API.Debug("Casting DragonsBreath on " ..
-                                      (game_api.unitIsCasting(unit) and "Casting" or "Channeling") .. " Unit")
-                        game_api.castSpell(spells.BlastWave)
-                        return true
-                    end
                 end
             end
         end
@@ -155,6 +152,9 @@ function UnitWithHighestHealth()
     end
 end
 
+local AutoAoE, FrostStrikeLogic, BreathofSindragosaLogic, SoulReaperLogic, ObliterateLogic, HowlingBlastLogic, ObliterateLogic2, HornofWinterLogic, FrostStrikeLogicActiveBreathCheck
+local STSetup, AddsLeft, RimeBuffs, RPBuffs, CDCheck, FrostscythePriority, ObliteratePooling, BreathPooling, PoolRunes, PoolRP, RWSetup
+
 function  StateUpdate()
     API.RefreshFunctionsState();
 
@@ -171,7 +171,10 @@ function  StateUpdate()
     state.incorporealUnits = game_api.getUnitsByNpcId(204560)
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer)
     state.CurrentRunicPower = game_api.getPower(1)/10
+    state.RunicPowerMax = game_api.getMaxPower(1)/10
+    state.RunicPowerDeficit = state.RunicPowerMax - state.CurrentRunicPower
     state.CurrentRunesAvailable = game_api.getRuneCount()
+
     if game_api.hasTalentEntry(96178) or game_api.hasTalentEntry(96229) then
         state.EmpowerRuneWeaponCharges = 1
     end
@@ -179,29 +182,236 @@ function  StateUpdate()
         state.EmpowerRuneWeaponCharges = 2
     end
 
+    state.HasEmpowerTalented = game_api.hasTalentEntry(talents.EmpowerRuneWeaponClassEntryID) or game_api.hasTalentEntry(talents.EmpowerRuneWeaponSpecEntryID)
 
-end
-
-local AutoAoE, FrostStrikeLogic, BreathofSindragosaLogic, SoulReaperLogic, ObliterateLogic, HowlingBlastLogic, ObliterateLogic2, HornofWinterLogic, FrostStrikeLogicActiveBreathCheck
-
-function DPS()
+    state.ColdheartBuffStacks = game_api.unitAuraStackCount(state.currentPlayer, auras.ColdHeartBuff, true)
 
     AutoAoE = game_api.getToggle(settings.AoE) and state.HostileUnitCount >= 3
     FrostStrikeLogic = API.PlayerHasBuff(auras.IcyTalonsBuff) and API.PlayerHasBuff(auras.UnleashedFrenzy) and game_api.currentPlayerAuraRemainingTime(auras.IcyTalonsBuff, true) <= 1250 and game_api.currentPlayerAuraRemainingTime(auras.UnleashedFrenzy, true) <= 1250
     BreathofSindragosaLogic = state.CurrentRunicPower >= 60
     SoulReaperLogic = state.currentTargetHpPercent < 35 and state.CurrentRunicPower > 40
     ObliterateLogic = API.PlayerHasBuff(auras.KillingMachineBuff) or API.PlayerHasBuff(auras.PillarofFrostBuff)
-    HowlingBlastLogic = API.PlayerHasBuff(auras.Ryme) and state.CurrentRunicPower >39
+    HowlingBlastLogic = API.PlayerHasBuff(auras.RimeBuff) and state.CurrentRunicPower >39
     ObliterateLogic2 = state.CurrentRunicPower <=100
     HornofWinterLogic = state.CurrentRunicPower <=95
     FrostStrikeLogicActiveBreathCheck = API.PlayerHasBuff(auras.BreathofSindragosa)
+    --SimC Vars
+    STSetup = state.HostileUnitCount == 1 or not AutoAoE
+    AddsLeft = state.HostileUnitCount >=2 and AutoAoE
+    RimeBuffs = (API.PlayerHasBuff(auras.RimeBuff) and (game_api.hasTalentEntry(talents.RageOfTheFrozenChampionEntryID) or game_api.hasTalentEntry(talents.Avalanche) or game_api.hasTalentEntry(talents.IcebreakerEntryID)))
+    RPBuffs = (game_api.hasTalentEntry(talents.UnleashedFrenzyEntryID) and (game_api.unitAuraRemainingTime(state.currentPlayer, auras.UnleashedFrenzy, true) < 5500 or game_api.unitAuraStackCount(state.currentPlayer, auras.UnleashedFrenzy, true) < 3 or (game_api.hasTalentEntry(talents.IcyTalonsEntryID) and (game_api.unitAuraRemainingTime(state.currentPlayer, auras.IcyTalonsBuff, true) < 5500 or game_api.unitAuraStackCount(state.currentPlayer, auras.IcyTalonsBuff, true) < 3))))
+    CDCheck = (game_api.hasTalentEntry(talents.PillarofFrostEntryID) and API.PlayerHasBuff(auras.PillarofFrostBuff) and (game_api.hasTalentEntry(talents.ObliterationEntryID) and game_api.unitAuraRemainingTime(state.currentPlayer, auras.PillarofFrostBuff, true) > 10000 or not game_api.hasTalentEntry(talents.ObliterationEntryID)) or not game_api.hasTalentEntry(talents.PillarofFrostEntryID) and API.PlayerHasBuff(auras.EmpowerRuneWeaponBuff) or not game_api.hasTalentEntry(talents.PillarofFrostEntryID) and not state.HasEmpowerTalented or state.HostileUnitCount >= 2 and API.PlayerHasBuff(auras.PillarofFrostBuff)) 
+    FrostscythePriority = (game_api.hasTalentEntry(talents.FrostscytheEntryID) and (API.PlayerHasBuff(auras.KillingMachineBuff) or state.HostileUnitCount >= 3) and (not game_api.hasTalentEntry(talents.ImprovedObliterateEntryID) or not game_api.hasTalentEntry(talents.CleavingStrikeEntryID) or game_api.hasTalentEntry(talents.CleavingStrikeEntryID) and (state.HostileUnitCount > 8 or not API.PlayerHasBuff(auras.DeathAndDecayBuff) and state.HostileUnitCount > 4)))
+   
+    if state.CurrentRunicPower < 35 and state.CurrentRunesAvailable < 2 and game_api.getCooldownRemainingTime(spells.PillarofFrost) < 10000 then
+        ObliteratePooling = (((game_api.getCooldownRemainingTime(spells.PillarofFrost) + 1000) / 1400) / ((state.CurrentRunesAvailable + 3) * (state.CurrentRunicPower + 5)) * 100)
+    else
+        ObliteratePooling = 3000
+    end
+    if state.RunicPowerDeficit > 10 and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) < 10000 then
+        BreathPooling = (((game_api.getCooldownRemainingTime(spells.BreathofSindragosa) + 1000) / 1400) / ((state.CurrentRunesAvailable + 1) * (state.CurrentRunicPower + 20)) * 100)
+    else
+        BreathPooling = 3000
+    end
+    PoolRunes = (state.CurrentRunesAvailable < 4 and game_api.hasTalentEntry(talents.Obliteration) and game_api.getCooldownRemainingTime(spells.PillarofFrost) < ObliteratePooling) 
+    PoolRP = (game_api.hasTalent(talents.BreathofSindragosa) and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) < BreathPooling or game_api.hasTalentEntry(talents.ObliterationEntryID) and state.CurrentRunicPower < 35 and game_api.getCooldownRemainingTime(spells.PillarofFrost) < ObliteratePooling)
+    RWSetup = game_api.hasTalentEntry(talents.EverFrostEntryID) or game_api.hasTalentEntry(talents.GatheringStormEntryID)
+
+
+end
+-- actions+=/call_action_list,name=high_prio_actions
+function HighPriorityActionsSimC()
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and (not TargetHasAura(auras.FrostFeverDebuff) and state.HostileUnitCount >= 2 and ((not game_api.hasTalentEntry(talents.ObliterationEntryID) or game_api.hasTalentEntry(talents.ObliterationEntryID) and (game_api.isOnCooldown(spells.PillarofFrost) or API.PlayerHasBuff(auras.PillarofFrostBuff) and not API.PlayerHasBuff(auras.KillingMachineBuff))))) then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - High Priority Action - SimC")
+        return true
+    end
+    if API.CanCast(spells.GlacialAdvance) and state.CurrentRunicPower >= 30 and (state.HostileUnitCount >= 2 and RPBuffs and game_api.hasTalentEntry(talents.ObliterationEntryID) and game_api.hasTalent(talents.BreathofSindragosa) and not API.PlayerHasBuff(auras.PillarofFrostBuff) and not API.PlayerHasBuff(auras.BreathofSindragosa) and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) > BreathPooling) then
+        game_api.castSpell(spells.GlacialAdvance)
+        API.Debug('Glacial Advance - Hight Priority Action - SimC')
+        return true
+    end
+    if API.CanCast(spells.GlacialAdvance) and state.CurrentRunicPower >= 30  and (state.HostileUnitCount >= 2 and RPBuffs and game_api.hasTalent(talents.BreathofSindragosa) and not API.PlayerHasBuff(auras.BreathofSindragosa) and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) > BreathPooling) then
+        game_api.castSpell(spells.GlacialAdvance)
+        API.Debug('Glacial Advance - Hight Priority Action - SimC #2')
+        return true 
+    end
+    if API.CanCast(spells.GlacialAdvance) and state.CurrentRunicPower >= 30  and (state.HostileUnitCount >= 2 and RPBuffs and not game_api.hasTalent(talents.BreathofSindragosa) and game_api.hasTalentEntry(talents.ObliterationEntryID) and not API.PlayerHasBuff(auras.PillarofFrostBuff)) then
+        game_api.castSpell(spells.GlacialAdvance)
+        API.Debug('Glacial Advance - Hight Priority Action - SimC #3')
+        return true 
+    end
+    if state.CurrentRunicPower >= 30 then
+        if API.CanCast(spells.FrostStrike) and (state.HostileUnitCount == 1 and RPBuffs and game_api.hasTalentEntry(talents.ObliterationEntryID) and game_api.hasTalent(talents.BreathofSindragosa) and not API.PlayerHasBuff(auras.PillarofFrostBuff) and not API.PlayerHasBuff(auras.BreathofSindragosa) and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) > BreathPooling) then
+            game_api.castSpell(spells.FrostStrike)
+            API.Debug("Frost Strike - High Priority Action - SimC #1")
+            return true
+        end 
+        if API.CanCast(spells.FrostStrike) and (state.HostileUnitCount == 1 and RPBuffs and game_api.hasTalent(talents.BreathofSindragosa) and not API.PlayerHasBuff(auras.BreathofSindragosa) and game_api.getCooldownRemainingTime(spells.BreathofSindragosa) > BreathPooling) then
+            game_api.castSpell(spells.FrostStrike)
+            API.Debug("Frost Strike - High Priority Action - SimC #2")
+            return true
+        end
+        if API.CanCast(spells.FrostStrike) and (state.HostileUnitCount == 1 and RPBuffs and not game_api.hasTalent(talents.BreathofSindragosa) and game_api.hasTalentEntry(talents.ObliterationEntryID) and not API.PlayerHasBuff(auras.PillarofFrostBuff)) then
+            game_api.castSpell(spells.FrostStrike)
+            API.Debug("Frost Strike - High Priority Action - SimC #3")
+            return true  
+        end
+    end
+    if API.CanCast(spells.RemorselessWinter) and (RWSetup or AddsLeft) and state.CurrentRunesAvailable > 0 then
+        game_api.castSpell(spells.RemorselessWinter) 
+        API.Debug("Remoresless Winter - High Priority Action - SimC")
+        return true
+    end 
+end
+-- actions+=/call_action_list,name=aoe,if=active_enemies>=2
+function AoE()
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and (API.PlayerHasBuff(auras.RimeBuff) or not TargetHasAura(auras.FrostFeverDebuff)) then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - AoE - SimC")
+        return true
+    end
+    if API.CanCast(spells.GlacialAdvance) and state.CurrentRunicPower >= 30 and not PoolRP and RPBuffs then
+        game_api.castSpell(spells.GlacialAdvance)
+        API.Debug("Glaical Advance - AoE - SimC")
+        return true
+    end
+    -- actions.aoe+=/frostscythe,if=!death_and_decay.ticking&equipped.fyralath_the_dreamrender&(cooldown.rage_of_fyralath_417131.remains<3|!dot.mark_of_fyralath.ticking)
+    -- Need to Do this part
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1 and API.PlayerHasBuff(auras.KillingMachineBuff) and game_api.hasTalentEntry(talents.CleavingStrikeEntryID) and API.PlayerHasBuff(auras.DeathAndDecayBuff) and not FrostscythePriority then
+        game_api.castSpell(spells.Obliterate) 
+        API.Debug("Obliterate - AoE - SimC")
+        return true
+    end
+    if API.CanCast(spells.GlacialAdvance) and state.CurrentRunicPower >= 30 and not PoolRP then
+        game_api.castSpell(spells.GlacialAdvance)
+        API.Debug("Glaical Advance - AoE - SimC #2")
+        return true
+    end
+    if API.CanCast(spells.Frostscythe) and state.CurrentRunesAvailable > 0 and FrostscythePriority then
+        game_api.castSpell(spells.Frostscythe) 
+        API.Debug("FrostScythe - AoE - SimC")
+        return true
+    end
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1 and not FrostscythePriority then
+        game_api.castSpell(spells.Obliterate) 
+        API.Debug("Obliterate - AoE - SimC #2")
+        return true  
+    end
+    if state.CurrentRunicPower >= 30 and API.CanCast(spells.FrostStrike) and not PoolRP and not game_api.hasTalentEntry(talents.GlacialAdvanceEntryID) then
+        game_api.castSpell(spells.FrostStrike)
+        API.Debug("Frost Strike - AoE - SimC")
+        return true  
+    end
+    if API.CanCast(spells.HornofWinter) and state.RunicPowerDeficit > 25 then
+        game_api.castSpell(spells.HornofWinter)
+        API.Debug("Horn of Winter - AoE - SimC")
+        return true
+    end
+    
+end
+
+--actions+=/run_action_list,name=breath,if=buff.breath_of_sindragosa.up&(!talent.obliteration|talent.obliteration&!buff.pillar_of_frost.up)
+function BreatheActiveRotationSimC()
+    -- actions.breath=howling_blast,if=variable.rime_buffs&runic_power>(45-((talent.rage_of_the_frozen_champion*8)+(5*buff.rune_of_hysteria.up)))
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0
+    and API.PlayerHasBuff(auras.RimeBuff) 
+    and state.CurrentRunicPower > (45 - ((game_api.hasTalentEntry(talents.RageOfTheFrozenChampionEntryID) and 8 or 0) + (API.PlayerHasBuff(auras.RuneofHysteriaBuff) and 5 or 0))) then 
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - Breathe Rotation - SimC")
+        return true
+    end
+    if API.CanCast(spells.HornofWinter) and state.CurrentRunesAvailable < 2 and state.RunicPowerDeficit > (25 + (API.PlayerHasBuff(auras.RuneofHysteriaBuff) and 5 or 0)) then
+        game_api.castSpell(spells.HornofWinter)
+        API.Debug("Horn of Winter - Breathe Rotation - SimC")
+        return true
+    end
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1 and (API.PlayerHasBuff(auras.KillingMachineBuff) and not FrostscythePriority) then
+        game_api.castSpell(spells.Obliterate)
+        API.Debug("Obliterate - Breathe Rotation - SimC")
+        return true
+    end
+    if API.CanCast(spells.Frostscythe) and state.CurrentRunesAvailable > 0 and FrostscythePriority and (API.PlayerHasBuff(auras.KillingMachineBuff) and state.CurrentRunicPower > 45) then
+        game_api.castSpell(spells.Frostscythe)
+        API.Debug("Frostsycthe - Breathe Rotation - SimC")
+    end
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1 and (state.RunicPowerDeficit > 40 or API.PlayerHasBuff(auras.PillarofFrostBuff)) then
+        game_api.castSpell(spells.Obliterate)
+        API.Debug("Obliterate - Breathe Rotation - SimC #2")
+        return true
+    end
+    if API.CanCast(spells.RemorselessWinter) and state.CurrentRunesAvailable > 0 and state.CurrentRunicPower < 36 then
+        game_api.castSpell(spells.RemorselessWinter)
+        API.Debug("Remorseless Winter - Breathe Rotation - SimC")
+        return true
+    end
+    if API.CanCast(spells.DeathAndDecay) and state.CurrentRunesAvailable > 0 and (STSetup and game_api.hasTalent(talents.UnholyGround) and not API.PlayerHasBuff(auras.DeathAndDecayBuff) and state.RunicPowerDeficit >= 10 or state.CurrentRunicPower < 36) then
+        game_api.castAOESpellOnSelf(spells.DeathAndDecay)
+        API.Debug("Death and Deacy - Breathe Rotation - SimC")
+        return true
+    end
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and state.CurrentRunicPower < 36 then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - Breathe Rotation - SimC #2")
+        return true
+    end
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1 and state.RunicPowerDeficit > 25 then
+        game_api.castSpell(spells.Obliterate)
+        API.Debug("Obliterate - Breathe Rotation - SimC #3")
+        return true
+    end
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and API.PlayerHasBuff(auras.RimeBuff) then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - Breathe Rotation - SimC #2")
+        return true
+    end
+
+end
+--actions+=/run_action_list,name=breath_oblit,if=buff.breath_of_sindragosa.up&talent.obliteration&buff.pillar_of_frost.up
+function BreathandObliterateActiveSimC()
+
+    if API.CanCast(spells.Frostscythe) and state.CurrentRunesAvailable > 0 and FrostscythePriority and API.PlayerHasBuff(auras.KillingMachineBuff) then
+        game_api.castSpell(spells.Frostscythe)
+        API.Debug("Frostsycthe - Breathe and Obliterate Rotation - SimC")
+    end
+    if API.CanCast(spells.Obliterate) and state.CurrentRunesAvailable > 1  and API.PlayerHasBuff(auras.KillingMachineBuff) then
+        game_api.castSpell(spells.Obliterate)
+        API.Debug("Obliterate - Breathe and Obliterate Rotation - SimC")
+    end
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and API.PlayerHasBuff(auras.RimeBuff) then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - Breathe and Obliterate Rotation - SimC ")
+        return true
+    end
+    if API.CanCast(spells.HowlingBlast) and state.CurrentRunesAvailable > 0 and not API.PlayerHasBuff(auras.KillingMachineBuff) then
+        game_api.castSpell(spells.HowlingBlast)
+        API.Debug("Howling Blast - Breathe and Obliterate Rotation - SimC #2")
+        return true
+    end
+    if API.CanCast(spells.HornofWinter) and state.RunicPowerDeficit > 25  then
+        game_api.castSpell(spells.HornofWinter)
+        API.Debug("Horn of Winter - Breathe and Obliterate Rotation - SimC")
+        return true
+    end
+
+end
+
+--actions+=/call_action_list,name=cold_heart,if=talent.cold_heart&(!buff.killing_machine.up|talent.breath_of_sindragosa)&((debuff.razorice.stack=5|!death_knight.runeforge.razorice&!talent.glacial_advance&!talent.avalanche)|fight_remains<=gcd)
+function ColdHeartRotation()
+--actions.cold_heart=chains_of_ice,if=fight_remains<gcd&(rune<2|!buff.killing_machine.up&(!variable.2h_check&buff.cold_heart.stack>=4|variable.2h_check&buff.cold_heart.stack>8)|buff.killing_machine.up&(!variable.2h_check&buff.cold_heart.stack>8|variable.2h_check&buff.cold_heart.stack>10))
+--if API.CanCast(spells.ChainsOfIce) and state.CurrentRunesAvailable > 0 and (state.CurrentRunesAvailable < 2 or not API.PlayerHasBuff(auras.KillingMachineBuff) and ())
+-- actions.cold_heart+=/chains_of_ice,if=!talent.obliteration&buff.pillar_of_frost.up&buff.cold_heart.stack>=10&(buff.pillar_of_frost.remains<gcd*(1+(talent.frostwyrms_fury&cooldown.frostwyrms_fury.ready))|buff.unholy_strength.up&buff.unholy_strength.remains<gcd)
+
+end
+
+function DPS()
+
+
 
     --Opener Down the Road
 
 
     --Base Rotation BreathofSindragosa
-
-
 
     if state.PlayerIsInCombat and state.TargetCheck and (state.HostileUnitCount < 3 or not AutoAoE) then
 

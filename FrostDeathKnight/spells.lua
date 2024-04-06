@@ -85,6 +85,7 @@ spells.HowlingBlast                      = 49184
 spells.HornofWinter                      = 57330
 spells.Avalanche                         = 207142
 spells.BreathofSindragosa                = 152279
+spells.ChainsOfIce                       = 45524
 
 -- Buffs
 spells.ChillingRageBuff                   = 424165 -- Tier 31 2pc
