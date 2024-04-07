@@ -45,6 +45,13 @@ settings.DeathStrike = "DeathStrike"
 settings.TwoHanderCheck = "2 Hand Equipped?"
 settings.UseRazorIce = "Using Razor Ice"
 
+settings.useRacials = "Racials"
+settings.useRacialsText = "Decide if you would like to use racials or not"
+settings.racialsName = "Racials mode"
+ settings.racialsNameText = "Decide which racial to use"
+ settings.racialsClass = "Racials Class"
+ settings.racialsClassText = "Decide Which Racial Class to Use"
+
 function settings.createSettings()
 
     game_api.createToggle(settings.AoE, "Auto AoE toggle",true,0);
@@ -72,6 +79,10 @@ function settings.createSettings()
     game_api.createSetting(settings.DeathStrike, settings.DefenseLifePercent, 45, { 0, 100 })
     game_api.createSetting(settings.LichBorne, settings.DefenseLifePercent, 45, { 0, 100 })
 
+
+ game_api.createSetting(settings.useRacials, settings.useRacialsText, true, {})
+game_api.createSetting(settings.racialsName, settings.racialsNameText, "None", { "None", "Fireblood","Shadowmeld", "Blood fury", "Gift of the Naaru", "Berserking", "Stoneform", "Ancestral call", "Will to survive", "Escape artist", "War stomp", "Arcane Torrent"})
+ game_api.createSetting(settings.racialsClass, settings.racialsClassText, "None", { "None", "Warrior", "Hunter", "Rogue", "Deathknight", "Priest", "Mage", "Warlock", "Shaman", "Monk", "Demon Hunter", "Paladin", "Druid"})
 end
 
 return settings

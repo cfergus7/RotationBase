@@ -25,4 +25,9 @@ auras.MarkofFyralathDebuff               = 414532
 auras.SoulReaperDebuff                   = 343294
 auras.VirulentPlagueDebuff               = 191587
 auras.RazoriceDebuff               = 51714          
+auras.AntiMagicShell = 48707
+auras.AntiMagicZone = 145629
+auras.IceboundFortitudeBuff              = 48792
+auras.PowerInfusion = 10060
+
 return auras

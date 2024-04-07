@@ -100,6 +100,8 @@ spells.KillingMachineBuff                 = 51124
 spells.PillarofFrostBuff                  = 51271
 spells.RimeBuff                           = 59052
 
-
+spells.EmpowerRuneWeapon = 47568
+spells.AbominationLimb = 383269
+spells.SoulReaper = 343294
 
 return spells

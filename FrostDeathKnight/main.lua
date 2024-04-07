@@ -12,7 +12,7 @@ state = {}
 ]]
 function OnInit()
     settings.createSettings()
-    print("Sample rotation !")
+    print("Frost DK - Beta")
 end
 
 local BloodlustExhaustSpells = {57724, 57723, 80354, 264689, 390435}
@@ -164,14 +164,14 @@ function StateUpdate()
     state.currentHpPercent = game_api.unitHealthPercent(state.currentPlayer)
     state.playerHealth = game_api.unitHealthPercent(state.currentPlayer)
     state.TargetCheck = game_api.unitInCombat(state.currentPlayer) and state.currentTarget ~= 00 and
-                            functions.isInCombatOrHasNpcId(state.currentTarget, cLists.npcIdList) and
+                            API.isInCombatOrHasNpcId(state.currentTarget, cLists.npcIdList) and
                             (game_api.currentPlayerDistanceFromTarget() <= 6 or game_api.unitNpcID(state.currentTarget) ==
                                 44566) and game_api.isFacing(state.currentTarget) and game_api.isTargetHostile(true) and
                             game_api.unitHealthPercent(state.currentTarget) > 0
     state.getUnits = game_api.getUnits()
     state.PlayerIsInCombat = game_api.unitInCombat(state.currentPlayer)
     state.HostileUnits = getCombatUnits()
-    state.HostileUnitCount = API.CountUnitsInRange(10, state.HostileUnits)
+    state.HostileUnitCount = getCombatUnitsCount()
     state.afflictedUnits = game_api.getUnitsByNpcId(204773)
     state.incorporealUnits = game_api.getUnitsByNpcId(204560)
     state.CurrentCastID = game_api.unitCastingSpellID(state.currentPlayer)
@@ -260,6 +260,35 @@ function StateUpdate()
                   
 
 
+end
+
+function ProactiveLogic()
+    for _, unit in ipairs(state.getUnits) do
+        if game_api.isUnitHostile(unit, true) then
+            if game_api.unitIsCasting(unit) and not game_api.unitIsChanneling(unit) then
+                unitCasting = true
+                castPercentage =game_api.unitCastPercentage(unit)
+            end
+            if game_api.unitIsChanneling(unit) then
+                unitCasting = true
+                castPercentage =game_api.unitChannelPercentage(unit)
+            end
+            local spellId = game_api.unitCastingSpellID(unit) 
+            local channelId = game_api.unitChannelingSpellID(unit)
+            if unitCasting then
+                local IsCastingAoE = cLists.aoeIncoming[spellId] or cLists.aoeIncoming[channelId] 
+
+                if IsCastingAoE and game_api.distanceToUnit(unit) <= 40 then
+                    return true
+                end
+            end
+        end
+    end
+    return false
+end
+
+function TargetHasAura(aura)
+    return game_api.unitHasAura(state.currentTarget, aura, true)
 end
 
 function Defense()
@@ -382,7 +411,7 @@ function isInCombatForLessThan10Seconds()
             -- Check if combat has been going on for less than 4000 milliseconds (4 seconds)
             return (currentTime - combatStartTime) < 8000
         end
-    elseif not functions.isUnitDummy(state.currentTarget) then
+    elseif not API.isUnitDummy(state.currentTarget) then
         combatStartTime = 0
         return false
     end
@@ -558,7 +587,7 @@ function BreatheActiveRotationSimC()
         API.Debug("Remorseless Winter - Breathe Rotation - SimC")
         return true
     end
-    if API.CanCast(spells.DeathAndDecay) and state.CurrentRunesAvailable > 0 and
+    if game_api.canCastCharge(spells.DeathAndDecay, 2) and state.CurrentRunesAvailable > 0 and
         (STSetup and game_api.hasTalent(talents.UnholyGround) and not API.PlayerHasBuff(auras.DeathAndDecayBuff) and
             state.RunicPowerDeficit >= 10 or state.CurrentRunicPower < 36) then
         game_api.castAOESpellOnSelf(spells.DeathAndDecay)
@@ -805,7 +834,7 @@ function Cooldowns()
             API.Debug("Soul Repear - Cooldowns - SimC")
             return true
         end
-        if API.CanCast(spells.DeathAndDecay) and state.CurrentRunesAvailable > 0 and
+        if game_api.canCastCharge(spells.DeathAndDecay, 2) and state.CurrentRunesAvailable > 0 and
             (AddsLeft and not API.PlayerHasBuff(auras.DeathAndDecayBuff) or game_api.hasTalent(talents.UnholyGround) and
                 not API.PlayerHasBuff(auras.DeathAndDecayBuff)) then
             game_api.castAOESpellOnSelf(spells.DeathAndDecay)
@@ -1139,7 +1168,7 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            if API.CanCast(spells.DeathAndDecay) then
+            if game_api.canCastCharge(spells.DeathAndDecay, 2) then
                 game_api.castSpell(spells.DeathAndDecay)
                 API.Debug("DeathAndDecay Casted for DPS")
                 return true
@@ -1221,7 +1250,7 @@ function DPS()
         end
 
         if game_api.getToggle(settings.Cooldown) then
-            if API.CanCast(spells.DeathAndDecay) then
+            if game_api.canCastCharge(spells.DeathAndDecay, 2) then
                 game_api.castSpell(spells.DeathAndDecay)
                 API.Debug("DeathAndDecay Casted for DPS")
                 return true
@@ -1357,16 +1386,24 @@ end
 ]]
 function OnUpdate()
 
+    if not game_api.isSpec(137006) then
+        API.Debug("Not Frost DK Spec!!")
+    end
+
+    StateUpdate()
+--API.Debug("Check ? " .. tostring(game_api.hasTalentEntry(96163)))
     if game_api.getToggle("Pause") then
         return
     end
-
     if game_api.currentPlayerIsCasting() or game_api.currentPlayerIsMounted() or game_api.currentPlayerIsChanneling() or
         game_api.isAOECursor() then
         return
     end
 
     if state.TargetCheck and state.PlayerIsInCombat then
+        if Defense() then
+            return true
+        end
         --  actions+=/call_action_list,name=trinkets
         if API.dpsTrinket(auras.PillarofFrostBuff, auras.EmpowerRuneWeaponBuff) then
             return true
@@ -1383,19 +1420,22 @@ function OnUpdate()
             end
         end
         --   actions+=/call_action_list,name=racials
-        if API.useRacial(auras.PillarofFrostBuff) then
+        if API.useRacialCommon(auras.PillarofFrostBuff) then
             return true
         end
         --   actions+=/call_action_list,name=cold_heart,if=talent.cold_heart&(!buff.killing_machine.up|talent.breath_of_sindragosa)&((debuff.razorice.stack=5|!death_knight.runeforge.razorice&!talent.glacial_advance&!talent.avalanche)|fight_remains<=gcd)
-        if game_api.hasTalentEntry(96163) and
-            (not API.PlayerHasBuff(auras.KillingMachineBuff) or game_api.hasTalent(talents.BreathofSindragosa)) and
-            ((game_api.unitAuraRemainingTime(state.currentTarget, auras.RazoriceDebuff) == 5 or not settings.UseRazorIce and
-                not game_api.hasTalentEntry(talents.GlacialAdvanceEntryID) and not game_api.hasTalent(talents.Avalanche))) or
-            API.timeToDieGroup() > 14 then
-            if ColdHeartRotation() then
-                return true
+        if game_api.hasTalentEntry(96163) then
+            if (not API.PlayerHasBuff(auras.KillingMachineBuff) or game_api.hasTalent(talents.BreathofSindragosa)) and
+                ((game_api.unitAuraRemainingTime(state.currentTarget, auras.RazoriceDebuff) == 5 or not settings.UseRazorIce and
+                    not game_api.hasTalentEntry(talents.GlacialAdvanceEntryID) and not game_api.hasTalent(talents.Avalanche))) or
+                API.timeToDieGroup() > 1.4 then
+                if ColdHeartRotation() then
+                    return true
+                end
             end
+
         end
+
         --   actions+=/run_action_list,name=breath_oblit,if=buff.breath_of_sindragosa.up&talent.obliteration&buff.pillar_of_frost.up
         if API.PlayerHasBuff(auras.BreathofSindragosa) and game_api.hasTalentEntry(talents.ObliterationEntryID) and
             API.PlayerHasBuff(auras.PillarofFrostBuff) then
